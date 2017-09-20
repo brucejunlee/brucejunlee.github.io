@@ -79,12 +79,27 @@ jekyll serve
 
 + 浏览器输入`username.github.io`即可
 
-### 添加文章
+### 添加文章/修改文章内容
 
 ```shell
 git add _post/2017-10-01-test.markdown
-git commit -m "add test file"
+git commit -m "add test.file"
 git push origin master
+```
+
+### 删除文章
+
+```shell
+git status
+git rm _post/2017-01-01-delete.markdown
+git commit -m "remove delete.file"
+git push -u origin master
+```
+
+### 恢复文章
+
+```shell
+git  checkout -- _post/2017-01-01-delete.markdown
 ```
 
 ### 域名绑定
