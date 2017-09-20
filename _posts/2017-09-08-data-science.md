@@ -1,15 +1,15 @@
-```YAML
+---
 layout: post
 title: "数据科学"
 author: "李军"
 categories: journal
-tags: [Research,Data science, Deep learning, math]
+tags: [Research,Data science, Deep learning, math
 image:
   feature: datascience.jpg
   teaser: datascience-teaser.jpg
-  credit:
-  creditlink:
-```
+  credit: Death to Stock Photo
+  creditlink: ""
+---
 
 ## 预备知识
 
@@ -70,4 +70,3 @@ image:
 * [Classification: Instant Recognition with Caffe](http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/00-classification.ipynb)
 * [Solving in Python with LeNet](http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/01-learning-lenet.ipynb)
 * [Deep learning with Julia (Flux.jl)](https://github.com/ninjin/juliacon2017_dl_workshop)
-

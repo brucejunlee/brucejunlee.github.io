@@ -4,12 +4,13 @@ title: "构建一个简单的博客"
 author: "李军"
 categories: journal
 tags: [Jekyll, Github, Blog]
-img: 
-    feature: github.jpg
-    teaser: github-teaser.jpg
-    credit: Death to Stock Photo
-    creditlink: ""
+image:
+  feature: github.jpg
+  teaser: github-teaser.jpg
+  credit: Death to Stock Photo
+  creditlink: ""
 ---
+
 使用`Jekyll`+`GitHub`，我们可以很快搭建一个简易、免费的个人博客。
 
 # Jekyll是什么？
@@ -46,26 +47,26 @@ jekyll serve
 
 ### 使用模板
 
-+ 从[网站](http://jekyllthemes.org)或github下载选择一个模板下载
+* 从[网站](http://jekyllthemes.org)或github下载选择一个模板下载
 
-+ 把模板中的所有内容放置在myblog文件夹下
+* 把模板中的所有内容放置在myblog文件夹下
 
   ```shell
   bundle install
   bundle exec jekyll serve
   ```
 
-+ 访问网址 http://localhost:4000
+* 访问网址 http://localhost:4000
 
 ### 将网站部署到GitHub
 
-+ 创建一个与用户名一致的仓库
+* 创建一个与用户名一致的仓库
 
   ```nothing
   https://github.com/username/username.github.io.git
   ```
 
-+ 建立本地与GitHub仓库的关联
+* 建立本地与GitHub仓库的关联
 
   ```shell
   cd myblog
@@ -76,7 +77,7 @@ jekyll serve
   git push -u origin master
   ```
 
-+ 浏览器输入`username.github.io`即可
+* 浏览器输入`username.github.io`即可
 
 ### 添加文章/修改文章内容
 
@@ -103,20 +104,19 @@ git  checkout -- _post/2017-01-01-delete.markdown
 
 ### 域名绑定
 
-+ 获取IP地址
+* 获取IP地址
 
   ```shell
   ping brucejunlee.github.io
   ```
 
-+ 申请域名
+* 申请域名
 
-  + 这里申请万网的`.site`域名，并添加解析
+  * 这里申请万网的`.site`域名，并添加解析
 
-+ 在博客根目录下添加`CNAME`文件
+* 在博客根目录下添加`CNAME`文件
 
-  + ```nothing
-    cd myblog
+  * ```nothing
     echo "brucejunlee.site" > CNAME
     ```
 
