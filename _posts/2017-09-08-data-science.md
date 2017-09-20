@@ -11,6 +11,8 @@ image:
   creditlink: ""
 ---
 
+
+
 ## 预备知识
 
 * 微积分
@@ -52,7 +54,7 @@ image:
 
 * [A Guide to Deep Learning by YN$^2$](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
 
-* [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)$\bigstar$
+* [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
 
 ## 视频课程
 
