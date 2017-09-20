@@ -35,8 +35,8 @@ image:
 * [林达华](https://dahuasky.wordpress.com)
 * [Christopher Rackauckas](http://www.stochasticlifestyle.com)
 * [Christopher Olah](http://colah.github.io): Neural Networks
-* [Chris Albon](https://chrisalbon.com)$\bigstar$
-* [Random Thoughts](http://rt.dgyblog.com/ref/ref-learning-deep-learning.html)$\bigstar$
+* [Chris Albon](https://chrisalbon.com)
+* [Random Thoughts](http://rt.dgyblog.com/ref/ref-learning-deep-learning.html)
 * [Analytics Vidhya](https://www.analyticsvidhya.com/blog/)
 * [深度学习](http://deeplearning.net/reading-list/)
 * [AI, DL and NLP](http://www.wildml.com)
@@ -65,7 +65,7 @@ image:
 * 知乎
 * [stack**overflow**](https://stackoverflow.com)
 * [math**overflow**](https://mathoverflow.net)
-* [Stack<font color=#00eeee>Exchange</font>](https://stackexchange.com)
+* [StackExchange](https://stackexchange.com)
 
 # 数据集
 
@@ -82,25 +82,26 @@ image:
 
 # 项目
 
-* <font color=red size=5>Maple</font>
+* Maple
   * Dynamical behaviors in ultradiscrete systems
-* <font color=blue size=5>Julia</font>
+* Julia
   * Numerical algorithms in matrix ensembles
   * Compressed sensing(Harmonic analysis)
   * Foundations of RMT
   * Free probability theory
   * Data science in **Julia** language
   * High Performance Computing in **Julia** language
-* <font color=blue size=5>Python</font>
-* <font color=blue size=5>Matlab</font>
-* <font color=blue size=5>C/C++</font>
-* <font color=blue size=5>Processing</font>
-* <font color=blue size=5>Haskell</font>
-* <font color=blue size=5>Coq</font>
+* Python
+* Matlab
+* C/C++
+* Processing
+* Haskell
+* Coq
 
 # 其它
 
 * [The neural network zoo](http://www.asimovinstitute.org/neural-network-zoo/)
 * [Deep learning papers reading roadmap](https://github.com/songrotek/Deep-Learning-Papers-Reading-Roadmap)
 * [A gallery of interesting Jupyter notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
-* [JuliaCon 2017
+* [JuliaCon 2017](http://juliacon.org/2017/talks#workshop-2)
+
