@@ -4,10 +4,9 @@ title: "构建一个简单的博客"
 author: "李军"
 categories: journal
 tags: [Jekyll, Github, Blog]
-description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: 
-    feature: jekyll.jpg
-    teaser: github.jpg
+    feature: github.jpg
+    teaser: github-teaser.jpg
     credit: Death to Stock Photo
     creditlink: ""
 ---
