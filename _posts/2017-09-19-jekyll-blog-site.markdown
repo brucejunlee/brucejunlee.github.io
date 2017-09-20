@@ -8,7 +8,7 @@ description: You’ll find this post in your `_posts` directory. Go ahead and ed
 img: 
     feature: jekyll.png
     teaser: github.png
-    credit: ""
+    credit: Death to Stock Photo
     creditlink: ""
 ---
 使用`Jekyll`+`GitHub`，我们可以很快搭建一个简易、免费的个人博客。
