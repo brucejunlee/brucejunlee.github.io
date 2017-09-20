@@ -5,7 +5,7 @@ author: "李军"
 categories: journal
 tags: [Research,Deep Learning, Machine Learning, math]
 image:
-  feature: deeplearning.gif
+  feature: deeplearning.jpg
   teaser: deeplearning-teaser.jpg
   credit: Death to Stock Photo
   creditlink: ""
