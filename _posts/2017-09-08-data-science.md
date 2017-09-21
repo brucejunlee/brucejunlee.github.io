@@ -50,7 +50,7 @@ image:
 
 * [A visual and interactive guide to the basics of neural networks](http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/)
 
-* [A Guide to Deep Learning by YN$^2$](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
+* [A Guide to Deep Learning by YN<sup>2</sup>](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
 
 * [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
 
