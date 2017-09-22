@@ -261,11 +261,118 @@ include("script.jl")
 
 ### 字符串
 
-### 函数
++ Char：类似C和Java，在Julia中Char作为最高等级的类型
+
+  + 32位
+
+
+  + ```julia
+    x = 'x'
+    typeof(x)
+    Int('x')    # output: 120
+    Char(120)   # output: 'x'
+    ```
+
+  + Unicode字符包括\\u后面至多四位16进制数或\\U后面至多八位16进制数
+
+  + 并非每个整数都是合法的Unicode编码，合法的Unicode编码包括U+00～U+d7ff，U+e000～U+10ffff
+
+    ```julia
+    Char(0x110000)
+    isvalid(Char, 0x110000)
+    ```
+
+
++ String: 在Julia0.6之前，采用AbstractString
+
+  + 不可变
+
+
+  + 偏函数：从索引到字符的映射
+
+  + 不同于Python，Julia第一个索引从1开始，最后一个索引可以用*end*表示，*end*可以参与运算
+
+    ```julia
+    str = "Hello, World!\n"
+    str[1]
+    str[end]
+    str[end - 1]
+    str[end÷2]
+    ```
+
+  + bing 
+
+  + bing
+
+  + 索引结果是字符，切片结果是字符串
+
+    ```julia
+    str[6]
+    str[6:6]
+    ```
+
+
+  + 并非所有索引都有效, 我们用nextind(s, 1), nextind(s, 4)来计算下标
+
+    ```julia
+    s = "\u2200 x \u2203 y"
+    s[1]
+    s[2]  # wrong
+    s[4]
+    ```
+
+  + length(s)<=endof(s)=sizeof(s)，所以我们采用如下方式高效迭代字符串
+
+    ```julia
+    for c in s
+      println(c)
+    end
+    ```
+
+  * 字符串插入
+
+    ```julia
+    a = "Hello"
+    b = "World"
+    string(a, ", ", b, "!\n")
+    "$a, $b!\n"
+    "1 + 2 = $(1 + 2)"
+    ```
+
+  + 特殊字符串
+
+    + VERSION
+
+  + 常见函数
+
+    + search(string, char)
+
+
+    + search(string, char, offset)
+    + contains(string, substring)
+    + in()
+    + start(string)
+    + next(string, index)
+    + repeat(string, number)
+    + join(string-array, ", ", " and ")
+    + ind2chr(string, index)
+    + chr2ind(string, index)
+
+#### 正则表达式
+
+
+
+#### 函数
+
+
 
 ### 宏
 
+
+
 ### 元编程
+
+
 
 ### 示例
 
