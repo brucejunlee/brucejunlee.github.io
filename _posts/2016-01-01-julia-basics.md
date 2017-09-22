@@ -13,19 +13,21 @@ image:
 
 想通过短篇幅的一篇文章将一种语言讲全讲透是很难的，因此这里我将跳过大多数语言共有的特性和元素，着重讲述Julia独有的一些性质。本文是Julia编程系列的第一篇文章，后面将不定期推出Julia的后续教程，着重讲述它在通用计算，金融分析，高性能计算，数据科学，机器学习，深度学习等方面的应用。
 
+
+
 ### 引言
 
 现代语言设计和编译技术能够尽量消除性能妥协，提供一种单一的高产出、高效的环境来构建原型并部署高性能的应用。<b>Julia</b> 语言正扮演着这种角色，它是一种灵活的动态编程语言，非常适用于科学计算和数值计算，并且性能和传统静态类型的语言相当。	
 
 Julia编译器不同于`Python`，`R`这类语言中使用的解释器。如果我们理解Julia的工作原理，我们将很容易写出接近于C语言速度的代码。
 
-Julia提供了可选类型和多指派等特性，利用类型推断和<b>LLVM</b>实现的即时编译(Just-iIn-Time)技术来达到高性能，并结合了过程式、函数式和面向对象编程的多种特性。Julia，同R、`MATLAB`、Python等语言一样，为高级数值计算提供了简易操作和丰富的表达能力，同时还支持泛化编程。为此，Julia构建在数学语言之上，并借鉴了`Lisp`，`Perl`，Python，`Lua`，`Ruby`等动态语言特性。
+Julia提供了可选类型和多指派等特性，利用类型推断和<b>LLVM</b>实现的即时编译(<b>Just-In-Time</b>)技术来达到高性能，并结合了过程式、函数式和面向对象编程的多种特性。Julia，同R、`MATLAB`、Python等语言一样，为高级数值计算提供了简易操作和丰富的表达能力，同时还支持泛化编程。为此，Julia构建在数学语言之上，并借鉴了`Lisp`，`Perl`，Python，`Lua`，`Ruby`等动态语言特性。
 
 Julia作为类型动态语言存在一些重要特性：
 
 * 极小的内核部分。标准库采用Julia自身编写，包括整数运算等最基本的操作
 * 是一种丰富的类型语言，可用于构造对象，描述对象，同时可用于类型声明
-* 通过<b>多指派</b>(multi-dispatch)在不同参数类型组合上来定义函数行为
+* 通过<b>多指派</b>(<b>multi-dispatch</b>)在不同参数类型组合上来定义函数行为
 * 不同参数类型代码的自动生成
 * 高性能，可以达到C一类的静态编译语言的性能
 
@@ -38,16 +40,28 @@ Julia作为类型动态语言存在一些重要特性：
 Julia语言的目的是将易用性、能力和高效性融合在一种语言中，除此之外，Julia还包含一些重要的优势:
 
 +  免费开源（MIT许可证）
+
 +  用户定义的类型与内置类型一样的紧凑迅捷
+
 +  去向量化
+
 +  并行计算，分布式计算
-+  轻量线程（协程coroutines）
+
++  轻量线程（<b>协程coroutines</b>）
+
 +  类型系统
+
 +  数值类型和其它类型之间的转换以及类型晋升
-+  UTF-8等Unicode支持
+
++  <b>UTF-8</b>等Unicode支持
+
 +  直接调用C函数，无须封装或API
+
 +  类shell操作
-+  类Lisp宏，元编程(metaprogramming)
+
++  类Lisp宏，元编程(<b>metaprogramming</b>)
+
+   ​
 
 ### 安装
 
@@ -65,7 +79,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
       julia
       ```
 
-+ IJulia notebook
++ <b>IJulia</b> notebook
 
 + Juno
 
@@ -73,15 +87,23 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
 + Atom/Sublime中安装插件
 
+  ​
+
 ### 代码执行
 
-```shell
-julia script.jl arg1 arg2 ...
-```
++ 终端输入
 
-```julia
-include("script.jl")
-```
+  ```julia
+  julia script.jl arg1 arg2 ...
+  ```
+
++ Julia环境下
+
+  ```julia
+  include("script.jl")
+  ```
+
+  ​
 
 ### 变量
 
@@ -99,9 +121,14 @@ include("script.jl")
 
 
   + 词分隔用下划线\_ （不鼓励使用）
+
   + 类型名和模块名开始于大写字母，词分隔采用驼峰法
+
   + 函数名和宏名采用无下划线的小写形式
+
   + 有实参的函数可以以!结尾，这些被称为可变(in-place)函数
+
+    ​
 
 ### 数值
 
@@ -114,16 +141,14 @@ include("script.jl")
 
   + 浮点数类型
 
-    + IEEE754
-
-
-    + Float16(半精度), Float32(单精度), Float64(双精度)
-    + 16进制对于浮点数也是有效的，但输出只是Float64
-    + 浮点数有两个零，分别是0.0和-0.0
-    + 特殊值
-      + Inf16, -Inf16, NaN16
-      + Inf32, -Inf32, NaN32
-      + Inf, -Inf, NaN
+    * IEEE754
+    * Float16(半精度), Float32(单精度), Float64(双精度)
+    * 16进制对于浮点数也是有效的，但输出只是Float64
+    * 浮点数有两个零，分别是0.0和-0.0
+    * 特殊值
+      * Inf16, -Inf16, NaN16
+      * Inf32, -Inf32, NaN32
+      * Inf, -Inf, NaN
 
   + 复数
 
@@ -141,6 +166,7 @@ include("script.jl")
     ```
 
   + 有理数
+
     ```julia
     a = 2; b = 3;
     num(a // b)
@@ -149,12 +175,13 @@ include("script.jl")
     float(a // b)
     ```
 
-+ 操作符
 
-  + 位运算
-    + 非～，与&， 或\|， 异或\$， 逻辑右移\>\>\>， 算术右移\>\>， 逻辑/算术左移\<\<
-  + 数值比较
-    + ==, != ≠, <, <= ≤, >, >= ≥
+  + 操作符
+
+    + 位运算
+      + 非～，与&， 或\|， 异或\$， 逻辑右移\>\>\>， 算术右移\>\>， 逻辑/算术左移\<\<
+    + 数值比较
+      + ==, != ≠, <, <= ≤, >, >= ≥
 
 + 函数
 
@@ -263,30 +290,29 @@ include("script.jl")
 
 + Char：类似C和Java，在Julia中Char作为最高等级的类型
 
-  + 32位
+  * 32位
 
-
-  + ```julia
+  * ```julia
     x = 'x'
     typeof(x)
     Int('x')    # output: 120
     Char(120)   # output: 'x'
     ```
 
-  + Unicode字符包括\\u后面至多四位16进制数或\\U后面至多八位16进制数
+  * Unicode字符包括\\u后面至多四位16进制数或\\U后面至多八位16进制数
 
-  + 并非每个整数都是合法的Unicode编码，合法的Unicode编码包括U+00～U+d7ff，U+e000～U+10ffff
+  * 并非每个整数都是合法的Unicode编码，合法的Unicode编码包括U+00～U+d7ff，U+e000～U+10ffff
 
     ```julia
     Char(0x110000)
     isvalid(Char, 0x110000)
     ```
 
+    ​
 
 + String: 在Julia0.6之前，采用AbstractString
 
   + 不可变
-
 
   + 偏函数：从索引到字符的映射
 
@@ -300,9 +326,7 @@ include("script.jl")
     str[end÷2]
     ```
 
-  + bing 
-
-  + bing
+    ​
 
   + 索引结果是字符，切片结果是字符串
 
@@ -311,6 +335,7 @@ include("script.jl")
     str[6:6]
     ```
 
+    ​
 
   + 并非所有索引都有效, 我们用nextind(s, 1), nextind(s, 4)来计算下标
 
@@ -321,6 +346,7 @@ include("script.jl")
     s[4]
     ```
 
+
   + length(s)<=endof(s)=sizeof(s)，所以我们采用如下方式高效迭代字符串
 
     ```julia
@@ -329,7 +355,7 @@ include("script.jl")
     end
     ```
 
-  * 字符串插入
+  + 字符串插入
 
     ```julia
     a = "Hello"
@@ -339,26 +365,41 @@ include("script.jl")
     "1 + 2 = $(1 + 2)"
     ```
 
-  + 特殊字符串
+  * 特殊字符串
 
     + VERSION
 
-  + 常见函数
+  * 常见函数
 
-    + search(string, char)
+    * search(string, char)
+    * search(string, char, offset)
+    * contains(string, substring)
+    * in()
+    * start(string)
+    * next(string, index)
+    * repeat(string, number)
+    * join(string-array, ", ", " and ")
+    * ind2chr(string, index)
+    * chr2ind(string, index)
 
+    ​
 
-    + search(string, char, offset)
-    + contains(string, substring)
-    + in()
-    + start(string)
-    + next(string, index)
-    + repeat(string, number)
-    + join(string-array, ", ", " and ")
-    + ind2chr(string, index)
-    + chr2ind(string, index)
 
 #### 正则表达式
+
+
+
+
+
+#### 列表／集合／字典
+
+
+
+
+
+#### 数组／矩阵
+
+
 
 
 
@@ -366,11 +407,27 @@ include("script.jl")
 
 
 
+#### 互操作性
+
+​	其它语言调用
+
+
+
+#### 类型，多指派
+
+
+
+
+
 ### 宏
 
 
 
+
+
 ### 元编程
+
+
 
 
 
