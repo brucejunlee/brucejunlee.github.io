@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ""
+title: "矩阵补全(一): 简介"
 author: "李军"
 categories: journal
 tags: [RMT, matrix completion]
