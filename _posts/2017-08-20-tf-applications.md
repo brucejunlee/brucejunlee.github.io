@@ -167,7 +167,7 @@ Optimization Finished!
 
 cost= 0.0769922 W= 0.250542 b= 0.794643
 
-![image](https://github.com/brucejunlee/brucejunlee.github.io/blob/master/assets/img/tf_lr.jpg)
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/tf_lr.jpg)
 
 ### 逻辑回归
 
