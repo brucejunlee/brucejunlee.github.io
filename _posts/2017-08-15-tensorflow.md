@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "TensorFlow"
+title: "TensorFlow(一)：初识"
 author: "李军"
 categories: journal
 tags: [tensorflow, deep learning]
@@ -121,28 +121,44 @@ TensorFlow运行时实现标签(*tags*)和帧(*frames*)的概念。循环的每�
 容器用于管理长期存在的可变状态。
 
 ## 优化
-### 子表达式(*subexpression*)消除
-
 ### 数据通信和内存使用
-
-### 异步核
++ as-soon-as-possible(**ASAP**) calculation
++ as-late-as-possible(**ALAP**) calculation
 
 ### 优化库
+#### 矩阵乘法
++ BLAS
++ cuBLAS
 
-### 有损压缩(lossy compression)
+#### GPU库
++ cuda-convnet
++ cuDNN
+
+#### 开源Eigen线性代数库扩展
 
 ## 经验
++ 构建工具来观察给定模型参数的精确个数
++ 从小网络开始，在扩展到更大网络中
++ 保证停止学习时机器学习系统间目标(损失函数)相匹配：将学习率设为0有助于观察模型参数随机初始化造成的异常行为
++ 在调试分布式实现前先通过单机实现：能够识别由于竞争条件(*race condition*)和非原子(*non-atomic*)操作造成的错误(*bug*)
++ 防止数值误差：数值库在处理非有限浮点数方面是不一致的
++ 分析网络块来理解数值误差的大小
 
 ## 工具
+### TensorBoard：计算图结构和统计信息可视化
 
-## 应用
+### 性能追踪：Google内部工具EEG
++ Linux核ftrace
++ CUDA概要工具接口(CUDA Profiling Tools Interface, CUPTI)
 
-#### 图片标题
+## 系统比较
+下面并没有针对Caffe2，MXNet，PyTorch和**PaddlePaddle**等最新发布的框架进行比较分析
 
-#### 运动检测
-
-
-
++ 不同于分布式TensorFlow实现，Theano，Torch，Caffe，Chainer，CNTK(Computational Network Toolkit)这些系统将计算映射到单机上
++ 像Theano和Chainer一样，TensorFlow支持符号微分
++ 像Caffe一样，TensorFlow由一个C++编写的内核，这大大简化了不同生产环境中模型的部署，包括内存受限计算能力受限的环境，如移动设备等
++ 同DistBelief和Project Adam一样，TensorFlow允许计算横跨多个机器多台计算设备
++ **Spark**，通过“弹性分布式数据集(resilient distributed datasets, RDD)”，来优化用于重复访问相同数据的计算
 
 ## 文献
 [^1]: Jeff Dean et al., TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems.
