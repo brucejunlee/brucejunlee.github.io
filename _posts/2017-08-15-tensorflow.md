@@ -19,3 +19,7 @@ image:
 
 Google Brain在2011年开始了一个探究将大规模深度神经网络用于研究和Google产品中的项目。DistBelief作为Google第一代可扩展分布式训练推理系统，在项目早期被构建，并很好地被用于无监督学习、语言表示、图像分类、目标检测、视频分类、语音识别、序列预测、围棋落子、行人检测、增强学习和其它很多领域。当然，DistBelief还被用于Google其它产品中，包括Google搜索、广告系统、Google照片、Google地图、街景、Google翻译、YouTube等。
 
+
+
+
+
