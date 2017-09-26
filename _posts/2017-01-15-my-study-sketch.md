@@ -45,6 +45,7 @@ image:
 * [陶哲轩)](https://terrytao.wordpress.com)
 * [Peter Norvig](http://norvig.com)
 * [Cal Newport](http://calnewport.com)
+* [斗大的熊猫](http://blog.topspeedsnail.com)
 
 # 杂志
 

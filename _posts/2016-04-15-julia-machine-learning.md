@@ -13,7 +13,9 @@ image:
 
 本文是Julia编程系列的第四篇文章，着重讲述它在机器学习方面的应用。
 
-### 引言
+## 常见库
++ ScikitLearn.jl: 类似Python的scikit-learn 
++ TextAnalysis.jl
 
 
 
