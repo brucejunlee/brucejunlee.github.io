@@ -247,7 +247,450 @@ Optimization Finished!
 
 Accuracy: 0.9191
 
+
+## 常见框架
+
+### 前馈神经网络(Forward Neural Network, FNN)
+
+### 卷积神经网络(Convolutional Neural Network, CNN)
+常用于图像识别、语音分析等领域
+
+```python
+import tensorflow as tf
+import numpy as np
+ 
+# 下载mnist数据集
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets('/tmp/', one_hot=True)
+ 
+ 
+n_output_layer = 10
+ 
+# 定义待训练的神经网络
+def convolutional_neural_network(data):
+    weights = {'w_conv1':tf.Variable(tf.random_normal([5,5,1,32])),
+              'w_conv2':tf.Variable(tf.random_normal([5,5,32,64])),
+              'w_fc':tf.Variable(tf.random_normal([7*7*64,1024])),
+              'out':tf.Variable(tf.random_normal([1024,n_output_layer]))}
+ 
+    biases = {'b_conv1':tf.Variable(tf.random_normal([32])),
+              'b_conv2':tf.Variable(tf.random_normal([64])),
+              'b_fc':tf.Variable(tf.random_normal([1024])),
+              'out':tf.Variable(tf.random_normal([n_output_layer]))}
+ 
+    data = tf.reshape(data, [-1,28,28,1])
+ 
+    conv1 = tf.nn.relu(tf.add(tf.nn.conv2d(data, weights['w_conv1'], strides=[1,1,1,1], padding='SAME'), biases['b_conv1']))
+    conv1 = tf.nn.max_pool(conv1, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
+ 
+    conv2 = tf.nn.relu(tf.add(tf.nn.conv2d(conv1, weights['w_conv2'], strides=[1,1,1,1], padding='SAME'), biases['b_conv2']))
+    conv2 = tf.nn.max_pool(conv2, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
+ 
+    fc = tf.reshape(conv2, [-1,7*7*64])
+    fc = tf.nn.relu(tf.add(tf.matmul(fc, weights['w_fc']), biases['b_fc']))
+ 
+    # dropout剔除一些"神经元"
+    #fc = tf.nn.dropout(fc, 0.8)
+ 
+    output = tf.add(tf.matmul(fc, weights['out']), biases['out'])
+    return output
+ 
+ 
+# 每次使用100条数据进行训练
+batch_size = 100
+ 
+X = tf.placeholder('float', [None, 28*28]) 
+Y = tf.placeholder('float')
+# 使用数据训练神经网络
+def train_neural_network(X, Y):
+    predict = convolutional_neural_network(X)
+    cost_func = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict, labels=Y))
+    optimizer = tf.train.AdamOptimizer().minimize(cost_func)  # learning rate 默认 0.001 
+ 
+    epochs = 100
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        epoch_loss = 0
+        for epoch in range(epochs):
+            for i in range( int(mnist.train.num_examples/batch_size) ):
+                x, y = mnist.train.next_batch(batch_size)
+                _, c = session.run([optimizer, cost_func], feed_dict={X:x,Y:y})
+                epoch_loss += c
+            print(epoch, ' : ', epoch_loss)
+ 
+        correct = tf.equal(tf.argmax(predict,1), tf.argmax(Y,1))
+        accuracy = tf.reduce_mean(tf.cast(correct,'float'))
+        print('准确率: ', accuracy.eval({X:mnist.test.images, Y:mnist.test.labels}))
+ 
+train_neural_network(X,Y)
+```
+
+### 循环神经网络(Recurrent Neural Network, RNN)
+
+```python
+import tensorflow as tf
+import numpy as np
+ 
+# 下载mnist数据集
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets('/tmp/', one_hot=True)
+ 
+ 
+#一张图片是28*28,FNN是一次性把数据输入到网络，RNN把它分成块
+chunk_size = 28
+chunk_n = 28
+ 
+rnn_size = 256
+ 
+n_output_layer = 10   # 输出层
+ 
+X = tf.placeholder('float', [None, chunk_n, chunk_size]) 
+Y = tf.placeholder('float')
+# 定义待训练的神经网络
+def recurrent_neural_network(data):
+    layer = {'w_':tf.Variable(tf.random_normal([rnn_size, n_output_layer])), 'b_':tf.Variable(tf.random_normal([n_output_layer]))}
+ 
+    lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(rnn_size)
+ 
+    data = tf.transpose(data, [1,0,2])
+    data = tf.reshape(data, [-1, chunk_size])
+    data = tf.split(0, chunk_n, data)
+    outputs, status = tf.nn.rnn(lstm_cell, data, dtype=tf.float32)
+ 
+    ouput = tf.add(tf.matmul(outputs[-1], layer['w_']), layer['b_'])
+ 
+    return ouput
+ 
+# 每次使用100条数据进行训练
+batch_size = 100
+ 
+# 使用数据训练神经网络
+def train_neural_network(X, Y):
+    predict = recurrent_neural_network(X)
+    cost_func = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict, labels=Y))
+    optimizer = tf.train.AdamOptimizer().minimize(cost_func)
+ 
+    epochs = 13
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        epoch_loss = 0
+        for epoch in range(epochs):
+            for i in range( int(mnist.train.num_examples/batch_size) ):
+                x, y = mnist.train.next_batch(batch_size)
+                x = x.reshape([batch_size, chunk_n, chunk_size])
+                _, c = session.run([optimizer, cost_func], feed_dict={X:x,Y:y})
+                epoch_loss += c
+            print(epoch, ' : ', epoch_loss)
+ 
+        correct = tf.equal(tf.argmax(predict,1), tf.argmax(Y,1))
+        accuracy = tf.reduce_mean(tf.cast(correct,'float'))
+        print('准确率: ', accuracy.eval({X:mnist.test.images.reshape(-1, chunk_n, chunk_size), Y:mnist.test.labels}))
+ 
+train_neural_network(X,Y)
+```
+
+## 模型
+
+### LeNet
+
+### GoogleNet
+
+### AlexNet
+
+### ResNet
+
 ## 应用
+
+### 手写字符识别
+
+#### 数据集
++ [中文字符集](http://www.nlpr.ia.ac.cn/CN/folder/folder8.shtml)
+
+```shell
+wget http://www.nlpr.ia.ac.cn/databases/download/feature_data/HWDB1.1trn_gnt.zip
+wget http://www.nlpr.ia.ac.cn/databases/download/feature_data/HWDB1.1tst_gnt.zip
+```
+
++ MNIST图像集
+
+#### 预处理
+
+```python
+import os
+import numpy as np
+import struct
+from PIL import Image
+
+
+data_dir = '../data'
+train_data_dir = os.path.join(data_dir, 'HWDB1.1trn_gnt')
+test_data_dir = os.path.join(data_dir, 'HWDB1.1tst_gnt')
+
+
+def read_from_gnt_dir(gnt_dir=train_data_dir):
+    def one_file(f):
+        header_size = 10
+        while True:
+            header = np.fromfile(f, dtype='uint8', count=header_size)
+            if not header.size: break
+            sample_size = header[0] + (header[1]<<8) + (header[2]<<16) + (header[3]<<24)
+            tagcode = header[5] + (header[4]<<8)
+            width = header[6] + (header[7]<<8)
+            height = header[8] + (header[9]<<8)
+            if header_size + width*height != sample_size:
+                break
+            image = np.fromfile(f, dtype='uint8', count=width*height).reshape((height, width))
+            yield image, tagcode
+    for file_name in os.listdir(gnt_dir):
+        if file_name.endswith('.gnt'):
+            file_path = os.path.join(gnt_dir, file_name)
+            with open(file_path, 'rb') as f:
+                for image, tagcode in one_file(f):
+                    yield image, tagcode
+char_set = set()
+for _, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
+    tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
+    char_set.add(tagcode_unicode)
+char_list = list(char_set)
+char_dict = dict(zip(sorted(char_list), range(len(char_list))))
+print(len(char_dict))
+import pickle
+f = open('char_dict', 'wb')
+pickle.dump(char_dict, f)
+f.close()
+train_counter = 0
+test_counter = 0
+for image, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
+    tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
+    im = Image.fromarray(image)
+    dir_name = '../data/train/' + '%0.5d'%char_dict[tagcode_unicode]
+    if not os.path.exists(dir_name):
+        os.mkdir(dir_name)
+    im.convert('RGB').save(dir_name+'/' + str(train_counter) + '.png')
+    train_counter += 1
+for image, tagcode in read_from_gnt_dir(gnt_dir=test_data_dir):
+    tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
+    im = Image.fromarray(image)
+    dir_name = '../data/test/' + '%0.5d'%char_dict[tagcode_unicode]
+    if not os.path.exists(dir_name):
+        os.mkdir(dir_name)
+    im.convert('RGB').save(dir_name+'/' + str(test_counter) + '.png')
+    test_counter += 1
+```
+
+#### 读取数据
+
+```python
+def batch_data(file_labels,sess, batch_size=128):
+    image_list = [file_label[0] for file_label in file_labels]
+    label_list = [int(file_label[1]) for file_label in file_labels]
+    print('tag2 {0}'.format(len(image_list)))
+    images_tensor = tf.convert_to_tensor(image_list, dtype=tf.string)
+    labels_tensor = tf.convert_to_tensor(label_list, dtype=tf.int64)
+    input_queue = tf.train.slice_input_producer([images_tensor, labels_tensor])
+
+    labels = input_queue[1]
+    images_content = tf.read_file(input_queue[0])
+    # images = tf.image.decode_png(images_content, channels=1)
+    images = tf.image.convert_image_dtype(tf.image.decode_png(images_content, channels=1), tf.float32)
+    # images = images / 256
+    images =  pre_process(images)
+    # print(images.get_shape())
+    # one hot
+    labels = tf.one_hot(labels, 3755)
+    image_batch, label_batch = tf.train.shuffle_batch([images, labels], batch_size=batch_size, capacity=50000,min_after_dequeue=10000)
+    # print('image_batch', image_batch.get_shape())
+
+    coord = tf.train.Coordinator()
+    threads = tf.train.start_queue_runners(sess=sess, coord=coord)
+    return image_batch, label_batch, coord, threads
+```
+
+#### 数据增强：图像翻转、改变亮度等基本操作
+
+```python
+def pre_process(images):
+    if FLAGS.random_flip_up_down:
+        images = tf.image.random_flip_up_down(images)
+    if FLAGS.random_flip_left_right:
+        images = tf.image.random_flip_left_right(images)
+    if FLAGS.random_brightness:
+        images = tf.image.random_brightness(images, max_delta=0.3)
+    if FLAGS.random_contrast:
+        images = tf.image.random_contrast(images, 0.8, 1.2)
+    new_size = tf.constant([FLAGS.image_size,FLAGS.image_size], dtype=tf.int32)
+    images = tf.image.resize_images(images, new_size)
+    return images
+```
+
+#### 网络构建：两个卷积层+一个全连接层
+
+```python
+def network(images, labels=None):
+    endpoints = {}
+    conv_1 = slim.conv2d(images, 32, [3,3],1, padding='SAME')
+    max_pool_1 = slim.max_pool2d(conv_1, [2,2],[2,2], padding='SAME')
+    conv_2 = slim.conv2d(max_pool_1, 64, [3,3],padding='SAME')
+    max_pool_2 = slim.max_pool2d(conv_2, [2,2],[2,2], padding='SAME')
+    flatten = slim.flatten(max_pool_2)
+    out = slim.fully_connected(flatten,3755, activation_fn=None)
+    global_step = tf.Variable(initial_value=0)
+    if labels is not None:
+        loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(out, labels))
+        train_op = tf.train.AdamOptimizer(learning_rate=0.0001).minimize(loss, global_step=global_step)
+        accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(out, 1), tf.argmax(labels, 1)), tf.float32))
+        tf.summary.scalar('loss', loss)
+        tf.summary.scalar('accuracy', accuracy)
+        merged_summary_op = tf.summary.merge_all()
+    output_score = tf.nn.softmax(out)
+    predict_val_top3, predict_index_top3 = tf.nn.top_k(output_score, k=3)
+
+    endpoints['global_step'] = global_step
+    if labels is not None:
+        endpoints['labels'] = labels
+        endpoints['train_op'] = train_op
+        endpoints['loss'] = loss
+        endpoints['accuracy'] = accuracy
+        endpoints['merged_summary_op'] = merged_summary_op
+    endpoints['output_score'] = output_score
+    endpoints['predict_val_top3'] = predict_val_top3
+    endpoints['predict_index_top3'] = predict_index_top3
+    return endpoints
+```
+
+#### 训练
+
+```python
+def train():
+    sess = tf.Session()
+    file_labels = get_imagesfile(FLAGS.train_data_dir)
+    images, labels, coord, threads = batch_data(file_labels, sess)
+    endpoints = network(images, labels)
+    saver = tf.train.Saver()
+    sess.run(tf.global_variables_initializer())
+    train_writer = tf.train.SummaryWriter('./log' + '/train',sess.graph)
+    test_writer = tf.train.SummaryWriter('./log' + '/val')
+    start_step = 0
+    if FLAGS.restore:
+        ckpt = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
+        if ckpt:
+            saver.restore(sess, ckpt)
+            print("restore from the checkpoint {0}".format(ckpt))
+            start_step += int(ckpt.split('-')[-1])
+    logger.info(':::Training Start:::')
+    try:
+        while not coord.should_stop():
+        # logger.info('step {0} start'.format(i))
+            start_time = time.time()
+            _, loss_val, train_summary, step = sess.run([endpoints['train_op'], endpoints['loss'], endpoints['merged_summary_op'], endpoints['global_step']])
+            train_writer.add_summary(train_summary, step)
+            end_time = time.time()
+            logger.info("the step {0} takes {1} loss {2}".format(step, end_time-start_time, loss_val))
+            if step > FLAGS.max_steps:
+                break
+            # logger.info("the step {0} takes {1} loss {2}".format(i, end_time-start_time, loss_val))
+            if step % FLAGS.eval_steps == 1:
+                accuracy_val,test_summary, step = sess.run([endpoints['accuracy'], endpoints['merged_summary_op'], endpoints['global_step']])
+                test_writer.add_summary(test_summary, step)
+                logger.info('===============Eval a batch in Train data=======================')
+                logger.info( 'the step {0} accuracy {1}'.format(step, accuracy_val))
+                logger.info('===============Eval a batch in Train data=======================')
+            if step % FLAGS.save_steps == 1:
+                logger.info('Save the ckpt of {0}'.format(step))
+                saver.save(sess, os.path.join(FLAGS.checkpoint_dir, 'my-model'), global_step=endpoints['global_step'])
+    except tf.errors.OutOfRangeError:
+        # print "============train finished========="
+        logger.info('==================Train Finished================')
+        saver.save(sess, os.path.join(FLAGS.checkpoint_dir, 'my-model'), global_step=endpoints['global_step'])
+    finally:
+        coord.request_stop()
+    coord.join(threads)
+    sess.close()
+```
+
+####验证
+
+```python
+def validation():
+    # it should be fixed by using placeholder with epoch num in train stage
+    sess = tf.Session()
+
+    file_labels = get_imagesfile(FLAGS.test_data_dir)
+    test_size = len(file_labels)
+    print(test_size)
+    val_batch_size = FLAGS.val_batch_size
+    test_steps = test_size / val_batch_size
+    print(test_steps)
+    # images, labels, coord, threads= batch_data(file_labels, sess)
+    images = tf.placeholder(dtype=tf.float32, shape=[None, 64, 64, 1])
+    labels = tf.placeholder(dtype=tf.int32, shape=[None,3755])
+    # read batch images from file_labels
+    # images_batch = np.zeros([128,64,64,1])
+    # labels_batch = np.zeros([128,3755])
+    # labels_batch[0][20] = 1
+    #
+    endpoints = network(images, labels)
+    saver = tf.train.Saver()
+    ckpt = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
+    if ckpt:
+        saver.restore(sess, ckpt)
+        # logger.info("restore from the checkpoint {0}".format(ckpt))
+    # logger.info('Start validation')
+    final_predict_val = []
+    final_predict_index = []
+    groundtruth = []
+    for i in range(test_steps):
+        start = i* val_batch_size
+        end = (i+1)*val_batch_size
+        images_batch = []
+        labels_batch = []
+        labels_max_batch = []
+        logger.info('=======start validation on {0}/{1} batch========='.format(i, test_steps))
+        for j in range(start,end):
+            image_path = file_labels[j][0]
+            temp_image = Image.open(image_path).convert('L')
+            temp_image = temp_image.resize((FLAGS.image_size, FLAGS.image_size),Image.ANTIALIAS)
+            temp_label = np.zeros([3755])
+            label = int(file_labels[j][1])
+            # print(label)
+            temp_label[label] = 1
+            # print("====",np.asarray(temp_image).shape)
+            labels_batch.append(temp_label)
+            # print("====",np.asarray(temp_image).shape)
+            images_batch.append(np.asarray(temp_image)/255.0)
+            labels_max_batch.append(label)
+        # print(images_batch)
+        images_batch = np.array(images_batch).reshape([-1, 64, 64, 1])
+        labels_batch = np.array(labels_batch)
+        batch_predict_val, batch_predict_index = sess.run([endpoints['predict_val_top3'],
+                        endpoints['predict_index_top3']], feed_dict={images:images_batch, labels:labels_batch})
+        logger.info('=======validation on {0}/{1} batch end========='.format(i, test_steps))
+        final_predict_val += batch_predict_val.tolist()
+        final_predict_index += batch_predict_index.tolist()
+        groundtruth += labels_max_batch
+    sess.close()
+    return final_predict_val, final_predict_index, groundtruth
+```
+
+#### 推理
+
+```python
+def inference(image):
+    temp_image = Image.open(image).convert('L')
+    temp_image = temp_image.resize((FLAGS.image_size, FLAGS.image_size),Image.ANTIALIAS)
+    sess = tf.Session()
+    logger.info('========start inference============')
+    images = tf.placeholder(dtype=tf.float32, shape=[None, 64, 64, 1])
+    endpoints = network(images)
+    saver = tf.train.Saver()
+    ckpt = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
+    if ckpt:
+        saver.restore(sess, ckpt)
+    predict_val, predict_index = sess.run([endpoints['predict_val_top3'],endpoints['predict_index_top3']], feed_dict={images:temp_image})
+    sess.close()
+    return final_predict_val, final_predict_index
+```
+
 ### Inception
 Inception是图像识别领域当前最好的卷积神经网络。这个系统将224x224像素图像分类到1000个标签(如cheetah猎豹、garbage truck垃圾货车等)上。这样的模型由1.36千万个学习参数和TensorFlow计算图中的3.6万个操作组成。在单张图像上运行推理需要20亿个乘-加操作。
 

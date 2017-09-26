@@ -13,12 +13,50 @@ image:
 
 本文概述了矩阵补全的基本知识与应用。
 
-#### 理论
+## 理论
 
 + Ronberg
 + 矩阵低秩近似
 
-#### 应用
+## 应用
+下面代码在Julia 0.6.0环境下测试通过
+### 测试矩阵
 
-+ Netflix
+```julia
+using PyPlot
+using Convex
+using SCS
+
+# passing in verbose=0 to hide output from SCS
+solver = SCSSolver(verbose = 0)
+set_default_solver(solver);
+
+# logistic function
+lgc(x) = 1 ./ (1 + exp(-x));
+
+# Construct a random m-by-n binary matrix matrix
+m, n, k = 40, 40, 2
+M = randn(m, k) * randn(k, n)       # Underlying low-rank matrix
+fM = lgc(M)                     # Probability matrix, maps M onto interval [0,1]
+Y = map(x -> x > rand() ? 1 : -1, fM) # True data, binary matrix
+
+# Suppose that we only observe a fraction of entries in Y
+n_obs = 800
+Yobs = fill(NaN, (m, n))
+obs = randperm(m * n)[1: n_obs]
+Yobs[obs] = Y[obs]
+
+# Plot the ground-truth, full dataset and our partial observations
+figure(figsize = (7, 14))
+subplot(1, 2, 1)
+imshow(Y, cmap = ColorMap("bwr"), interpolation = "None")
+xticks([]), yticks([]), title("True Data", fontweight = "bold")
+
+subplot(1, 2, 2)
+imshow(Yobs, cmap = ColorMap("bwr"), interpolation = "None")
+xticks([]), yticks([]), title("Observed Data", fontweight = "bold")
+show()
+```
+
+### Netflix
 
