@@ -11,11 +11,249 @@ image:
   creditlink: ""
 ---
 
-Google [TensorFlow](www.tensorflow.org)是表示机器学习算法的接口，并且是执行这些算法的实现平台。使用TensorFlow表示的计算可以在多种多样的系统中几乎无修改地执行。这些系统包括从手机、平板电脑等移动设备到数以百计的机器和数以千计的**GPU**等计算设备组成的大规模分布式系统。这样的系统非常灵活，可以被用来表示大量算法，包括深度神经网络模型的训练和推理。它也被运用到研究中，以及将机器学习系统部署到横跨数十个计算机科学和其它领域的生产中，包括语音识别，计算机视觉，机器人学，信息检索，自然语言处理，地理信息抽取和计算药物发现等。
+## 注意事项
+### 在Jupyter notebook中，定义新节点前，我们需要开始调用*tf.reset\_default\_graph()*以清空符号图。
+
+### 张量初始值
+
+```python
+weights = tf.Variable(tf.random_normal([784, 200], stddev=0.35),
+                      name="weights")
+# Create another variable with the same value as 'weights'.
+w2 = tf.Variable(weights.initialized_value(), name="w2")
+# Create another variable with twice the value of 'weights'
+w_twice = tf.Variable(weights.initialized_value() * 0.2, name="w_twice")
+```
+
+### 张量的静态／动态形状(Shape)
+```python
+import tensorflow as tf
+
+t = tf.placeholder(tf.float32, [None, 128])
+static_shape = t.shape.as_list()
+t.set_shape([32, 128])
+
+dynamic_shape = tf.shape(t)
+t.set_shape([None, 128])
+
+t = tf.reshape(t, [32, 128])
+```
+### 作用域(Scope)
+*tf.name\_scope*只影响由*tf.Variable*创建的张量和变量的名称, 并不影响由*tf.get\_variable*创建的变量名称。但如果重名，*tf.get_variable*会返回**ValueError**，如果想重用名称，需要设置参量`reuse=True`
+
+```python
+with tf.variable_scope("scope"):
+  a = tf.constant(1, name="a")
+  print(a.name)  # prints "scope/a:0"
+
+  b = tf.Variable(1, name="b")
+  print(b.name)  # prints "scope/b:0"
+
+  c = tf.get_variable(name="c", shape=[])
+  print(c.name)  # prints "scope/c:0"
+  
+with tf.variable_scope("scope"):
+  a1 = tf.get_variable(name="a", shape=[])
+  a2 = tf.get_variable(name="a", shape=[])  # Disallowed
+  
+with tf.variable_scope("scope"):
+  a1 = tf.get_variable(name="a", shape=[])
+with tf.variable_scope("scope", reuse=True):
+  a2 = tf.get_variable(name="a", shape=[])  # OK
+```
+
+### 广播机制(broadcasting)
+在TensorFlow计算中，使用广播时要非常小心仔细，尤其是在*tf.squeeze*时。一般经验是使用时总是显式给出维度信息。
+
+### TensorFlow中数据读取方式
+
++ *tf.constant*
+
++ 使用占位符，然后`feed_dict`
+
++ *tf.py\_func*
+
++ 推荐使用数据集API
+
+	```python
+	actual_data = np.random.normal(size=[100])
+	dataset = tf.contrib.data.Dataset.from_tensor_slices(actual_data)
+	data = dataset.make_one_shot_iterator().get_next()
+	```
+ 
+ 或从文件中读入
+ 
+ ```python
+ dataset = tf.contrib.data.Dataset.TFRecordDataset(path_to_data)
+ ```
+ 
+ 然后进行数据(预)处理
+ 
+ ```python
+ dataset = dataset.cache()
+if mode == tf.estimator.ModeKeys.TRAIN:
+    dataset = dataset.repeat()
+    dataset = dataset.shuffle(batch_size * 5)
+dataset = dataset.map(parse, num_threads=8)
+dataset = dataset.batch(batch_size)
+ ```
+
+### 切片
+切片是一个非常低效的操作，我们尽量使用*tf.unstack*操作来代替使用**slice**，尤其是在切片数非常多时。
+
+```python
+import tensorflow as tf
+import time
+
+x = tf.random_uniform([500, 10])
+
+z = tf.zeros([10])
+for i in range(500):
+	z += x[i]
+	
+sess = tf.Session()
+start = time.time()
+sess.run(z)
+print("It took %f seconds." % (time.time() - start))
+
+```
+
+更好的方式是使用*tf.unstack*操作将矩阵一次性切分成向量列表
+
+```python
+z = tf.zeros([10])
+for x_i in tf.unstack(x):
+	z += x_i
+```
+
+最合适做法
+
+```python
+z = tf.reduce_sum(x, axis=0)
+```
+
+### 运算符重载(overload)
++ `x += y`, `x **= 2`是合法的
++ **and**, **or**, **not**等关键字不能被重载，代替地，我们使用*tf.logical\_and*, *tf.logical\_or*, *tf.logical\_xor*, *tf.logical\_not*
++ 张量不能作为布尔值用于判断，代替地，我们可以使用*tf.cond(x, ...)*, 或者*if x is None*
++ ==, !=不能被重载, 代替地，我们使用*tf.equal*, *tf.not\_equal*
+
+### 循环控制
+经常出现在RNN构造计算中
+
++ tf.cond
++ tf.where
++ tf.while_loop
+
+例：记录当前数值的Fibonacci数列
+
+```python
+n = tf.constant(5)
+
+c = tf.TensorArray(tf.int32, n)
+c = c.write(0, 1)
+c = c.write(1, 1)
+
+def cond(i, a, b, c):
+    return i < n
+
+def body(i, a, b, c):
+    c = c.write(i, a + b)
+    return i + 1, b, a + b, c
+
+i, a, b, c = tf.while_loop(cond, body, (2, 1, 1, c))
+
+c = c.stack()
+
+print(tf.Session().run(c))
+```
+
+### 数值稳定性
+
+浮点数最大／最小值
+
+```python
+print(np.nextafter(np.float32(0), np.float32(1))) # prints 1.4013e-45
+print(np.finfo(np.float32).max) # prints 3.40282e+38
+```
+
+ln(3.40282e+38)=88.7,所以任何超出这个数字的值都将导致结果`NAN`
+
+`softmax`
+
+```python
+import tensorflow as tf
+
+def unstable_softmax(logits):
+    exp = tf.exp(logits)
+    return exp / tf.reduce_sum(exp)
+
+tf.Session().run(unstable_softmax([1000., 0.]))  # prints [ nan, 0.]
+```
+
+`cross entropy`
+
+```python
+def unstable_softmax_cross_entropy(labels, logits):
+    logits = tf.log(softmax(logits))
+    return -tf.reduce_sum(labels * logits)
+
+labels = tf.constant([0.5, 0.5])
+logits = tf.constant([1000., 0.])
+
+xe = unstable_softmax_cross_entropy(labels, logits)
+
+print(tf.Session().run(xe))  # prints inf
+```
+
+稳定版本
+
+```python
+import tensorflow as tf
+
+def softmax(logits):
+    exp = tf.exp(logits - tf.reduce_max(logits))
+    return exp / tf.reduce_sum(exp)
+
+tf.Session().run(softmax([1000., 0.]))  # prints [ 1., 0.]
+```
+
+```python
+def softmax_cross_entropy(labels, logits):
+    scaled_logits = logits - tf.reduce_max(logits)
+    normalized_logits = scaled_logits - tf.reduce_logsumexp(scaled_logits)
+    return -tf.reduce_sum(labels * normalized_logits)
+
+labels = tf.constant([0.5, 0.5])
+logits = tf.constant([1000., 0.])
+
+xe = softmax_cross_entropy(labels, logits)
+
+print(tf.Session().run(xe))  # prints 500.0
+```
+
+### IPython交互式环境
+
+```python
+import tensorflow as tf
+sess = tf.InteractiveSession()  #代替tf.Session()
+
+x = tf.Variable([1.0, 2.0])
+a = tf.constant([3.0, 3.0])
+
+# 使用初始化器 initializer op 的 run() 方法初始化 'x' 
+x.initializer.run()
+
+# 增加一个减法 sub op, 从 'x' 减去 'a'. 运行减法 op, 输出结果 
+sub = tf.sub(x, a)
+print sub.eval()  #使用Operation.run和Tensor.eval代替sess.run
+# ==> [-2. -1.]
+```
 
 ## 熟悉编程环境
 下面的程序均在python 3.5中测试通过
 ### Hello World
+其实，在深度学习方向，一般将MNIST手写字符识别作为该领域的<u>Hello World</u>应用的。
 
 ```python
 import tensorflow as tf
@@ -76,6 +314,57 @@ Addition with variables: 5
 Multiplication with variables: 6
 
 [[ 12.]]
+
+### 函数近似
+
+$$y = 5 x^2 + 3$$
+
+```python
+import numpy as np
+import tensorflow as tf
+
+# Placeholders are used to feed values from python to TensorFlow ops. We define
+# two placeholders, one for input feature x, and one for output y.
+x = tf.placeholder(tf.float32)
+y = tf.placeholder(tf.float32)
+
+# Assuming we know that the desired function is a polynomial of 2nd degree, we
+# allocate a vector of size 3 to hold the coefficients. The variable will be
+# automatically initialized with random noise.
+w = tf.get_variable("w", shape=[3, 1])
+
+# We define yhat to be our estimate of y.
+f = tf.stack([tf.square(x), x, tf.ones_like(x)], 1)
+yhat = tf.squeeze(tf.matmul(f, w), 1)
+
+# The loss is defined to be the l2 distance between our estimate of y and its
+# true value. We also added a shrinkage term, to ensure the resulting weights
+# would be small.
+loss = tf.nn.l2_loss(yhat - y) + 0.1 * tf.nn.l2_loss(w)
+
+# We use the Adam optimizer with learning rate set to 0.1 to minimize the loss.
+train_op = tf.train.AdamOptimizer(0.1).minimize(loss)
+
+def generate_data():
+    x_val = np.random.uniform(-10.0, 10.0, size=100)
+    y_val = 5 * np.square(x_val) + 3
+    return x_val, y_val
+
+sess = tf.Session()
+# Since we are using variables we first need to initialize them.
+sess.run(tf.global_variables_initializer())
+for _ in range(1000):
+    x_val, y_val = generate_data()
+    _, loss_val = sess.run([train_op, loss], {x: x_val, y: y_val})
+    print(loss_val)
+print(sess.run([w]))
+```
+
+输出：
+
+array([[  4.98141575e+00],
+       [  4.86645894e-03],
+       [  4.09156847e+00]]
 
 ### 线性回归
 
@@ -250,7 +539,67 @@ Accuracy: 0.9191
 
 ## 常见框架
 
-### 前馈神经网络(Forward Neural Network, FNN)
+### 前馈神经网络(FeedForward Neural Network, FNN)
+
+```python
+def neural_network(data):
+	# 定义第一层"神经元"的权重和biases
+	layer_1_w_b = {'w_':tf.Variable(tf.random_normal([n_input_layer, n_layer_1])), 'b_':tf.Variable(tf.random_normal([n_layer_1]))}
+	# 定义第二层"神经元"的权重和biases
+	layer_2_w_b = {'w_':tf.Variable(tf.random_normal([n_layer_1, n_layer_2])), 'b_':tf.Variable(tf.random_normal([n_layer_2]))}
+	# 定义输出层"神经元"的权重和biases
+	layer_output_w_b = {'w_':tf.Variable(tf.random_normal([n_layer_2, n_output_layer])), 'b_':tf.Variable(tf.random_normal([n_output_layer]))}
+ 
+	# w·x+b
+	layer_1 = tf.add(tf.matmul(data, layer_1_w_b['w_']), layer_1_w_b['b_'])
+	layer_1 = tf.nn.relu(layer_1)  # 激活函数
+	layer_2 = tf.add(tf.matmul(layer_1, layer_2_w_b['w_']), layer_2_w_b['b_'])
+	layer_2 = tf.nn.relu(layer_2 ) # 激活函数
+	layer_output = tf.add(tf.matmul(layer_2, layer_output_w_b['w_']), layer_output_w_b['b_'])
+ 
+	return layer_output
+ 
+# 每次使用50条数据进行训练
+batch_size = 50
+ 
+X = tf.placeholder('float', [None, len(train_dataset[0][0])]) 
+#[None, len(train_x)]代表数据数据的高和宽（矩阵），好处是如果数据不符合宽高，tensorflow会报错，不指定也可以。
+Y = tf.placeholder('float')
+# 使用数据训练神经网络
+def train_neural_network(X, Y):
+	predict = neural_network(X)
+	cost_func = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(predict, Y))
+	optimizer = tf.train.AdamOptimizer().minimize(cost_func)  # learning rate 默认 0.001 
+ 
+	epochs = 13
+	with tf.Session() as session:
+		session.run(tf.initialize_all_variables())
+		epoch_loss = 0
+ 
+		i = 0
+		random.shuffle(train_dataset)
+		train_x = dataset[:, 0]
+		train_y = dataset[:, 1]
+		for epoch in range(epochs):
+			while i < len(train_x):
+				start = i
+				end = i + batch_size
+ 
+				batch_x = train_x[start:end]
+				batch_y = train_y[start:end]
+ 
+				_, c = session.run([optimizer, cost_func], feed_dict={X:list(batch_x),Y:list(batch_y)})
+				epoch_loss += c
+				i += batch_size
+ 
+			print(epoch, ' : ', epoch_loss)
+ 
+		text_x = test_dataset[: ,0]
+		text_y = test_dataset[:, 1]
+		correct = tf.equal(tf.argmax(predict,1), tf.argmax(Y,1))
+		accuracy = tf.reduce_mean(tf.cast(correct,'float'))
+		print('准确率: ', accuracy.eval({X:list(text_x) , Y:list(text_y)})) 
+```
 
 ### 卷积神经网络(Convolutional Neural Network, CNN)
 常用于图像识别、语音分析等领域
@@ -278,7 +627,7 @@ def convolutional_neural_network(data):
               'b_fc':tf.Variable(tf.random_normal([1024])),
               'out':tf.Variable(tf.random_normal([n_output_layer]))}
  
-    data = tf.reshape(data, [-1,28,28,1])
+    data = tf.reshape(data, [-1,28,28,1]) #第2，第3维对应图片的宽、高，最后一维代表图片的颜色通道数：灰度图为1，RGB彩色图为3
  
     conv1 = tf.nn.relu(tf.add(tf.nn.conv2d(data, weights['w_conv1'], strides=[1,1,1,1], padding='SAME'), biases['b_conv1']))
     conv1 = tf.nn.max_pool(conv1, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
@@ -398,6 +747,40 @@ train_neural_network(X,Y)
 ### AlexNet
 
 ### ResNet
+
+## 重要函数
+
+### KL散度
+
+```python
+def gaussian_kl(q, p=(0., 0.)):
+  """Computes KL divergence between two isotropic Gaussian distributions.
+
+  To ensure numerical stability, this op uses mu, log(sigma^2) to represent
+  the distribution. If q is not provided, it's assumed to be unit Gaussian.
+
+  Args:
+    q: A tuple (mu, log(sigma^2)) representing a multi-variatie Gaussian.
+    p: A tuple (mu, log(sigma^2)) representing a multi-variatie Gaussian.
+  Returns:
+    A tensor representing KL(q, p).
+  """
+  mu1, log_sigma1_sq = q
+  mu2, log_sigma2_sq = p
+  return tf.reduce_sum(
+    0.5 * (log_sigma2_sq - log_sigma1_sq +
+           tf.exp(log_sigma1_sq - log_sigma2_sq) +
+           tf.square(mu1 - mu2) / tf.exp(log_sigma2_sq) -
+           1), axis=-1)
+```
+
+### Leaky ReLU
+
+```python
+def leaky_relu(tensor, alpha=0.1):
+    """Computes the leaky rectified linear activation."""
+    return tf.maximum(tensor, alpha * tensor)
+```
 
 ## 应用
 
