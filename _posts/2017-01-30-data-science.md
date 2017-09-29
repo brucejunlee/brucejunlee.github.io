@@ -51,15 +51,15 @@ image:
 
 * [A Guide to Deep Learning by YN<sup>2</sup>](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
 
- [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
+	[Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
 
- [The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
+ 	[The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
 
- [Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
+ 	[Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
 
- [PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
+ 	[PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
  
- [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
+ 	[TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
  
 
 ## 视频课程
