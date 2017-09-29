@@ -35,7 +35,7 @@ image:
 
 ## 实用教程
 
-* [Python](http://nbviewer.jupyter.org/github/briandalessandro/DataScienceCourse/tree/master/ipython/)
++ [Python](http://nbviewer.jupyter.org/github/briandalessandro/DataScienceCourse/tree/master/ipython/)
 
   [Python Numpy Tutorial](http://cs231n.github.io/python-numpy-tutorial/)
 
@@ -43,25 +43,24 @@ image:
 
   [Scikit-learn](http://scikit-learn.org/stable/index.html)
 
-* [Data Science Course](http://nbviewer.jupyter.org/github/briandalessandro/)
++ [Data Science Course](http://nbviewer.jupyter.org/github/briandalessandro/)
 
-* [A visual introduction to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
++ [A visual introduction to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
 
-* [A visual and interactive guide to the basics of neural networks](http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/)
++ [A visual and interactive guide to the basics of neural networks](http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/)
 
-* [A Guide to Deep Learning by YN<sup>2</sup>](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
++ [A Guide to Deep Learning by YN<sup>2</sup>](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
 
-	[Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
+  [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
 
- 	[The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
+  [The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
 
- 	[Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
-
- 	[PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
- 
- 	[TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
- 
-
+  [Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
+  
+  [PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
+  
+  [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
+  
 ## 视频课程
 
 * 吴恩达，Machine Learning
