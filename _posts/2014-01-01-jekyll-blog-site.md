@@ -107,7 +107,7 @@ git  checkout -- _post/2017-01-01-delete.markdown
 * 获取IP地址
 
   ```shell
-  ping brucejunlee.github.io
+  ping username.github.io
   ```
 
 * 申请域名
@@ -116,7 +116,7 @@ git  checkout -- _post/2017-01-01-delete.markdown
 
 * 在博客根目录下添加`CNAME`文件
 
-  * ```nothing
-    echo "brucejunlee.site" > CNAME
+    ```nothing
+    username.site
     ```
 
