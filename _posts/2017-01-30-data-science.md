@@ -27,43 +27,53 @@ image:
 
 ## 书籍
 
-* Hastie, Friedman and Tibshirani, The Elements of Statistical Learning
-* Christopher Bishop, Pattern Recognition and Machine Learning
-* Avrim Blum, John Hopcroft and Ravindran Kannan, Foundations of Data Science
-* Anshul Joshi, Julia for Data Science
-* Ian Goodfellow, Yoshua Bengio and Aaron Courville, Deep Learning
+* Hastie, Friedman and Tibshirani, <u>The Elements of Statistical Learning</u>
+* Christopher Bishop, <u>Pattern Recognition and Machine Learning</u>
+* Avrim Blum, John Hopcroft and Ravindran Kannan, <u>Foundations of Data Science</u>
+* Anshul Joshi, <u>Julia for Data Science</u>
+* Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>
 
 ## 实用教程
 
+### Python
+
 + [Python](http://nbviewer.jupyter.org/github/briandalessandro/DataScienceCourse/tree/master/ipython/)
 
-  [Python Numpy Tutorial](http://cs231n.github.io/python-numpy-tutorial/)
++ [Python Numpy Tutorial](http://cs231n.github.io/python-numpy-tutorial/)
 
-  [Scipy](www.scipy-lectures.org)
++ [Scipy](www.scipy-lectures.org)
 
-  [Scikit-learn](http://scikit-learn.org/stable/index.html)
++ [Scikit-Learn](http://scikit-learn.org/stable/index.html)
+
+### 数据科学
 
 + [Data Science Course](http://nbviewer.jupyter.org/github/briandalessandro/)
 
+### 机器学习
+
 + [A visual introduction to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
+
+### 神经网络
 
 + [A visual and interactive guide to the basics of neural networks](http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/)
 
+### 深度学习
+
 + [A Guide to Deep Learning by YN<sup>2</sup>](http://yerevann.com/a-guide-to-deep-learning/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=The%20Wild%20Week%20in%20AI) 
 
-  [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
++ [Deep Learning 0.1 documentation](http://deeplearning.net/tutorial/contents.html)
 
-  [The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
++ [The Terrible Deep Learning List](https://github.com/SamDeepLearning/The-Terrible-Deep-Learning-List#the-terrible-deep-learning-list)
 
-  [Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
++ [Effective TensorFlow](https://github.com/vahidk/EffectiveTensorflow)
   
-  [PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
++ [PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
   
-  [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
++ [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
   
 ## 视频课程
 
-* 吴恩达，Machine Learning
+* 吴恩达，<b>Machine Learning</b>, Coursera
 * Geoff Hinton，Neural Network
 * [Hugo Larochelle](http://info.usherbrooke.ca/hlarochelle/neural_networks/content.html)
 * [Stanford CS231n by Fei-fei Li et.al.](http://cs231n.stanford.edu)
