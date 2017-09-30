@@ -19,6 +19,8 @@ image:
 
 $$z = x^2 + y^2$$
 
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize01.jpg)
+
 Boyd
 
 #### 非凸优化
@@ -33,6 +35,8 @@ $$y = x^3$$
 
 $$z = x^2 - y^2$$
 
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize02.jpg)
+
 $$z = x^4 - 2 x^2 + y^2$$
 
 ```matlab
@@ -43,11 +47,21 @@ surface(X, Y, Z)
 view(3)
 ```
 
-
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize03.jpg)
 
 $$z = x^4 - y^4$$
 
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize04.jpg)
+
 monkey saddle
+
+$$z = Re(x+iy)$$
+
+that is,
+
+$$z(x, y) = x^3 -3xy^2$$
+
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize05.jpg)
 
 鞍点问题
 
