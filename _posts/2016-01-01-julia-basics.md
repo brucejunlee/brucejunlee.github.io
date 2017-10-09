@@ -11,11 +11,11 @@ image:
   creditlink:
 ---
 
-想通过短篇幅的一篇文章将一种语言讲全讲透是很难的，因此这里我将跳过大多数语言共有的特性和元素，着重讲述Julia独有的一些性质。本文是Julia编程系列的第一篇文章，后面将不定期推出Julia的后续教程，着重讲述它在通用计算，金融分析，高性能计算，数据科学，机器学习，深度学习等方面的应用。
+想通过短篇幅的一篇文章将一种语言讲全讲透是很难的，因此这里我将跳过大多数语言共有的特性和元素，着重讲述<b>Julia</b>独有的一些性质。本文是Julia编程系列的第一篇文章，后面将不定期推出Julia的后续教程，着重讲述它在通用计算，金融分析，高性能计算，数据科学，机器学习，深度学习等方面的应用。
 
 
 
-### 引言
+## 引言
 
 现代语言设计和编译技术能够尽量消除性能妥协，提供一种单一的高产出、高效的环境来构建原型并部署高性能的应用。<b>Julia</b> 语言正扮演着这种角色，它是一种灵活的动态编程语言，非常适用于科学计算和数值计算，并且性能和传统静态类型的语言相当。	
 
@@ -39,7 +39,7 @@ Julia作为类型动态语言存在一些重要特性：
 
 Julia语言的目的是将易用性、能力和高效性融合在一种语言中，除此之外，Julia还包含一些重要的优势:
 
-+  免费开源（MIT许可证）
++  免费开源（<b>MIT</b>许可证）
 
 +  用户定义的类型与内置类型一样的紧凑迅捷
 
@@ -63,7 +63,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
    ​
 
-### 安装
+## 安装
 
 + <b>REPL</b>(read-eval-print-loop)
 
@@ -71,9 +71,9 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
   + 打开方式
 
-    + 直接点击桌面图标打开
+  + 直接点击桌面图标打开
 
-    + 将julia安装路径添加到.bash_profile文件中，然后可以在Terminal直接输入julia进入开发环境
+  + 将julia安装路径添加到.bash_profile文件中，然后可以在Terminal直接输入julia进入开发环境
 
       ```shell
       julia
@@ -87,9 +87,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
 + Atom/Sublime中安装插件
 
-  ​
-
-### 代码执行
+## 代码执行
 
 + 终端输入
 
@@ -103,9 +101,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
   include("script.jl")
   ```
 
-  ​
-
-### 变量
+## 变量
 
 + UTF-8编码: 如\pi-tab, \delta-tab, \alpha-tab-\hat-tab-\\_2-tab
 
@@ -116,41 +112,32 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 + 命名：除了内置语句中保留的关键字外
 
 + 风格习惯
+	+ 小写
+	+  词分隔用下划线\_ （不鼓励使用）
+	+  类型名和模块名开始于大写字母，词分隔采用驼峰法
+	+  函数名和宏名采用无下划线的小写形式
+	+  有实参的函数可以以!结尾，这些被称为可变(in-place)函数
 
-  + 小写
+## 数值
 
+### 类型
+	
++ 整数类型
+	+ Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Int18, UInt128, Bool(8位)
+   + 无符号整型是以0x前缀的16进制数0-9a-f
+   + 当然二进制(0b)和8进制(0o)也是支持的
 
-  + 词分隔用下划线\_ （不鼓励使用）
++ 浮点数类型
+	+ IEEE754
+	+ Float16(半精度), Float32(单精度), Float64(双精度)
+	+ 16进制对于浮点数也是有效的，但输出只是Float64
+	+ 浮点数有两个零，分别是0.0和-0.0
+	+ 特殊值
+		+ Inf16, -Inf16, NaN16
+		+ Inf32, -Inf32, NaN32
+		+ Inf, -Inf, NaN
 
-  + 类型名和模块名开始于大写字母，词分隔采用驼峰法
-
-  + 函数名和宏名采用无下划线的小写形式
-
-  + 有实参的函数可以以!结尾，这些被称为可变(in-place)函数
-
-    ​
-
-### 数值
-
-+ 类型
-
-  + 整数类型
-    + Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Int18, UInt128, Bool(8位)
-    + 无符号整型是以0x前缀的16进制数0-9a-f
-    + 当然二进制(0b)和8进制(0o)也是支持的
-
-  + 浮点数类型
-
-    * IEEE754
-    * Float16(半精度), Float32(单精度), Float64(双精度)
-    * 16进制对于浮点数也是有效的，但输出只是Float64
-    * 浮点数有两个零，分别是0.0和-0.0
-    * 特殊值
-      * Inf16, -Inf16, NaN16
-      * Inf32, -Inf32, NaN32
-      * Inf, -Inf, NaN
-
-  + 复数
++ 复数
 
     ```julia
     c = 1 + 2im
@@ -165,7 +152,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     complex(a, b)
     ```
 
-  + 有理数
++ 有理数
 
     ```julia
     a = 2; b = 3;
@@ -175,42 +162,40 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     float(a // b)
     ```
 
+### 操作符
 
-
-
-+ 操作符
-
-  * 位运算
+* 位运算
     * 非～，与&， 或\|， 异或\$， 逻辑右移\>\>\>， 算术右移\>\>， 逻辑/算术左移\<\<
-  * 数值比较
+  
+* 数值比较
     * ==， !=或者≠， <， <=或者≤， >， >=或者≥
 
-+ 函数
+### 函数
 
-  + Sys.WORD_SIZE：返回操作系统的位数
++ Sys.WORD_SIZE：返回操作系统的位数
 
-  + typeof: 参数是具体数值
++ typeof: 参数是具体数值
 
-  + typemin, typemax: 参数是值类型
++ typemin, typemax: 参数是值类型
 
-  + BigInt, BigFloat: 输入是上一条函数输出
++ BigInt, BigFloat: 输入是上一条函数输出
 
-  + sizeof:参数是具体数值
++ sizeof:参数是具体数值
 
-  + eps: 参数是类型或数值
++ eps: 参数是类型或数值
 
-  + zero, one: 参数是类型或数值
++ zero, one: 参数是类型或数值
 
-  + isa
++ isa
 
     ```julia
     x = 1
     isa(x, Int)
     ```
 
-  + prevfloat, nextfloat:参数是具体数值
++ prevfloat, nextfloat:参数是具体数值
 
-  + setrounding: 参数是类型，选项是RoundUp, RoundDown, RoundNearest
++ setrounding: 参数是类型，选项是RoundUp, RoundDown, RoundNearest
 
     ```julia
     x = 1.1; y = 0.1;
@@ -219,62 +204,56 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     end
     ```
 
-  + parse: 参数是可转化为数值的抽象字符串，输出是对应数值
++ parse: 参数是可转化为数值的抽象字符串，输出是对应数值
 
-  + factorial：阶乘
++ factorial：阶乘
 
-  + 比较函数:
++ 比较函数:
+	+ isequal, isfinite, isinf, isnan
 
-    + isequal, isfinite, isinf, isnan
++ setprecision
 
-  + setprecision
++ 舍入操作
+	+ round(x), round(T, x)
+	+ floor(x), floor(T, x)
+	+ ceil(x), ceil(T, x)
+	+ trunc(x), trunc(T, x)
 
-  + 舍入操作
++ 除法
+	+ div, fld, cld, rem, mod, mod1, mod2pi, divrem, fldmod, gcd(x, y…), lcm(x, y...)
 
-    + round(x), round(T, x)
-    + floor(x), floor(T, x)
-    + ceil(x), ceil(T, x)
-    + trunc(x), trunc(T, x)
-
-  + 除法
-
-    + div, fld, cld, rem, mod, mod1, mod2pi, divrem, fldmod, gcd(x, y…), lcm(x, y...)
-
-  + 按元操作:
++ 按元操作:
 
     ```julia
     x = [1, 2, 3, 4]
     sin.(x)
     ```
 
-  + 三角函数
++ 三角函数
+	+ sinpi(x), cospi(x): 精确计算sin(pi\*x), cos(pi\*x)
+	+ atan2: 计算x轴与指定参数点之间的弧度
+	+ sind(x): x以度数给定
 
-    + sinpi(x), cospi(x): 精确计算sin(pi\*x), cos(pi\*x)
-    + atan2: 计算x轴与指定参数点之间的弧度
-    + sind(x): x以度数给定
++ 指数函数
+	+ 平方根sqrt, 立方根cbrt, 直角三角形弦长hypot(x, y)
+	+ 当x接近0时exp(x) - 1的值，expm1(x)
+	+ 当x接近0时log(1 + x)的值，log1p(x)
 
-  + 指数函数
-
-    * 平方根sqrt, 立方根cbrt, 直角三角形弦长hypot(x, y)
-    * 当x接近0时exp(x) - 1的值，expm1(x)
-    * 当x接近0时log(1 + x)的值，log1p(x)
-
-  + 特殊函数: 在Julia0.6以后，特殊函数放在SpecialFunctions包中，需要安装
++ 特殊函数: 在Julia0.6以后，特殊函数放在SpecialFunctions包中，需要安装
 
     ```julia
     Pkg.add("SpecialFunctions")
     using SpecialFunctions
     ```
 
-    + erf, erfc: erfc是erf补函数
-    + digamma:对数gamma函数lgamma的导数
-    + airy(z), airy(1, z), airy(2, z), airy(3, z), airy(k, z)
++ erf, erfc: erfc是erf补函数
++ digamma:对数gamma函数lgamma的导数
++ airy(z), airy(1, z), airy(2, z), airy(3, z), airy(k, z)
+
+### 类型晋升(promotion)
 
 
-+ 类型晋升(promotion)
-
-
-+ 类数学表达式
+### 类数学表达式
 
   ```julia
   x = 3
@@ -285,40 +264,35 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
   x(x + 1)        # wrong
   ```
 
+## 字符串
 
+### Char：类似C和Java，在Julia中Char作为最高等级的类型
 
+* 32位
 
-### 字符串
+	```julia
+	x = 'x'
+	typeof(x)
+	Int('x')    # output: 120
+	Char(120)   # output: 'x'
+	```
 
-+ Char：类似C和Java，在Julia中Char作为最高等级的类型
+* Unicode字符包括\\u后面至多四位16进制数或\\U后面至多八位16进制数
 
-  * 32位
-
-  * ```julia
-    x = 'x'
-    typeof(x)
-    Int('x')    # output: 120
-    Char(120)   # output: 'x'
-    ```
-
-  * Unicode字符包括\\u后面至多四位16进制数或\\U后面至多八位16进制数
-
-  * 并非每个整数都是合法的Unicode编码，合法的Unicode编码包括U+00～U+d7ff，U+e000～U+10ffff
+* 并非每个整数都是合法的Unicode编码，合法的Unicode编码包括U+00～U+d7ff，U+e000～U+10ffff
 
     ```julia
     Char(0x110000)
     isvalid(Char, 0x110000)
     ```
 
-    ​
+### String: 在Julia0.6之前，采用AbstractString
 
-+ String: 在Julia0.6之前，采用AbstractString
++ 不可变
 
-  + 不可变
++ 偏函数：从索引到字符的映射
 
-  + 偏函数：从索引到字符的映射
-
-  + 不同于Python，Julia第一个索引从1开始，最后一个索引可以用*end*表示，*end*可以参与运算
++ 不同于Python，Julia第一个索引从1开始，最后一个索引可以用*end*表示，*end*可以参与运算
 
     ```julia
     str = "Hello, World!\n"
@@ -327,19 +301,15 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     str[end - 1]
     str[end÷2]
     ```
-
-    ​
-
-  + 索引结果是字符，切片结果是字符串
+    
++ 索引结果是字符，切片结果是字符串
 
     ```julia
     str[6]
     str[6:6]
     ```
 
-    ​
-
-  + 并非所有索引都有效, 我们用nextind(s, 1), nextind(s, 4)来计算下标
++ 并非所有索引都有效, 我们用nextind(s, 1), nextind(s, 4)来计算下标
 
     ```julia
     s = "\u2200 x \u2203 y"
@@ -347,9 +317,8 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     s[2]  # wrong
     s[4]
     ```
-
-
-  + length(s)<=endof(s)=sizeof(s)，所以我们采用如下方式高效迭代字符串
+    
++ length(s)<=endof(s)=sizeof(s)，所以我们采用如下方式高效迭代字符串
 
     ```julia
     for c in s
@@ -357,7 +326,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     end
     ```
 
-  + 字符串插入
++ 字符串插入
 
     ```julia
     a = "Hello"
@@ -367,73 +336,205 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
     "1 + 2 = $(1 + 2)"
     ```
 
-  * 特殊字符串
+* 特殊字符串
+	* VERSION:遵从一定的命名规则，即主版本号(major version)，次版本号(minor version)，补丁版本号(patch version)，预发布(pre-release)，编译环境(build)
+	
+	```python
+	v"0.2.1-rc1+win64"
+	
+	typeof(VERSION)    # VersionNumber
+	```
+	
+	* 字节数组
+	
+	```python
+	b"DATA\xff\u2200"
+	```
 
-    + VERSION
+* 常见函数
+	* search(string, char)
+	* search(string, char, offset)
+	* contains(string, substring)
+	* in()
+	* start(string)
+	* next(string, index)
+	* repeat(string, number)
+	* join(string-array, ", ", " and ")
+	* ind2chr(string, index)
+	* chr2ind(string, index)
 
-  * 常见函数
+## 正则表达式(Regular expressions, regexes)
 
-    * search(string, char)
-    * search(string, char, offset)
-    * contains(string, substring)
-    * in()
-    * start(string)
-    * next(string, index)
-    * repeat(string, number)
-    * join(string-array, ", ", " and ")
-    * ind2chr(string, index)
-    * chr2ind(string, index)
+在Julia中，正则表达式使用以`r`为前缀的非标准字符串来表示，即它是一种特殊的字符串。正则表达式用于寻找字符串中的正则模式；并且，正则表达式自身也是字符串，它可以被解析成状态机(state machine)来高效搜索字串中的模式。
 
-    ​
+示例
+
+```python
+regex = r"^\s*(?:#|$)"
+```
+
+函数
+
+```python
+typeof(regex)                             # Regex
+
+ismatch(r"^\s*(?:#|$)", "not a comment")  # false
+ismatch(r"^\s*(?:#|$)", "# a comment")    # true
+
+match(r"^\s*(?:#|$)", "not a comment")    # nothing
+match(r"^\s*(?:#|$)", "# a comment")      # RegexMatch("#")
+
+m = match(r"^\s*(?:#\s*(.*?)\s*$|$)", "# a comment ")  # RegexMatch("# a comment ", 1="a comment")
+
+m = match(r"[0-9]","aaaa1aaaa2aaaa3",6)   # RegexMatch("2")
+```
+
+方法
+
+```python
+m = match(r"(a|b)(c)?(d)", "acd")
+
+m.match
+m.captures
+m.offset
+m.offsets  # this method has a zero offset
+```
+
+索引
+
+```python
+m=match(r"(?<hour>\d+):(?<minute>\d+)","12:45")
+
+m[:minute]
+m[2]
+```
+
+替换
+
+```python
+replace("first second", r"(\w+) (?<agroup>\w+)", s"\g<agroup> \1")
+replace("a", r".", s"\g<0>1")
+```
+
+## 列表／集合／字典
 
 
-#### 正则表达式
+
+
+
+## 数组／矩阵
 
 
 
 
 
-#### 列表／集合／字典
+## 函数(Function)
+
+函数对象将参数元组映射到返回值。不带括号的函数名表达式指代的是函数对象，可以像值一样进行传递。
+
+### 定义
+
+```python
+function f(x, y)
+	x + y
+end
+
+f(x, y) = x + y
+
+f(2, 3)  # 5
+
+g = f;
+g(2, 3)  # 5
+
+∑(x, y) = x + y
+```
+
+### return
+
+```python
+function g(x, y)
+	return x * y
+	x + y
+end
+```
+
+### 操作符
+
+在Julia中，大多数操作符都是函数（除了一些有特殊计算语法的操作符，如&&和||。这些操作符不能作为函数，因为短路（short-circuit evaluation）计算要求操作数在操作符计算后才被计算）。
+
+```python
+1 + 2 + 3     # infix
+
++(1, 2, 3)
+
+f = +;
+f(1, 2, 3)    # not support infix notation
+```
+
+#### 一些特殊操作符
+在Base.Operators包中
+
++ hcat():       [A B C ...]
++ vcat():       [A, B, C, ...]
++ hvcat():      [A B; C D; ...]
++ ctranspose():  A'
++ transpose():   A.'
++ colon():       1:n
++ getindex():    A[i]
++ setindex!():   A[i] = x
+
+### 匿名函数
+
+```python
+() -> 3
+x -> x^2 +2x - 1
+(x, y, z) -> 2x + y - z
+
+function (x)
+	x^2 +2x - 1
+end
+
+map(round, [1.2, 3.5, 1.7])
+map(x -> x^2 + 2x - 1, [1, 3, -1])
+```
+
+### 参数
+
+#### 变参(Varargs)
+
+
+
+#### 可选参数(Optional args)
+
+#### 关键字参数(Keyword args)
+
+
+
+## 控制流
+
+
+
+## 类型，多指派
 
 
 
 
 
-#### 数组／矩阵
+## 宏
 
 
 
 
 
-#### 函数
+## 元编程
 
 
-
-#### 互操作性
+## 互操作性
 
 ​	其它语言调用
 
 
-
-#### 类型，多指派
-
-
-
-
-
-### 宏
-
-
-
-
-
-### 元编程
-
-
-
-
-
-### 示例
+## 示例
 
 
 

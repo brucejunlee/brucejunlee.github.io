@@ -3,7 +3,7 @@ layout: post
 title: "元胞自动机(一)：简介"
 author: "李军"
 categories: journal
-tags: [cellular automata, traffic flow, image processing, math]
+tags: [cellular automata, mathematics]
 image:
   feature: cellularautomata.jpg
   teaser: cellularautomata-teaser.jpg

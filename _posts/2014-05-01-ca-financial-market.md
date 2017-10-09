@@ -3,7 +3,7 @@ layout: post
 title: "元胞自动机(四): 金融分析"
 author: "李军"
 categories: journal
-tags: [cellular automata, finance, math]
+tags: [cellular automata, finance, mathematics]
 image:
   feature: ca_finance.jpg
   teaser: ca_finance-teaser.jpg

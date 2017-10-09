@@ -3,7 +3,7 @@ layout: post
 title: "超离散系统"
 author: "李军"
 categories: journal
-tags: []
+tags: [PDE, ultradiscrete system]
 image:
   feature:
   teaser: 

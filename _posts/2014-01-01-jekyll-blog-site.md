@@ -11,7 +11,7 @@ image:
   creditlink: ""
 ---
 
-有很多种方式来创建静态网站，如[Hugo](https://gohugo.io)、Jekyll等。这里我们仅使用`Jekyll`+`GitHub`，来快速搭建一个简易、免费的个人博客。
+有很多种方式来创建静态网站，如[Hugo](https://gohugo.io)、Jekyll等，当然还可以使用WordPress搭建，或者在lofter等笔记网站上注册创建自己的博客。这里我们仅使用`Jekyll`+`GitHub`，来快速搭建一个简易、免费的个人博客。
 
 # Jekyll是什么？
 

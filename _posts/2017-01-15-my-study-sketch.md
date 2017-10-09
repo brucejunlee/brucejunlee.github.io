@@ -7,7 +7,7 @@ tags: [Research,Deep Learning, Machine Learning, math]
 image:
   feature: deeplearning.jpg
   teaser: deeplearning-teaser.jpg
-  credit: Death to Stock Photo
+  credit:
   creditlink: ""
 ---
 

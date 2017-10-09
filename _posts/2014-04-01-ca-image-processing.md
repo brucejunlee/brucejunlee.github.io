@@ -3,7 +3,7 @@ layout: post
 title: "元胞自动机(三): 图像处理"
 author: "李军"
 categories: journal
-tags: [cellular automata, image processing, math]
+tags: [cellular automata, image processing, mathematics]
 image:
   feature: imageprocessing.jpg
   teaser: imageprocessing-teaser.jpg

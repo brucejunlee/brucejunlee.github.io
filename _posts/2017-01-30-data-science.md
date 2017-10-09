@@ -3,11 +3,11 @@ layout: post
 title: "数据科学"
 author: "李军"
 categories: journal
-tags: [research, data science, deep learning, math]
+tags: [research, data science, deep learning, mathematics]
 image:
   feature: datascience.jpg
   teaser: datascience-teaser.jpg
-  credit: Death to Stock Photo
+  credit:
   creditlink: ""
 ---
 
