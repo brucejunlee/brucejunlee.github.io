@@ -23,7 +23,7 @@ Julia编译器不同于`Python`，`R`这类语言中使用的解释器。如果�
 
 Julia提供了可选类型和多指派等特性，利用类型推断和<b>LLVM</b>实现的即时编译(<b>Just-In-Time</b>)技术来达到高性能，并结合了过程式、函数式和面向对象编程的多种特性。Julia，同R、`MATLAB`、Python等语言一样，为高级数值计算提供了简易操作和丰富的表达能力，同时还支持泛化编程。为此，Julia构建在数学语言之上，并借鉴了`Lisp`，`Perl`，Python，`Lua`，`Ruby`等动态语言特性。
 
-Julia作为类型动态语言存在一些重要特性：
+Julia[^1]作为类型动态语言存在一些重要特性：
 
 * 极小的内核部分。标准库采用Julia自身编写，包括整数运算等最基本的操作
 * 是一种丰富的类型语言，可用于构造对象，描述对象，同时可用于类型声明
@@ -65,7 +65,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
 ## 安装
 
-+ <b>REPL</b>(read-eval-print-loop)
+### <b>REPL</b>(read-eval-print-loop)
 
   + 我们可以直接从[官网](http://julialang.org/downloads/)下载对应的预编译二进制文件或者从源码编译安装
 
@@ -79,23 +79,23 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
       julia
       ```
 
-+ <b>IJulia</b> notebook
+### <b>IJulia</b> notebook
 
-+ Juno
+### Juno
 
-+ JuliaPro
+### JuliaPro
 
-+ Atom/Sublime中安装插件
+### Atom/Sublime中安装插件
 
 ## 代码执行
 
-+ 终端输入
+### 终端输入
 
   ```julia
   julia script.jl arg1 arg2 ...
   ```
 
-+ Julia环境下
+### Julia环境下
 
   ```julia
   include("script.jl")
@@ -103,20 +103,108 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
 ## 变量
 
-+ UTF-8编码: 如\pi-tab, \delta-tab, \alpha-tab-\hat-tab-\\_2-tab
+### UTF-8编码: 如\pi-tab, \delta-tab, \alpha-tab-\hat-tab-\\_2-tab
 
   ```julia
   δ = 0.00001
   ```
 
-+ 命名：除了内置语句中保留的关键字外
+### 命名：除了内置语句中保留的关键字外
 
-+ 风格习惯
-	+ 小写
-	+  词分隔用下划线\_ （不鼓励使用）
-	+  类型名和模块名开始于大写字母，词分隔采用驼峰法
-	+  函数名和宏名采用无下划线的小写形式
-	+  有实参的函数可以以!结尾，这些被称为可变(in-place)函数
+### 风格习惯
++ 小写
++  词分隔用下划线\_ （不鼓励使用）
++  类型名和模块名开始于大写字母，词分隔采用驼峰法
++  函数名和宏名采用无下划线的小写形式
++  有实参的函数可以以!结尾，这些被称为可变(in-place)函数
+
+### 作用域(scope)
+#### global
+用于module, baremodule, at interactive prompt (REPL)中
+#### local
++ soft：用于for, while, comprehensions, try-catch-finally, let
+
+特殊情况：下面将作用域范围从local变成global是错误的
+
+```julia
+let	local x = 2	let		global x = 3	end
+end
+```
+
++ hard：用于函数(如syntax, anonymous & do-blocks), type, immutable, macro
+
+嵌套函数会改变母函数作用域中的local变量
+
+```julia
+x, y = 1, 2 
+function foo()	x = 2 # introduces a new local 
+	function bar()		x = 10 # modifies the parent's x		return x+y # y is global 
+	end	return bar() + x # 12 + 10 (x is modified in call of bar()) 
+end
+
+foo()          # => 22
+```
+
+这样做的好处同样适用于闭包(closure)
+
+```julia
+let
+	state = 0	global counter 
+	counter() = state += 1endcounter()        # => 1counter()        # => 2
+```
+
+while-loop中变量i存储在同一位置，每次迭代都会重用变量
+
+```julia
+Fs = Array{Any}(2)
+i=1while i <= 2	Fs[i] = ()->i	i += 1 
+end
+
+Fs[1]()            # => 3
+Fs[2]()            # => 3
+```
+
+`let x = x`对于不同的x变量存储在不同的位置
+
+```julia
+Fs = Array{Any}(2) 
+i=1while i <= 2	let i = i		Fs[i] = ()->i	end	i += 1 
+end
+
+Fs[1]()       # => 1
+Fs[2]()       # => 2
+```
+
+for-loop中每次迭代，新的变量存储都会刷新
+
+```julia
+Fs = Array{Any}(2)for i = 1:2	Fs[i] = ()->i
+end
+
+Fs[1]()            # => 1
+Fs[2]()            # => 2
+```
+
+但是for-loop中会重用已经存在的变量
+
+```julia
+i = 0
+for i = 1:3
+end
+
+i         # => 3
+```
+
+comprehension(列表综合)每次都会刷新变量地址分配
+
+```julia
+x = 0
+[x for x = 1:3]
+x        # => 0
+```
+
+#### const
+常量声明适用于全局和局部范围，对于全局范围特别有用。编译器很难优化包含全局变量的代码，因为全局变量的值甚至类型经常会发生改变。因此，如果全局变量不会改变，那么我们添加`const`声明来提高性能。而编译器能够自动确定局部变量中的常量。
 
 ## 数值
 
@@ -416,13 +504,14 @@ replace("first second", r"(\w+) (?<agroup>\w+)", s"\g<agroup> \1")
 replace("a", r".", s"\g<0>1")
 ```
 
+## 数组／矩阵
+
+
+
+
+
 ## 列表／集合／字典
 
-
-
-
-
-## 数组／矩阵
 
 
 
@@ -498,25 +587,357 @@ map(round, [1.2, 3.5, 1.7])
 map(x -> x^2 + 2x - 1, [1, 3, -1])
 ```
 
-### 参数
+### 参量
 
-#### 变参(Varargs)
+#### 变参(Varargs, 这是"variable number of arguments"的缩写)
 
+```julia
+bar(a, b, x...) = (a, b, x)
 
+bar(1, 2)            # => (1, 2, ())
+bar(1, 2, 3)         # => (1, 2, (3, ))
+bar(1, 2, 3, 4)      # => (1, 2, (3, 4))
+```
 
-#### 可选参数(Optional args)
+除了在函数定义中声明集合对象(collection)外，还可以直接在函数调用中手动将集合对象中的元素铰接(`splice`)到函数参数中；同时，这里对象不需要是元组，函数也不一定是varargs参量形式
 
-#### 关键字参数(Keyword args)
+```julia
+x = (3, 4)
 
+bar(1, 2, x...)      # => (1, 2, (3, 4))
 
+x = (2, 3, 4)
+bar(1, x...)         # => (1, 2, (3, 4))
+
+x = (1, 2, 3, 4)
+bar(x...)            # => (1, 2, (3, 4))
+
+x = [3, 4]
+bar(1, 2, x...)      # => (1, 2, (3, 4))
+
+baz(a, b) = a + b;
+args = [1, 2]
+baz(args...)         # => 3
+```
+
+#### 可选参量(Optional args)
+
+```julia
+#interpret a string num as a number in some base
+function parse(type, num, base = 10)
+	###
+end
+
+parse(Int, "12", 10)     # => 12
+parse(Int, "12")         # => 12
+parse(Int, "12", 3)      # => 5
+```
+
+#### 关键字参量(kwargs, "keyword arguments"的缩写)
+通过`name`而非`position`来识别参量
+
+```julia
+function plot(x, y; style = "solid", width = 1, color = "black")
+	###
+end
+
+plot(x, y, width = 1)
+plot(x, y; width = 1)       #equivalent
+plot(x, y; (:width, 1))     #equivalent
+plot(x, y; :width => 1)     #equivalent
+
+function f(; x::Int64 = 1)
+	###
+end
+
+function f(x; y = 0, kwargs...)
+	###
+end
+```
+
+### do语句块
+通常做法
+
+```julia
+map(x->begin			if x < 0 && iseven(x)				return 0 
+			elseif x == 0				return 1 
+			else				return x 
+			end		end, 
+	[A, B, C])
+```
+
+Julia中提供了`do`保留字，该语法创建的是一个匿名函数，形如`do x`, `do a, b`, `do`(声明() -> ...这样的匿名函数)
+
+```julia
+map([A, B, C]) do x	if x < 0 && iseven(x)		return 0 
+	elseif x == 0		return 1 
+	else		return x 
+	endend
+```
+`do`语法使得通过函数有效地扩展语言变得更加容易
+
+```julia
+open("outfile", "w") do io
+	write(io, data)
+end
+
+function open(f::Function, args...)
+	io = open(args...)
+	try
+		f(io)
+	finally
+		close(io)
+	end
+end
+```
+
+### dot语法用于函数向量化
+任何Julia函数都可以通过dot语法逐元应用到数组或其它集合对象中，这就是广播(broadcast)机制，当然我们也可以通过自定义向量化函数消除dot；Julia中也有嵌套函数实现，只要函数中没有`非dot`子函数出现，它就可以熔合(fusion)到一起
+
+```julia
+f.(A)
+f(A::AbstractArray) = map(f, A)
+
+f.(args...)
+broadcast(f, args...)
+
+f(x, y) = 3x + 4y
+f.(pi, A)            # => a new array consisting of f(pi, a) for each a in A
+f.(vector1, vector2) # => a new vector consisting of f(vector1[i], vector2[i]) for each index i
+
+sin.(cos.(X))
+broadcast(x -> sin(cos(x)), X)    # equivalent
+[sin(cos(x)) for x in X]          # equivalent
+
+sin.(sort(cos.(X)))               # cannot be merged
+```
+
+当预分配向量化操作的输出数组时，Julia可以实现最大效率。
+
+```julia
+X .= ...
+broadcast!(identity, X, ...)                # equivalent
+
+X .= sin.(Y)
+broadcast!(sin, X, Y)                       # overwriting X with sin.(Y) in-place
+
+X[2:end] .= sin.(Y)
+broadcast!(sin, view(X, 2:endof(X)), Y)
+
+# In future versions
+X .+= Y
+X .= X .+ Y                                 # equivalent
+
+X .*= Y
+X .= X .* Y                                 # equivalent
+```
 
 ## 控制流
+### 复合(compound)表达式
+`begin`和(;)语句块都没有限定单行还是多行
+
+```julia
+z = begin
+	x = 1
+	y = 2
+	x + y
+end
+
+z = (x = 1; y = 2; x + y)
+```
+
+### 条件表达式
++ `if-elseif-else`，`?:`
++ 不同于C，MATLAB，Perl，Python和Ruby等语言，但是和Java等强类型语言相同的是，在Julia的条件判断中，需要严格定义`Bool`类型，而不是任何可以表示true/false的对象，如`if 1`在Julia中是错误的
+
+### 短路(short-circuit)计算
+`&&`, `||`
+
+```julia
+if <cond> 
+	<statement>
+end
+
+<cond> && <statement>         # equivalent
+
+if ! <cond>
+	<statement>
+end
+
+<cond> || <statement>         # equivalent
+```
+
+没有短路的Boolean运算可以通过位运算(`&`, `|`)来实现
+
+### 重复计算
+`while`, `for`，`break`，`continue`，在for-loop中，索引是局部的，在循环外不可见。
+
+```julia
+i = 1
+
+while i <= 5
+	println(i)
+	i += 1
+end
+
+for i = 1:5
+	println(i)
+end
+
+# equivalent
+for i in [1, 2, 3, 4, 5]
+	println(i)
+end
+
+for i ∈ [1, 2, 3, 4, 5]
+	println(i)
+end
+
+# multiple nest
+for i = 1:2, j = 3:4
+	println((i, j))
+end
+```
+
+### 异常处理
+#### 内置异常:下面列出的都是异常类型，加()后表示异常
++ ArgumentError
++ BoundsError
++ CompositeException
++ DivideError
++ DomainError: sqrt(-1)
++ EOFError
++ ErrorException
++ InexactError
++ InitError
++ InterruptException
++ InvalidStateException
++ KeyError
++ LoadError
++ OutOfMemoryError
++ ReadOnlyMemoryError
++ RemoteException
++ MethodError
++ OverflowError
++ ParseError
++ SystemError
++ TypeError
++ UndefRefError
++ UndefVarError
++ UnicodeError
++ 自定义异常
+
+```julia
+type MyCustomException <: Exception
+	###
+end
+
+type MyUndefVarError <: Exception
+	var::Symbol
+end
+
+Base.showerror(io::IO, e::MyUndefVarError) = print(io, e.var, "not defined")
+```
+
+#### throw()
+
+```julia
+f(x) = x >=0 ? exp(-x) : throw(DomainError())
+
+typeof(DomainError()) <: Exception       # true
+typeof(DomainError) <: Exception         # false
+```
+
+#### error()
+抛出异常信息，并中断程序运行
+
+#### info(), warn()
+只输出消息，并不中断程序运行
+
+#### try/catch: catch分句不是必要的
+
+```julia
+f(x) = try
+		sqrt(x)
+	catch
+		sqrt(complex(x, 0))
+	end
+	
+sqrt_second(x) = try 
+		sqrt(x[2])	catch y		if isa(y, DomainError)			sqrt(complex(x[2], 0)) 
+		elseif isa(y, BoundsError)			sqrt(x)		end 
+	end
+	
+try bad() catch; x end
+
+# equivalent
+try bad()
+catch
+	x
+end
+```
+
+#### rethrow(), backtrace(), catch_backtrace()
+
+#### finally
+
+### 任务(Task, aka Coroutine`协程`)
+任务是一种特殊的控制流特性，它允许计算以某种灵活的方式挂起(suspend)或继续运行(resume)。它还有一些其他的名字，如对称协程(symmetric coroutine), 轻量级线程(lightweight thread), 协作多任务(cooperative multitasking), 单次延续执行流(one-shot continuation)等。
+
+任务同函数调用之间有两点关键的不同之处。一，任务切换不需要任何空间。二，任务间的切换可以任何顺序发生。
+
+```julia
+function producer() 
+	produce("start")	for n=1:4 
+		produce(2n)	end	produce("stop") 
+end
+
+p = Task(producer)
+
+consume(p)
+
+for x in Task(producer)
+	println(x)
+end
+```
+
+Task()构造器期望的是一个零参量函数
+
+```julia
+function mytask(myarg)
+	...
+end
+
+taskHdl = Task(() -> mytask(7))   # need a partial function
+
+# equivalent
+taskHdl = @task mytask(7)
+```
+
+#### 核心任务函数
++ yieldto(task, value)
++ current_task()
++ istaskdone()
++ istaskstarted()
++ task_local_storage()
+
+#### 事件(event)
++ wait()
++ notify()
++ schedule(), @schedule, @async
+
+#### 任务状态
++ :runnable
++ :waiting
++ :queued
++ :done
++ :failed
+
+## 类型
 
 
 
-## 类型，多指派
-
-
+## 方法，多指派
 
 
 
@@ -533,8 +954,13 @@ map(x -> x^2 + 2x - 1, [1, 3, -1])
 
 ​	其它语言调用
 
+## 性能
+
 
 ## 示例
+
+
+[^1]: Jeff Bezanson, Stefan Karpinski, Viral Shah, Alan Edelman, et al., Julia Language Documentation(Release 0.6.0-dev).
 
 
 
