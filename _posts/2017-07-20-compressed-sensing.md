@@ -96,7 +96,6 @@ norm(x_r-x)#恢复残差
 
 
 ## 参考文献
-[^1]: Chen S S, Donoho D L, Saunders M A. Atomic decomposition by basis pursuit. SIAM review
- , 2001, 43(1): 129-159.
-[^2]: Joel A. Tropp and Anna C. Gilbert, Signal Recovery From Random Measurements Via Orthogonal Matching Pursuit， IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 53, NO. 12, DECEMBER 2007.
+[^1]: Chen S S, Donoho D L, Saunders M A. Atomic decomposition by basis pursuit. SIAM review, 2001, 43(1): 129-159.
+[^2]: Joel A. Tropp and Anna C. Gilbert, Signal Recovery From Random Measurements Via Orthogonal Matching Pursuit，IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 53, NO. 12, DECEMBER 2007.
 

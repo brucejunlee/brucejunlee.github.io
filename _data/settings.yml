@@ -6,9 +6,9 @@ tagline:  random walk
 # Change to true for Disqus comments
 disqus:
   comments: false
-  disqus_shortname: 'https-lenpaul-github-io-lagrange'
+  disqus_shortname: 'https-brucejunlee-github-io-brucejunlee.github.io'
 
-google-ID: 'UA-80213386-1'
+#google-ID: 'UA-80213386-1'
 
 menu:
 - {name: 'About', url: 'about.html'}
@@ -17,7 +17,6 @@ menu:
 
 social:
 - {icon: 'github', link: 'https://www.github.com/brucejunlee'}
-- {icon: 'envelope', link: 'jliecnu@163.com'}
-- {icon: 'rss-square', link: '\feed.xml'}
+- {icon: 'envelope', link: 'mailto:jliecnu@163.com'}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer

@@ -5,8 +5,8 @@ author: "李军"
 categories: journal
 tags: [convex, optimization]
 image:
-  feature: 
-  teaser: 
+  feature: optimization.jpg
+  teaser: optimization-teaser.jpg
   credit: 
   creditlink: ""
 ---

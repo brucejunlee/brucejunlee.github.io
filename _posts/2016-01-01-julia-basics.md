@@ -916,10 +916,10 @@ taskHdl = @task mytask(7)
 
 #### 核心任务函数
 + yieldto(task, value)
-+ current_task()
++ current\_task()
 + istaskdone()
 + istaskstarted()
-+ task_local_storage()
++ task\_local\_storage()
 
 #### 事件(event)
 + wait()

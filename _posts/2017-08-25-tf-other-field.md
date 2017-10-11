@@ -5,8 +5,8 @@ author: "李军"
 categories: journal
 tags: [tensorflow, mathematics, PDE]
 image:
-  feature: 
-  teaser: 
+  feature: tf.jpg
+  teaser: tf-teaser.jpg
   credit: 
   creditlink: ""
 ---
