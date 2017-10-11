@@ -11,7 +11,7 @@ image:
   creditlink:
 ---
 
-想通过短篇幅的一篇文章将一种语言讲全讲透是很难的，因此这里我将跳过大多数语言共有的特性和元素，着重讲述<b>Julia</b>独有的一些性质。本文是Julia编程系列的第一篇文章，后面将不定期推出Julia的后续教程，着重讲述它在通用计算，金融分析，高性能计算，数据科学，机器学习，深度学习等方面的应用。
+想通过短篇幅的一篇文章将一种语言讲全讲透是很难的，因此这里我将跳过大多数语言共有的特性和元素，着重讲述<b>Julia</b>独有的一些性质。本文是Julia编程系列的第一篇文章，后面将不定期推出Julia的后续教程，着重讲述它在通用计算[^1]，金融分析，高性能计算[^7], 数值计算[^2]，数据科学[^6], [^8]，机器学习，深度学习等方面的应用。
 
 
 
@@ -23,7 +23,7 @@ Julia编译器不同于`Python`，`R`这类语言中使用的解释器。如果�
 
 Julia提供了可选类型和多指派等特性，利用类型推断和<b>LLVM</b>实现的即时编译(<b>Just-In-Time</b>)技术来达到高性能，并结合了过程式、函数式和面向对象编程的多种特性。Julia，同R、`MATLAB`、Python等语言一样，为高级数值计算提供了简易操作和丰富的表达能力，同时还支持泛化编程。为此，Julia构建在数学语言之上，并借鉴了`Lisp`，`Perl`，Python，`Lua`，`Ruby`等动态语言特性。
 
-Julia[^1]作为类型动态语言存在一些重要特性：
+Julia[^3], [^4], [^9]作为类型动态语言存在一些重要特性：
 
 * 极小的内核部分。标准库采用Julia自身编写，包括整数运算等最基本的操作
 * 是一种丰富的类型语言，可用于构造对象，描述对象，同时可用于类型声明
@@ -504,14 +504,21 @@ replace("first second", r"(\w+) (?<agroup>\w+)", s"\g<agroup> \1")
 replace("a", r".", s"\g<0>1")
 ```
 
-## 数组／矩阵
-
-
-
-
-
 ## 列表／集合／字典
 
+
+
+
+
+
+## 数组
+
+
+
+
+
+
+## 线性代数
 
 
 
@@ -933,26 +940,463 @@ taskHdl = @task mytask(7)
 + :done
 + :failed
 
-## 类型
+## 类型系统[^5]
+
+来源于图灵奖得主Dana Scott早期关于Domain Theory的工作。
+
+类型系统通常划分为两种迥然不同的部分，即静态类型和动态类型。在静态类型系统中，程序执行前表达式必须有可计算的类型；而在动态类型中，程序类型判断推迟到运行时完成。通过编写无精确值(这些值在编译时已知)类型的代码，面向对象机制为静态类型语言提供了一些灵活性。编写可以在不同类型上运算的代码的能力称为多态(polymorphism)。经典动态类型语言中的所有代码都是多态的。
+
+Julia类型系统是动态的，但通过指明某些值的特定类型，Julia可以获得静态类型系统的一些好处。这对于生成高效代码是有很大好处的，更重要的是，它允许在函数参量类型上的方法指派(method dispatch)。
+
+Julia中默认值可以是任意类型。
+
+### 类型声明
+Julia中使用`::`操作符将类型与程序中的表达式／变量固定在一起，该操作符可以读作"is an instance of"。
+
+```julia
+(1 + 2) :: AbstractFloat          # throw an error
+
+(1 + 2) :: Int                    # => 3
+
+function foo()
+	x :: Int8 = 100                # every value assigned to the variable will be converted to the declared type using convert()
+	x
+end
+
+function sinc(x) :: Float64
+	if x == 0
+		return 1
+	end
+	return sin(pi * x) / (pi * x)
+end
+```
+
+### 常见类型
+#### 抽象类型(abstract types)
+抽象类型不能实例化(instantiated)，只能作为类型图中的结点。同时抽象类型可以用于类型族的构造。
+
+```julia
+abstract <<name>>
+abstract <<name>> <: <<supertype>>
+```
+
+上面程序块中的`<:`读作"is a subtype of"。当不显式给定超类型时，默认超类型是`Any`。同时，Julia中预定义了抽象的最底层类型，即`Union{}`。
+
+#### 具体类型(concrete types)
+下面讨论的三个类型实际上是相关的，共享了许多性质，它们本质上都是`DataType`的实例
+
++ 位类型(bits types)
+需要注意的是，目前Julia位数只支持8的倍数
+
+```julia
+bitstype <<bits>> <<name>>
+bitstype <<bits>> <<name>> <: <<supertype>>
+```
+
+```julia
+bitstype 16 Float16 <: AbstractFloat
+bitstype 32 Float32 <: AbstractFloat 
+bitstype 64 Float64 <: AbstractFloat
+bitstype 8 Bool <: Integer 
+bitstype 32 Charbitstype 8 Int8 <: Signed 
+bitstype 8 UInt8 <: Unsigned
+bitstype 16 Int16 <: Signedbitstype 16 UInt16 <: Unsignedbitstype 32 Int32 <: Signedbitstype 32 UInt32 <: Unsignedbitstype 64 Int64 <: Signedbitstype 64 UInt64 <: Unsignedbitstype 128 Int128 <: Signed 
+bitstype 128 UInt128 <: Unsigned
+```
+
++ 组合类型(composite types): record, structure(struct in C), 对象等。
+
+在如Ruby，Smalltalk等纯面向对象语言中，所有值都是对象。在如C++，Java等非纯面向对象语言中，比如整数，浮点数等一些值不被当作对象，而用户定义的组合类型实例被当作真正的对象。
+
+在Julia中，所有值都是对象，但是函数并没有与其作用的对象绑定在一起。因为Julia通过多指派来选择使用函数的某个方法，也就是说一个函数的所有参量类型是在选择方法时确定的。
+
+```julia
+type Foo
+	bar
+	baz :: Int
+	qux :: Float64
+end
+
+foo = Foo("Hello, world.", 23, 1.5)
+typeof(foo)                          # => Foo
+```
+
+当类型像函数一样被应用时，我们称其为构造器(constructor)。Julia自动生成两个构造器，它们被称为默认构造器。
+
+```julia
+fieldnames(foo)
+
+foo.bar
+
+foo.qux = 2
+```
+
+无域(field)的组合类型被称为singleton，这样的类型只有一个实例。
+
+```julia
+type NoFields
+end
+
+is(NoFields(), NoFields())            # => true
+```
+
+`is`函数用来验证NoFields类型的两个实例是同一个，并且是相同的。
+
++ 不可变的组合类型(immutable composite types): 在某些情况下更高效，更容易推理
+
+```julia
+immutable Complex
+	real :: Float64
+	imag :: Float64
+end
+```
+
+不可变的组合类型中也可以包含可变对象，如数组，域等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。
+
+### 类型并集(type unions)
+
+```julia
+IntOrString = Union{Int, AbstractString}
+```
+
+### 参数化类型(parametric types)
+类型可以带参，因此类型声明实际上引入了整个新类型族。其实有很多语言都支持某种形式的泛化编程。如ML，Haskell，Scala等语言支持真正的带参多态，而如C++，Java等其他语言支持特殊的基于模版(template)的泛化编程。
+
+#### 参数化组合类型
+
+```julia
+type Point{T}
+	x :: T
+	y :: T
+end
+
+Point{Float64}
+
+Point               # itself is also a valid type object
+```
+
+`Float64`Point实例可以紧致高效地表示成64位浮点值对，而`Real`Point实例必须要表示成指向单独分配的Real对象的指针对。这种好处可以扩展到数组，浮点数组被存储成64位浮点数的连续内存块，而实数数组必须是指向单独分配的Real对象的指针数组。因为实数实例是任意大小，任意结构的复杂对象。
+
+```julia
+Point{Float64} <: Point{Real}    # => false, that is, it is not covariant
+```
+
+```julia
+function norm{T <: Real}(p :: Point{T})
+	sqrt(p.x ^ 2 + p.y ^ 2)
+end
+```
+
+#### 参数化抽象类型
+
+```julia
+abstract Pointy{T}
+
+Pointy{Float64} <: Pointy
+Pointy{1} <: Pointy
+
+type Point{T} <: Pointy{T}
+	x :: T
+	y :: T
+end
+
+type DiagPoint{T} <: Pointy{T}
+	x :: T
+end
+
+abstract Pointy{T <: Real}
+
+type Point{T <: Real} <: Pointy{T}
+	x :: T
+	y :: T
+end
+```
+
+```julia
+immutable Rational{T <: Integer} <: Real 
+	num :: T	den :: Tend
+```
+
+#### 元组类型
+元组类型是协变的，即Tuple{Int}可以是Tuple{Any}的子类型。
+
+```julia
+immutable Tuple2{A, B}
+	a :: A
+	b :: B
+end
+```
+
+#### 变参元组类型
+`Vararg{T}`, `Vararg{T, N}`, `NTuple{N, T}`
+
+```julia
+isa(("1",), Tuple{AbstractString, Vararg{Int}})           # => true
+isa(("1", 1), Tuple{AbstractString, Vararg{Int}})         # => true
+isa(("1", 1, 2), Tuple{AbstractString, Vararg{Int}})      # => true
+isa(("1",1,2), Tuple{AbstractString, Vararg{Int,2}})      # => true
+isa(("1",(1,2)), Tuple{AbstractString, NTuple{2,Int}})    # => true
+isa(("1", 1, 2, 3.0), Tuple{AbstractString, Vararg{Int}}) # => false
+```
+
+#### singleton类型
+isa(A, Type{B})为真，当且仅当A和B是相同对象，并且对象为某个类型。`Type`本身作为抽象类型。
+
+#### 参数化位类型
+
+声明指针类型
+
+```julia
+bitstype 64 Ptr{T}
+
+Ptr{Int64} <: Ptr
+```
+
+### 类型别名(aliases)
+
+```julia
+typealias Vector{T} Array{T,1} 
+typealias Matrix{T} Array{T,2}
+```
+
+我们可以只简单地限定类型而不限定维数；但是，我们没法等价地只限定维数而不限定元素类型
+
+```julia
+Array{Float64, 1} <: Array{Float64} <: Array   # => true
+```
+
+特别地，下面我们不能创建关系AA{T} <: AA，因为Array{Array{T, 1}, 1}是一个具体类型。
+
+```julia
+typealias AA{T} Array{Array{T, 1}, 1}
+```
+
+### 常见的类型函数
++ isa(value, Type)
++ typeof
++ supertype
+
+### 值类型
+Julia不允许在如true／false这样的值上进行指派，但是我们可以在参数化类型上进行指派。
+
+```julia
+immutable Val{T}
+end
+
+firstlast(::Type{Val{true}}) = "First"
+firstlast(::Type{Val{false}}) = "Last"
+
+firstlast(Val{true})      # => "First"
+firstlast(Val{false})      # => "Last"
+```
+
+这里为了Julia一致性，函数参数总是传递Val类型而不是创建一个实例，即foo(Val{:bar})而不是foo(Val{:bar}())。为了防止值类型无用以及性能考虑，我们应该慎用上面的值类型。
+
+### 可空类型(nullable types)
+Nullable{T}是为了表示缺失值。
+
+```julia
+x1 = Nullable{Int64}()     # a missing value of type T
+x2 = Nullable(1)           # a non-missing value of type T
+
+isnull(x1)                  # => true
+isnull(x2)                  # => false
+
+get(x1)                     # throw NullException
+get(x2)                     # 1
+
+get(x1, 0)                  # 0
+get(x2, 0)                  # 1
+```
+
+## 方法
+方法包含了多态和多指派等概念。比方说，我们有一个函数`add`，但是两个整数相加和两个浮点数相加是非常不同的，这里就有两个方法，但是Julia中会落入同一个对象，即`add`函数。对于相同概念的不同实现，我们不需要每次使用都定义，我们只需要对参数类型进行某种组合从而定义函数行为。这样，一个函数的一种可能行为的定义就是一种方法。同时，当应用函数时执行其中一种方法的选择即被称为指派。Julia允许指派基于给定参数的个数和所有参数类型来选择执行哪个方法，这就是多指派。而传统的面向对象语言只允许指派基于第一个参数作出选择。它们之间是有很大不同的。
+
+```julia
+f(x :: Float64, y :: Float64) = 2 x + y
+f(x :: Number, y :: Number) = 2 x - y
+f(x, y) = println("Whoa there, Nelly.")
+
+methods(f)
+```
+
+### 消除方法歧义
+首先定义消除歧义的方法
+
+### 带参方法
+
+```julia
+myappend{T}(v::Vector{T}, x::T) = [v..., x]
+
+mytypeof{T}(x::T) = T                             # as the return value
+
+same_type_numeric{T<:Number}(x::T, y::T) = true   # constrain the type parametersame_type_numeric(x::Number, y::Number) = false
+```
+
+### 带参变参方法
+
+```julia
+function getindex{T,N}(A::AbstractArray{T,N}, indexes::Vararg{Number,N})
+```
+
+### 可选参数
+需要注意的是，可选参数与函数绑定，而非与特定方法绑定。它依赖于可选参数的类型。
+
+```julia
+f(a = 1, b = 2) = a + 2b
+
+# equivalent to the following three methods
+f(a, b) = a + 2 b
+f(a) = f(a, 2)
+f() = f(1, 2)           # => 5
+
+# but
+f(a::Int, b::Int) = a - 2 b
+
+f() = f(1, 2)           # => -3
+```
+
+### 关键字参数
+这与通常的按位置参数相当不同。关键字参数不参与方法指派。
+
+### 函子(functor)
+有时也称为可调对象(callable)，即将方法添加到类型中从而使得任意Julia对象可调。
+
+构造多项式计算函数
+
+```julia
+immutable Polynomial{R} 
+	coeffs::Vector{R}end
+function (p::Polynomial)(x)	v = p.coeffs[end]	for i = (length(p.coeffs)-1):-1:1		v = v*x + p.coeffs[i]
+	end	return v 
+end
+
+p = Polynomial([1,10,100])
+p(3)
+```
+
+### 空泛化函数
+即，没有添加方法的函数。这可以用于将接口定义和接口实现分离。也可以用于文档化以及代码可读性。
+
+```julia
+function emptyfunc
+end
+```
+
+## 构造器
+### 外部构造器
+
+```julia
+type Foo
+	bar
+	baz
+end
+
+Foo(x) = Foo(x, x)
+F() = Foo(0)
+```
+
+### 内部构造器
+
+```julia
+type OrderdPair
+	x :: Real
+	y :: Real
+	
+	OrderdPair(x, y) = x > y ? error("out of order") : new(x, y)
+end
+
+type T
+	x :: Int64
+	# T(x) = new(x)        # explicit is equivalent to default constructor
+end
+```
+
+#### 自引对象／递归数据结构
+为了允许非完全初始化的对象创建，Julia允许调用少于类型域数目参量的new函数，返回一个未初始化的对象。然后内部构造器方法就可以使用这个非完全(incomplete)的对象，在返回之前完成初始化。
+
+```julia
+type SelfReferential 
+	obj::SelfReferential	SelfReferential() = (x = new(); x.obj = x) 
+end
+
+x = SelfReferential()
+is(x, x)                  # => true
+is(x, x.obj)              # => true
+is(x, x.obj.obj)          # => true
+```
+
+### 参数化构造器
+
+```julia
+type Point{T <: Real}
+	x::T
+	y::T
+end
+
+Point(1, 2)
+Point(1.0, 2.5)
+
+Point{Int64}(1, 2)
+Point{Float64}(1.0, 2.5)
+
+Point{Float64}(1, 2)        # type promotion, => Point{Float64}(1.0, 2.0)
+
+Point(x::Real, y::Real) = Point(promote(x,y)...)    #explicit promotion
+```
+
+### Case study
+
+Rational有理数定义和表示，这是一个很好的综合性知识点分析
+
+```julia
+immutable Rational{T<:Integer} <: Real 
+	num::T	den::T	function Rational(num::T, den::T) 
+		if num == 0 && den == 0			error("invalid rational: 0//0") 
+		end       g = gcd(den, num)       num = div(num, g)       den = div(den, g)       new(num, den)
+   end 
+endRational{T<:Integer}(n::T, d::T) = Rational{T}(n,d)Rational(n::Integer, d::Integer) = Rational(promote(n,d)...)Rational(n::Integer) = Rational(n,one(n))//(n::Integer, d::Integer) = Rational(n,d)//(x::Rational, y::Integer) = x.num // (x.den*y)//(x::Integer, y::Rational) = (x*y.den) // y.num//(x::Complex, y::Real) = complex(real(x)//y, imag(x)//y)//(x::Real, y::Complex) = x*y'//real(y*y')function //(x::Complex, y::Complex) 
+	xy = x*y'   yy = real(y*y')	complex(real(xy)//yy, imag(xy)//yy) 
+end
+
+(1 + 2im)//(1 - 2im)
+```
+
+## 接口
 
 
-
-## 方法，多指派
-
-
-
-## 宏
-
-
+## 模块
 
 
 
 ## 元编程
+### 宏
+
+
+## 网络
+
+
+## 并行计算
+
+
+## 日期
 
 
 ## 互操作性
+### 运行外部程序
 
-​	其它语言调用
+### 其它语言调用
+
+
+## 包
+### 包开发
+
+### 包管理
+
+
+## Profiling
+
+## 内存分配
 
 ## 性能
 
@@ -960,48 +1404,12 @@ taskHdl = @task mytask(7)
 ## 示例
 
 
-[^1]: Jeff Bezanson, Stefan Karpinski, Viral Shah, Alan Edelman, et al., Julia Language Documentation(Release 0.6.0-dev).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[^1]: VB Shah, A Edelman, S Karpinski and J Bezanson. Novel algebras for advanced analytics in Julia. High PERFORMANCE Extreme Computing Conference, IEEE, pp.1-4(2013).
+[^2]: J. Bezanson, A. Edelman, S. Karpinski, et al. Julia: A Fresh Approach to Numerical Computing. Eprint Arxiv, 2014.
+[^3]: Ivo Balbaert. Getting Started with Julia Programming, 2015.
+[^4]: Malcolm Sherrington. Mastering Julia, 2015.
+[^5]: Jeff Werner Bezanson. Abstraction in Technical Computing(PhD Thesis), 2015.
+[^6]: Anshul Joshi. Julia for Data Science, 2016.
+[^7]: Avik Sengupta. Julia High Performance, 2016.
+[^8]: Alexander Chen, Alan Edelman, Jeremy Kepner, Vijay Gadepally, Dylan Hutchison. Julia Implementation of the Dynamic Distributed Dimensional Data Model, High Performance Extreme Computing Conference, 2016:1-7.
+[^9]: Jeff Bezanson, Stefan Karpinski, Viral Shah, Alan Edelman, et al., Julia Language Documentation(Release 0.6.0-dev).
