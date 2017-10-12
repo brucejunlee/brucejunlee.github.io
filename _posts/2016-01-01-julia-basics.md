@@ -339,6 +339,32 @@ x        # => 0
 + airy(z), airy(1, z), airy(2, z), airy(3, z), airy(k, z)
 
 ### 类型晋升(promotion)
+#### 晋升类型
++ 内置算术类型和算符的自动晋升：中缀表达式；C，Java，Perl，Python
++ 非自动晋升：Ada，ML，Julia；Julia函数需要通过指派和类型系统来实现这样的功能
+
+#### 转换(conversion)
+
+```julia
+convert(type, value)
+```
+
+在Julia中，我们不能使用`convert`函数直接将字符串转换成数值类型，即使该字符串可以表示成有效的数值；Julia提供了`parse`函数来进行这样的操作。
+
+#### 晋升
+晋升就是将混合类型的值转换成同一类型。但是，这不同于面向对象的超类型／子类型。
+
+```julia
+promote(tuple)         # => tuple of the same number of values
+
+Rational(n :: Integer, d :: Integer) = Rational(promote(n, d)...)
+
+promote_rule(::Type{Float64}, ::Type{Float32} ) = Float64
+
+promote_type(Int8, UInt16)        # => Int64
+```
+
+晋升过程中`promote_rule`函数蕴含了对称性，因此我们不需要同时定义`promote_rule(::Type{A}, ::Type{B})`和`promote_rule(::Type{B}, ::Type{A})`。
 
 
 ### 类数学表达式
@@ -1347,7 +1373,7 @@ Point(x::Real, y::Real) = Point(promote(x,y)...)    #explicit promotion
 
 ### Case study
 
-Rational有理数定义和表示，这是一个很好的综合性知识点分析
+[rational.jl](https://github.com/JuliaLang/julia/blob/master/base/rational.jl)有理数定义和表示，这是一个很好的知识点汇总
 
 ```julia
 immutable Rational{T<:Integer} <: Real 
@@ -1360,12 +1386,229 @@ endRational{T<:Integer}(n::T, d::T) = Rational{T}(n,d)Rational(n::Integer, d:
 end
 
 (1 + 2im)//(1 - 2im)
+
+convert{T<:Integer}(::Type{Rational{T}}, x::Rational) = Rational(convert(T,x.num),convert(T,x.den))convert{T<:Integer}(::Type{Rational{T}}, x::Integer) = Rational(convert(T,x), convert(T,1))
+function convert{T<:Integer}(::Type{Rational{T}}, x::AbstractFloat, tol::Real) 
+	if isnan(x); return zero(T)//zero(T); end	if isinf(x); return sign(x)//zero(T); end	y=x	a = d = one(T)
+	b = c = zero(T)
+	while true		f = convert(T,round(y));y -= f 
+		a, b, c, d = f*a+c, f*b+d, a, b 
+		if y == 0 || abs(a/b-x) <= tol			return a//b 
+		end		y = 1/y 
+	endend
+convert{T<:Integer}(rt::Type{Rational{T}}, x::AbstractFloat) = convert(rt,x,eps(x))
+convert{T<:AbstractFloat}(::Type{T}, x::Rational) = convert(T,x.num)/convert(T,x.den)convert{T<:Integer}(::Type{T}, x::Rational) = div(convert(T,x.num),convert(T,x.den))
+
+promote_rule{T<:Integer}(::Type{Rational{T}}, ::Type{T}) = Rational{T}promote_rule{T<:Integer,S<:Integer}(::Type{Rational{T}}, ::Type{S}) = Rational{promote_type(T,S)}promote_rule{T<:Integer,S<:Integer}(::Type{Rational{T}}, ::Type{Rational{S}}) = Rational{promote_type(T,S)}promote_rule{T<:Integer,S<:AbstractFloat}(::Type{Rational{T}}, ::Type{S}) = promote_type(T,S)
 ```
 
 ## 接口
+Julia很多强大的能力和扩展性都来源于非正式的接口集。
 
+### 迭代
++ start(iter)
++ next(iter, state)
++ done(iter, state)
++ length(iter)
++ eltype(IterType)
++ size(iter, [dim...])
+
+```julia
+for i in iter       # or "for i = iter"
+	# body
+end
+
+
+# equivalent
+
+state = start(iter)
+
+while !done(iter, state)
+	(i, state) = next(iter, state)
+	# body
+end
+```
+
+平方数迭代序列，`in`，`mean`，`std`，`collect`等函数也可以作用在这种序列上
+
+```julia
+immutable Squares 
+	count::Intend
+Base.start(::Squares) = 1Base.next(S::Squares, state) = (state*state, state+1)Base.done(S::Squares, state) = state > S.count; Base.eltype(::Type{Squares}) = Int # Note that this is defined for the type 
+Base.length(S::Squares) = S.count;
+
+for i in Squares(7)
+	println(i)
+end
+
+Base.sum(S::Squares) = (n = S.count; return n*(n+1)*(2n+1)÷6)
+sum(Squares(1803))
+```
+
+### 索引
++ getindex(X, i):X[i]
++ setindex!(X, v, i):X[i] = v
++ endof(X):X[end]
+
+```julia
+function Base.getindex(S::Squares, i::Int)	1 <= i <= S.count || throw(BoundsError(S, i))	return i*i 
+endSquares(100)[23]
+
+Base.endof(S::Squares) = length(S) 
+Squares(23)[end]
+
+Base.getindex(S::Squares, i::Number) = S[convert(Int, i)] Base.getindex(S::Squares, I) = [S[i] for i in I] 
+Squares(10)[[3,4.,5]]
+```
 
 ## 模块
+Julia模块是单独的变量工作空间。模块使得我们可以创建一些顶层设计而不用担心和其他模块发生命名冲突。
+
++ 模块体不缩进，因为缩进会导致整个文件缩进
++ using Lib语句表示当程序遇到在当前模块中没有定义的全局变量时，系统会搜索所有Lib包对外开放的变量
++ using BigLib: thing1, thing2是using BigLib.thing1, using BigLib.thing2的缩写
++ import语法和using相同，只是一次只能作用一个名字
++ importall等同于将import作用在特定模块的所有名字上
++ 变量通过import或using引入后，模块不能再创建同名的变量；被引入的变量将成为只读变量
+
+```julia
+module MyModule
+using Lib
+	
+using BigLib: thing1, thing2
+	
+import Base.show
+	
+importall OtherLib
+	
+export MyType, foo
+	
+type MyType
+	x
+end
+	
+bar(x) = 2x
+foo(a::MyType) = b(a.x) + 1
+	
+show(io::IO, a::MyType) = print(io, "MyType $(a.x)")
+end
+```
+
+### 标准模块
++ Main：在提示符窗口中的变量存在Main中，用`whos()`函数查看
++ Core：包含所有内置标识符，所有模块隐式地using Core
++ Base：标准库，所有模块隐式地using Base
+
+### eval
+模块自动包含了`eval`函数的定义；如果不想要默认定义，我们可以使用关键字`baremodule`代替`module`，但是我们注意到Core库仍然隐式地被引入
+
+```julia
+baremodule Mod
+
+using Base
+
+eval(x) = Core.eval(Mod, x)
+eval(m, x) = Core.eval(m, x)
+
+...
+
+end
+```
+
+### 模块路径
+当给定using Foo时，系统开始在Main内搜索Foo，当Main中不存在Foo模块时，系统设法`require("Foo")`，这会导致系统从已安装包中加载代码
+
+#### 绝对路径
+
+```julia
+using Base.Sort
+```
+
+#### 相对路径
+
+```julia
+module Parent
+
+module Utils
+...
+end
+
+using .Utils
+
+...
+end
+```
+
+相当路径使用.Utils符号来作用，甚至我们可以使用..Utils来寻找包含Parent的模块中的Utils而非在Parent本身当中寻找
+
+### LOAD_PATH
+全局变量，包含了当调用`require`时Julia搜索模块的目录；使用`push!`来扩展文件路径
+
+```julia
+push!(LOAD_PATH, "/Path/To/My/Module/")
+```
+
+将该语句放入文件<i>~/.juliarc.jl</i>中，我们可以在每次Julia启动时扩展`LOAD_PATH`。当然我们还可以定义环境变量`JULIA_LOAD_PATH`来扩展模块加载路径
+
+### 其它
++ import/export宏: import Mod.@mac
++ 其它模块中宏调用: Mod.@mac / @Mod.mac
++ M.x = y不起作用，因为全局赋值是局限在模块内的
+
+### 模块初始化、预编译
+
+###初始化
+\_\_init\_\_()
+
+### 预编译
+加载大模块通常需要花费几分钟时间，因此Julia提供了预编译模块的创建来减少加载时间。Julia中有两种机制来实现预编译模块：
+
++ 增量编译incremental compile：在模块文件顶部(即module开始前)添加\_\_precompile\_\_()，同时我们也可以手动调用Base.compilecache(modulename)，调用\_\_precompile\_\_(false)关闭预编译，通常情况下为了安全考虑，我们都需要关闭预编译功能
++ 通常的系统镜像custom system image：在启动Julia时使用-J选项
+
+## 文档
+文档系统内置在<b>Julia0.4</b>往后版本，而<b>Julia0.3</b>中是通过`Docile.jl`包来实现的。
+
+### docstrings
+
+```julia
+"Tell whether there are too foo items in the array."foo(xs::Array) = ...
+```
+
+### @doc
+文档被解释成<b>Markdown</b>
+
+```julia
+"""    bar(x[, y])
+    Compute the Bar index between `x` and `y`. If `y` is missing, compute the Bar index between all pairs of columns of `x`.
+# Examples```juliajulia> bar([1, 2], [1, 2]) 
+1```"""function bar(x, y) ...
+```
+
++ 在文档顶部总是展示函数标识，并以四空格方式缩进，使得能够以Julia代码方式输出
++ 包含单行语句描述函数功能：不要以第三人称方式描述，以英文句号结束
++ 不要在描述语句中重复强调`the function`或者参量类型
++ 仅仅对于复杂函数参量，提供参量列表
+
+```julia
+"""...# Arguments* `n::Integer`: the number of elements to compute.* `dim::Integer=1`: the dimensions along which to perform the computation...."""
+```
+
++ `# Examples`段落下的事例应该用```julia块包裹，这可以用于程序运行结果与文档中给定结果的比较检测
+
+```julia
+"""Some nice documentation here.```jldoctestjulia> a = [1 2; 3 4]2×2 Array{Int64,2}:1 23 4 ```"""
+```
+
++ 使重音符`来标识代码和方程，并且使用Unicode字符而非转义字符：‘‘α = 1‘‘
++ 文档开始和文档结束```单独成行
+
+### 文档访问
++ REPL或者IJulia中使用?
++ Juno中使用Ctrl-D
+
+### 函数&方法
+
 
 
 
@@ -1399,9 +1642,6 @@ end
 ## 内存分配
 
 ## 性能
-
-
-## 示例
 
 
 [^1]: VB Shah, A Edelman, S Karpinski and J Bezanson. Novel algebras for advanced analytics in Julia. High PERFORMANCE Extreme Computing Conference, IEEE, pp.1-4(2013).

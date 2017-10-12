@@ -774,7 +774,7 @@ def gaussian_kl(q, p=(0., 0.)):
            1), axis=-1)
 ```
 
-与Radon-Nikodym定理之间的关联：如果µ和v是X上的测度，并且µ<<v，那么从µ到v的Kullback-Leibler散度可以定义成
+与Radon-Nikodym定理之间的关联：如果µ和ν是X上的测度，并且µ<<ν，那么从µ到ν的Kullback-Leibler散度可以定义成
 
 $$D_{KL}(\mu||\nu) = \int_X \log(\frac{d\mu}{d\nu})d\mu$$
 

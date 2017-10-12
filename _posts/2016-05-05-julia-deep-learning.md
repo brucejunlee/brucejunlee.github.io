@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Julia编程(五): 深度学习"
+title: "Julia编程(六): 深度学习"
 author: "李军"
 categories: journal
 tags: [Julia, deep learning]
@@ -11,7 +11,7 @@ image:
   creditlink:
 ---
 
-本文是Julia编程系列的第五篇文章深度学习方面的应用。
+本文是Julia编程系列的第六篇文章深度学习方面的应用。
 
 ## 引言
 
