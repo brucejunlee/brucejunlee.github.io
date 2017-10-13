@@ -11,11 +11,16 @@ image:
   creditlink:
 ---
 
-本文是Julia编程系列的第四篇文章，着重讲述它在数据科学方面的应用。
+本文是Julia编程系列的第四篇文章，着重讲述它在数据科学[^1]方面的应用。
 
-### 引言
+## 引言
 
 
+
+
+
+
+[^1]: Joel Grus. Data Science from Scratch First Principles with Python, 2015.
 
 
 

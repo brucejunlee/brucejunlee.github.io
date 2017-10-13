@@ -1969,19 +1969,11 @@ sub2ind_rec(dims::Tuple{}) = 1sub2ind_rec(dims::Tuple{},i1::Integer, I::Integer
 end
 ```
 
-## 互操作性
-### 运行外部程序
-
-### 其它语言调用
-
-
 ## 包
 ### 包开发
 
 ### 包管理
 
-
-## Profiling
 
 ## 内存分配
 
