@@ -537,18 +537,183 @@ replace("a", r".", s"\g<0>1")
 
 
 
-## 数组
+## 多维数组
+一般来说不同于其它科学计算语言，为了性能考虑，Julia不希望程序被写成<b>向量化</b>风格。Julia编译器使用类型推理(type inference)，生成标量数组索引的优化代码，使得程序能够被写成占有较少内存的通俗可读的风格而不牺牲性能。
 
+Julia中，函数参量都是引用传递。一些科学计算语言的数组是值传递。在Julia中，对函数内输入数组的修改是对父函数可见的，因此，如果想要展示相似行为，我们应该考虑创建输入的副本。
 
+### 数组
+#### 基本函数
++ eltype(A)
++ length(A)
++ ndims(A)
++ size(A)
++ size(A, n)
++ indices(A)
++ indices(A, n)
++ eachindex(A)
++ stride(A, k)
++ strides(A)
 
+#### 构造&初始化
++ Array{type}(dims...)
++ zeros(type, dims...)
++ zeros(A)
++ ones(type, dims...)
++ ones(A)
++ trues(dims...)
++ trues(A)
++ falses(dims...)
++ falses(A)
++ reshape(A, dims...)
++ copy(A)
++ deepcopy(A)
++ similar(A[, element_type, dims...])
++ reinterpret(type, A)
++ rand(dims)
++ randn(dims)
++ eye(n)
++ eye(m, n)
++ linspace(start, stop, n)
++ fill!(A, x)
++ fill(x, dims)
++ [A, B, C, ...]
 
+#### 连接
++ cat(k, A...)
++ vcat(A...): cat(1, A...), [A; B; C; ...]
++ hcat(A...): cat(2, A...), [A B C ...], [A B; C D; ...]
 
+#### 带类型的初始化
+
++ T[A, B, C, ...]
+
+#### 列表综合
+
++ A = [F(x,y,...) for x=rx, y=ry, ...]
++ A = T[F(x,y,...) for x=rx, y=ry, ...]
+
+```julia
+[(i,j) for i=1:3 for j=1:i if i+j == 4]
+```
+
+#### 生成器(generator): 按需迭代产生值，不需要分配数组并提前存储
+
+```julia
+map(tuple, (1/(i+j) for i=1:2, j=1:2), [1 3; 2 4])
+```
+
+#### 索引
+
++ 下标: X = getindex(A, I_1, I_2, ..., I_n)
++ 逻辑索引，即掩码(mask): find(B)
++ searchsorted(A, value)
++ setindex!(A, X, I_1, I_2, ..., I_n)
+
+```julia
+x = reshape(1:16, 4, 4)
+# x = collect(reshape(1:16, 4, 4))
+
+x[2:3, 2:end-1]
+x[map(ispow2, x)]
+x[1, [2 3; 4 1]]
+```
+
+#### 迭代
++ 按元
++ 下标：如果数组类型是可以快速线性索引的(fast linear indexing)，那么下标为Int，否则下标为`CartesianIndex`
+
+```julia
+for a in A	# Do something with the element aendfor i in eachindex(A)	# Do something with i and/or A[i]end
+
+A = rand(4,3)B = view(A, 1:3, 2:3)
+
+for i in eachindex(B)	@show iend
+```
+
+#### 向量化算符&函数
+
+算符：
+
++ 单元：-, +, !
++ 二元：+, -, \*, .\*, /, ./, \, .\\, ^, .^, div, mod
++ 比较：.==, .!=, .<, .<=, .>, .>=
++ 单元Boolean／按位：~
++ 二元Boolean／按位：&, |, $
+
+函数：
+
++ abs abs2 angle cbrt airy airyai airyaiprime airybi airybiprime airyprimeacos acosh asin asinh atan atan2 atanh acsc acsch asec asech acot acothcos  cospi cosh  sin  sinpi sinh  tan  tanh  sinc  cosc csc  csch  sec  sech  cot  coth acosd asind atand asecd acscd acotd cosd  sind  tand  secd  cscd  cotd besselh besseli besselj besselj0 besselj1 besselk bessely bessely0 bessely1 exp  erf  erfc  erfinv erfcinv exp2  expm1 beta dawson digamma erfcx erfi exponent eta zeta gamma hankelh1 hankelh2 ceil  floor  round  trunc isfinite isinf isnan lbeta lfact lgamma log log10 log1p log2 copysign max min significand sqrt hypot
+
+自动向量化：
+
++ @vectorize_1arg type func
++ @vectorize_2arg type func
+
+#### 广播
+
++ repmat
++ broadcast, broadcast!
+
+### 稀疏矩阵
+包含足够的零，以特殊的数据结构存储，节省了空间和时间。
+
+#### 压缩稀疏列(compressed sparse column, CSC)存储
+
++ 便利的按列访问
++ 按行访问相当慢
++ nnz()
++ countnz()
+
+#### 构造器
+
+稀疏矩阵构造：
+
++ spzeros(m, n)
++ spones(S)
++ speye(n)
++ sparse(A)
++ sprand(m, n, d)
++ sprandn(m, n, d)
++ sprandn(m, n, d, X)
+
+逆运算：
+
++ findn
++ findnz
+
+稠密矩阵恢复：
+
++ full(S)
++ issparse
 
 ## 线性代数
+### 矩阵因子化(factorization)
+即矩阵分解
 
++ Cholesky
++ CholeskyPivoted
++ LU
++ LUTridiagonal
++ UmfpackLU
++ QR
++ QRCompactWY
++ QRPivoted
++ Hessenberg
++ Eigen: eig, eigvals, eigvecs
++ SVD: svd, svdvals
++ GeneralizedSVD
 
+### 特殊矩阵
 
-
++ Hermitian: inv, sqrtm, expm
++ UpperTriangular: inv, det
++ LowerTriangular: inv, det
++ Tridiagonal
++ SymTridiagonal: eigmax, eigmin
++ Bidiagonal
++ Diagonal: inv, det, logdet, /
++ UniformScaling, 表示一个标量与恒等算子<b>I</b>的乘积: /
 
 ## 函数(Function)
 
@@ -1566,7 +1731,7 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 + 增量编译incremental compile：在模块文件顶部(即module开始前)添加\_\_precompile\_\_()，同时我们也可以手动调用Base.compilecache(modulename)，调用\_\_precompile\_\_(false)关闭预编译，通常情况下为了安全考虑，我们都需要关闭预编译功能
 + 通常的系统镜像custom system image：在启动Julia时使用-J选项
 
-## 文档
+## 文档(documentation)
 文档系统内置在<b>Julia0.4</b>往后版本，而<b>Julia0.3</b>中是通过`Docile.jl`包来实现的。
 
 ### docstrings
@@ -1575,8 +1740,10 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 "Tell whether there are too foo items in the array."foo(xs::Array) = ...
 ```
 
-### @doc
+### 使用规则
 文档被解释成<b>Markdown</b>
+
+下面块中数字1后面的\`\`\`应该写在下一行，这里只是为了文章前后输出一致
 
 ```julia
 """    bar(x[, y])
@@ -1600,30 +1767,207 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 """Some nice documentation here.```jldoctestjulia> a = [1 2; 3 4]2×2 Array{Int64,2}:1 23 4 ```"""
 ```
 
-+ 使重音符`来标识代码和方程，并且使用Unicode字符而非转义字符：‘‘α = 1‘‘
-+ 文档开始和文档结束```单独成行
++ 使重音符\`来标识代码和方程，并且使用Unicode字符而非转义字符：``` ``α = 1`` ```
++ 文档开始和文档结束\`\`\`单独成行
 
 ### 文档访问
 + REPL或者IJulia中使用?
 + Juno中使用Ctrl-D
 
 ### 函数&方法
+一般只有泛化方法或者函数本身可以文档化。特定方法只有在和其他更泛化的方法极其不同时才文档化。
+
+### @doc
+
+```julia
+for (f, op) in ((:add, :+), (:subtract, :-), (:multiply, :*), (:divide, :/)) 
+	@eval begin		$f(a,b) = $op(a,b) 
+	endend
+@doc "`add(a,b)` adds `a` and `b` together" add@doc "`subtract(a,b)` subtracts `b` from `a`" subtract
+```
+
+在非顶层块(如if,for,let)中写的文档不会自动添加到文档系统中，必须使用@doc。
+
+```julia
+if VERSION > v"0.4"
+	@doc "..." ->
+	f(x) = x
+end
+```
+
+### @__doc__
+如果宏返回包含多个子表达式的语句块，那么应该被文档化的子表达式必须使用@\_\_doc\_\_来标记
+
+```julia
+macro example(f) 
+	quote        $(f)() = 0        @__doc__ $(f)(x) = 1        $(f)(x, y) = 2	end |> esc
+end
+```
+
+## 元编程(metaprogramming)
+Julia语言像Lisp一样将代码表示成语言本身的一个数据结构。因为代码被表示成可以在语言内创建和操纵的对象，所以程序可以变换和生成自己的代码。这使得不需要额外的构建(build)步骤就可以成熟地进行代码生成(code generation)，同时也使得类Lisp宏可以操纵在抽象语法树(abstract syntax tree, `AST`)上
+
+### :操作符
++ 表示Symbol
+
+```julia
+:foo == Symbol("foo")
+```
+
++ 表示Expr
+
+```julia
+ex = :(a + b * c + 1)
+```
 
 
+### 程序表示
 
+```julia
+prog = "1 + 1"
 
-## 元编程
+ex1 = parse(prog)
+typeof(ex1)                     # => Expr
+
+ex1.head
+ex1.args
+ex1.typ
+
+ex2 = Expr(:call, :+, 1, 1)
+
+# equivalent
+ex1 == ex2                     # true
+
+dump(ex2)                      # display of Expr objects
+
+ex3 = parse("(4 + 4) / 2")     # nested
+Meta.show_sexpr(ex3)           #another way to view expression
+
+ex = quote
+	x = 1
+	y = 2
+	x + y
+end
+```
+
+### 插值
+
+```julia
+a = 1
+ex1 = :($a + b)
+
+ex2 = :(a in $:(1, 2, 3))
+
+ex3 = :(:a in $(:(:a + :b)))
+```
+
+### eval()
+
+### 表达式上的函数
+
+```julia
+function math_expr(op, op1, op2) 
+	expr = Expr(:call, op, op1, op2)	return expr
+end
+
+ex = math_expr(:+, 1, Expr(:call, :*, 4, 5))
+eval(ex)
+```
+
 ### 宏
+#### 宏将参量元组映射到被返回的表达式，相应的表达式直接编译而不是通过运行时eval调用。
 
+```julia
+macro sayhello(name)
+	return :(println("Hello, ", $name, "!"))
+end
 
-## 网络
+@sayhello("world")                           # => Hello, world!
 
+ex = macroexpand(:(@sayhello("world")))      # extremely useful for debugging macros
+```
 
-## 并行计算
+#### 宏是必要的：当代码被解析时执行宏，因此宏允许在整个程序运行前生成和包含定制代码片段。
 
+```julia
+macro twostep(arg)	println("I execute at parse time. The argument is: ", arg)	return :(println("I execute at runtime. The argument is: ", $arg)) 
+end
 
-## 日期
+ex = macroexpand(:(@twostep :(1, 2, 3)))
+typeof(ex)
+ex
+eval(ex)
+```
 
+#### 调用宏
+
+```julia
+@name expr1 expr2 ...
+@name(expr1, expr2, ...)
+@name (expr1, expr2, ...)        # a tuple as one argument
+
+macro showarg(x)
+	show(x)
+	# ...
+end
+@showarg(a)
+@showarg(1+1)
+@showarg(println("Yo!"))
+```
+
+#### 高级宏
+
+```julia
+macro assert(ex, msgs...)
+	msg_body = isempty(msgs) ? ex : msgs[1]
+	msg = string(msg_body)	return :( $ex ? nothing : throw(AssertionError($msg)))end
+
+macroexpand(:(@assert a==b))
+macroexpand(:(@assert a==b "a should equal b!"))
+```
+
+#### esc()
+
+### 代码生成
+
+```julia
+for op = (:+, :*, :&, :|, :$) 
+	eval(quote		($op)(a,b,c) = ($op)(($op)(a,b),c) 
+	end)end
+
+# equivalent
+for op = (:+, :*, :&, :|, :$) 
+	eval(:(($op)(a,b,c) = ($op)(($op)(a,b),c)))end
+
+for op = (:+, :*, :&, :|, :$)	@eval ($op)(a,b,c) = ($op)(($op)(a,b),c)end
+```
+
+对于更大的代码块：
+
+```julia
+@eval begin
+	# multiple lines
+end
+```
+
+### @generated
+
+```julia
+# runtime loop
+function sub2ind_loop{N}(dims::NTuple{N}, I::Integer...) 
+	ind = I[N] - 1	for i = N-1:-1:1		ind = I[i]-1 + dims[i]*ind 
+	end	return ind + 1 
+end
+
+# recursion
+sub2ind_rec(dims::Tuple{}) = 1sub2ind_rec(dims::Tuple{},i1::Integer, I::Integer...) = i1==1 ? sub2ind_rec(dims,I...) : throw(BoundsError())sub2ind_rec(dims::Tuple{Integer,Vararg{Integer}}, i1::Integer) = i1sub2ind_rec(dims::Tuple{Integer,Vararg{Integer}}, i1::Integer, I::Integer...) = i1 + dims[1]*(sub2ind_rec(tail(dims),I...)-1)
+
+# compile-time iteration
+@generated function sub2ind_gen{N}(dims::NTuple{N}, I::Integer...) 
+	ex = :(I[$N] - 1)	for i = N-1:-1:1		ex = :(I[$i] - 1 + dims[$i]*$ex) 
+	end	return :($ex + 1) 
+end
+```
 
 ## 互操作性
 ### 运行外部程序
