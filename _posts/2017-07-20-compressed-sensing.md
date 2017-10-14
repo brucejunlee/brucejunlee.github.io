@@ -16,8 +16,8 @@ image:
 ## 理论
 
 + David Donoho[^1]
-+ Candes，Tao
-+ JA Tropp[^2]
++ Candes，Tao[^2], [^3], [^4]
++ JA Tropp[^5]
 + L1范数
 + 基追踪
 
@@ -97,5 +97,8 @@ norm(x_r-x)#恢复残差
 
 ## 参考文献
 [^1]: Chen S S, Donoho D L, Saunders M A. Atomic decomposition by basis pursuit. SIAM review, 2001, 43(1): 129-159.
-[^2]: Joel A. Tropp and Anna C. Gilbert, Signal Recovery From Random Measurements Via Orthogonal Matching Pursuit，IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 53, NO. 12, DECEMBER 2007.
+[^2]: Candès, Emmanuel J., J. K. Romberg, and T. Tao. Stable signal recovery from incomplete and inaccurate measurements. Communications on Pure & Applied Mathematics 59.8(2005):1207-1223.
+[^3]: Candes, Emmanuel J, and T. Tao. Decoding by linear programming. IEEE Transactions on Information Theory 51.12(2005):4203-4215.
+[^4]: Candes, Emmanuel J, and T. Tao. Near-Optimal Signal Recovery From Random Projections: Universal Encoding Strategies?. IEEE Transactions on Information Theory 52.12(2006):5406-5425.
+[^5]: Joel A. Tropp and Anna C. Gilbert, Signal Recovery From Random Measurements Via Orthogonal Matching Pursuit，IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 53, NO. 12, DECEMBER 2007.
 

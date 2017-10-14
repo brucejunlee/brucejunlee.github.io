@@ -15,7 +15,7 @@ image:
 
 ## 理论
 
-+ Ronberg
++ Ronberg, Candes, Tao [^1], [^2], [^3]
 + 矩阵低秩近似
 
 ## 应用
@@ -60,3 +60,6 @@ show()
 
 ### Netflix
 
+[^1]: Candes, Emmanuel J., and T. Tao. The Power of Convex Relaxation: Near-Optimal Matrix Completion. IEEE Transactions on Information Theory 56.5(2009):2053-2080.
+[^2]: Starck, Jean Luc, E. J. Candes, and D. L. Donoho. The curvelet transform for image denoising. IEEE Press, 2002.
+[^3]: Candes, Emmanuel J., and Y. Plan. Matrix Completion With Noise. Proceedings of the IEEE 98.6(2009):925-936.
