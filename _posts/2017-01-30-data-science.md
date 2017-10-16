@@ -47,7 +47,8 @@ image:
 
 ### 数据科学
 
-+ [Data Science Course](http://nbviewer.jupyter.org/github/briandalessandro/)
++ [Data Science Course[推荐]](http://nbviewer.jupyter.org/github/briandalessandro/)
++ [Manifold Learning](http://nbviewer.jupyter.org/github/briandalessandro/PythonDataScienceHandbook/blob/master/notebooks/05.10-Manifold-Learning.ipynb)
 
 ### 机器学习
 

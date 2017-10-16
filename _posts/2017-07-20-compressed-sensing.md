@@ -95,6 +95,15 @@ norm(x_r-x)#恢复残差
 ### 图像压缩
 
 
+## 相关网站
++ 张驰原
++ [Julia's Tours](http://www.numerical-tours.com/julia/)
++ [Compressive sampling overview](http://nbviewer.jupyter.org/github/unpingco/Python-for-Signal-Processing/blob/master/Compressive_Sampling.ipynb)
++ [Kalman and Bayesian Filters in Python](http://nbviewer.jupyter.org/github/rlabbe/Kalman-and-Bayesian-Filters-in-Python/blob/master/table_of_contents.ipynb)
++ [Sound Analysis with Fourier Transform](https://github.com/calebmadrigal/FourierTalkOSCON)
++ [Digital signal processing](http://nbviewer.jupyter.org/github/spatialaudio/digital-signal-processing-lecture/blob/master/index.ipynb)
+
+
 ## 参考文献
 [^1]: Chen S S, Donoho D L, Saunders M A. Atomic decomposition by basis pursuit. SIAM review, 2001, 43(1): 129-159.
 [^2]: Candès, Emmanuel J., J. K. Romberg, and T. Tao. Stable signal recovery from incomplete and inaccurate measurements. Communications on Pure & Applied Mathematics 59.8(2005):1207-1223.
