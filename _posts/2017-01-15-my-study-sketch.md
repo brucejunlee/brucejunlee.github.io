@@ -11,7 +11,7 @@ image:
   creditlink: ""
 ---
 
-# 兴趣
+## 兴趣
 
 * <b>Cellular Automata</b> (John von Neumann, E.F. Codd, John H. Conway, Stephen Wolfram, etc.; e.g., traffic flow modeling)
 * <b>Formal theorem proving/Type theory in mathmatical software programs</b>(e.g., in Maple)
@@ -20,11 +20,11 @@ image:
 * <b>Tropical geometry/Semiring algebra</b> (Imre Simon, Jean-Eric Pin, B. Sturmfels; e.g., piecewise linear function ReLU)
 * <b>Ultradiscrete system</b> (Ryogo Hirota, S. Satsuma; e.g., soliton interaction)
 
-# 博客
-
+## 博客
 
 * [Andrew Gibiansky](http://andrew.gibiansky.com)
 * [AI, DL and NLP](http://www.wildml.com)
+* [AI Playbook](http://aiplaybook.a16z.com)
 * [Analytics Vidhya](https://www.analyticsvidhya.com/blog/)
 * [Baidu Research](research.baidu.com)
 * [Chris Albon](https://chrisalbon.com)
@@ -51,7 +51,37 @@ image:
 * [陶哲轩](https://terrytao.wordpress.com)
 * [张驰原](http://blog.pluskid.org/?page_id=683): Mocha.jl for deep learning
 
-# 杂志
+## 会议&期刊
+
++ AAAI
++ ACL
++ ACM
++ AISTATS
++ COLT
++ CVPR
++ ECCV
++ ECML
++ ICASSP
++ ICCV
++ ICDE
++ ICLR
++ ICML
++ IEEE
++ IJCAI
++ IJCV
++ JMLR
++ Neural Computation
++ Neural Networks
++ NIPS
++ PAMI
++ PyCon
++ SciPy
++ SIAM
++ SIGGRAPH
++ SIGKDD
++ [Strata](https://conferences.oreilly.com/strata)
+
+## 杂志
 
 * [DataTau](http://www.datatau.com)
 * [Hacker News](https://news.ycombinator.com)
@@ -59,12 +89,14 @@ image:
 * [MIT Technology Review](https://www.technologyreview.com)
 * [New Scientist](https://www.newscientist.com)
 * [Quanta](https://www.quantamagazine.org)
+* [TechCrunch](https://techcrunch.com)
 * [Scientific American](https://www.scientificamerican.com)
 * [Washington Post](https://www.washingtonpost.com)
 * [连线](https://www.wired.com/category/magazine/)
 * [哈佛商业评论](https://hbr.org)
+* [Fast Company](https://www.fastcompany.com)
 
-# 问答类
+## 问答类
 
 * [Quora](https://www.quora.com)
 * [stack**overflow**](https://stackoverflow.com)
@@ -72,7 +104,7 @@ image:
 * [StackExchange](https://stackexchange.com)
 * [知乎](https://www.zhihu.com)
 
-# 数据集
+## 数据集
 
 * CIFAR
 * Data.gov
@@ -85,7 +117,7 @@ image:
 * NOAA
 * UCI
 
-# 项目
+## 项目
 
 * C/C++
 * Coq
@@ -104,7 +136,7 @@ image:
 * Python
 
 
-# 其它
+## 其它
 
 * [A gallery of interesting Jupyter notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
 * [Deep learning papers reading roadmap](https://github.com/songrotek/Deep-Learning-Papers-Reading-Roadmap)
