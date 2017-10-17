@@ -27,10 +27,32 @@ image:
 
 ## 书籍
 
-* Hastie, Friedman and Tibshirani, <u>The Elements of Statistical Learning</u>
-* Christopher Bishop, <u>Pattern Recognition and Machine Learning</u>
+* Eric Lehman, F Thomson Leighton and Albert R Meyer, <u>Mathematics for Computer Science</u>
+* Gilbert Strang, <u>Linear Algebra</u>
+* E. T. Jaynes, <u>Probability Theory: The Logic of Science</u>
+* Larry Wasserman, <u>All of Statistics</u>
+
+---
+
+* Trevor Hastie, Robert Tibshirani and Jerome Friedman, <u>The Elements of Statistical Learning</u>
+* Jiawei Han, Micheline Kamber and Jian Pei, <u>Data Mining: Concepts and Techniques</u>
+
+---
+
 * Avrim Blum, John Hopcroft and Ravindran Kannan, <u>Foundations of Data Science</u>
+* Joel Grus, <u>Data Science from Scratch First Principles with Python</u>
 * Anshul Joshi, <u>Julia for Data Science</u>
+* Rachel Schutt and Cathy O'Neil, <u>Doing Data Science</u>
+* Sebastian Gutierrez, <u>Data Scientists at Work</u>
+* Amy N. langville and Carl D. Meyer, <u>Google's PageRank and Beyond</u>
+
+---
+
+* Stuart J. Russell and Peter Norvig, <u>Artificial Intelligence: A Modern Approach</u>
+* Christopher Bishop, <u>Pattern Recognition and Machine Learning</u>
+* Kevin P. Murphy, <u>Machine Learning: A Probabilistic Perspective</u>
+* Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
+* Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>
 * Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>
 
 ## 实用教程
