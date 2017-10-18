@@ -2063,10 +2063,91 @@ sub2ind_rec(dims::Tuple{}) = 1sub2ind_rec(dims::Tuple{},i1::Integer, I::Integer
 end
 ```
 
-## 包
-### 包开发
-
+## 包(package, Pkg)
 ### 包管理
+官方的Julia包注册在METADATA.jl文件库中
+
++ Pkg.init()
++ Pkg.status()
++ Pkg.installed()
++ pkg.add()
++ Pkg.resolve()/Pkg.edit()
+
+	```julia
+	julia> echo UTF16 >> ~/.julia/v6.0/REQUIRE
+	julia> Pkg.resolve()
+	
+	# equivalent, except that Pkg.add() doesn’t change REQUIRE until after installation has completed
+	Pkg.add("UTF16")
+	```
++ Pkg.rm()
++ Pkg.setprotocol!()
+
+	```shell
+	git config --global url."https://".insteadOf git://
+	```
++ Pkg.dir(): 离线安装
++ Pkg.build()
++ Pkg.test()
++ Pkg.clone(url): 对于官方未注册的包
++ Pkg.update()
++ Pkg.checkout()
++ Pkg.free()
++ Pkg.pin()
+
+### 包开发
+#### 初始设置
+
+```shell
+git config --global github.user "USERNAME"
+```
+
+```shell
+git config --global user.name "FULL NAME"
+git config --global user.email "EMAIL"
+```
+
+```julia
+Pkg.add("PkgDev")
+
+import PkgDev
+```
+
+#### 对已存在的包进行修改
++ 文档修改: README.md
++ 代码修改
+
+	```julia
+	Pkg.checkout("Images") # check out the master branch	<here, make sure your bug is still a bug and hasn't been fixed already> 	cd(Pkg.dir("Images"))	;git checkout -b myfixes	<edit code>	Pkg.test("Images")	;git commit -a -m "Fix foo by calling bar" # write a descriptive message 
+	using PkgDev	PkgDev.submit("Images")
+	```
++ 细节描述
+
+	```julia
+	cd(Pkg.dir("Foo")) # go to Foo's folder	;git command arguments... # command will apply to Foo
+	```
+	
+	```julia
+	PkgDev.submit("Foo")
+	```
+	
+	```shell
+	git push
+	git diff
+	git reset --hard origin/master
+	git rebase -i origin/master
+	git remote add myfork https://github.com/myaccount/Foo.jl.git
+	git push myfork +fixbar
+	```
+
+#### 创建新包
+
+
+
+
+
+	
+
 
 
 ## 内存分配
