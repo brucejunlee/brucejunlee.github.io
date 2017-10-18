@@ -61,8 +61,6 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
 +  类Lisp宏，元编程(<b>metaprogramming</b>)
 
-   ​
-
 ## 安装
 
 ### <b>REPL</b>(read-eval-print-loop)
@@ -130,7 +128,8 @@ help>
 ### Julia环境下
 
   ```julia
-  include("script.jl")
+  reload("module")
+  include("test.jl")
   ```
 
 ## 变量
@@ -151,9 +150,13 @@ help>
 +  有实参的函数可以以!结尾，这些被称为可变(in-place)函数
 
 ### 作用域(scope)
+
 #### global
+
 用于module, baremodule, at interactive prompt (REPL)中
+
 #### local
+
 + soft：用于for, while, comprehensions, try-catch-finally, let
 
 特殊情况：下面将作用域范围从local变成global是错误的
@@ -251,6 +254,7 @@ x # => 0
 ```
 
 #### const
+
 常量声明适用于全局和局部范围，对于全局范围特别有用。编译器很难优化包含全局变量的代码，因为全局变量的值甚至类型经常会发生改变。因此，如果全局变量不会改变，那么我们添加`const`声明来提高性能。而编译器能够自动确定局部变量中的常量。
 
 ## 数值
@@ -386,7 +390,9 @@ x # => 0
 + airy(z), airy(1, z), airy(2, z), airy(3, z), airy(k, z)
 
 ### 类型晋升(promotion)
+
 #### 晋升类型
+
 + 内置算术类型和算符的自动晋升：中缀表达式；C，Java，Perl，Python
 + 非自动晋升：Ada，ML，Julia；Julia函数需要通过指派和类型系统来实现这样的功能
 
@@ -399,6 +405,7 @@ convert(type, value)
 在Julia中，我们不能使用`convert`函数直接将字符串转换成数值类型，即使该字符串可以表示成有效的数值；Julia提供了`parse`函数来进行这样的操作。
 
 #### 晋升
+
 晋升就是将混合类型的值转换成同一类型。但是，这不同于面向对象的超类型／子类型。
 
 ```julia
@@ -524,6 +531,9 @@ promote_type(Int8, UInt16)        # => Int64
 	* ind2chr(string, index)
 	* chr2ind(string, index)
 
+## Unicode
+请查阅[Julia官方在线文档](https://docs.julialang.org/en/stable/manual/unicode-input/)
+
 ## 正则表达式(Regular expressions, regexes)
 
 在Julia中，正则表达式使用以`r`为前缀的非标准字符串来表示，即它是一种特殊的字符串。正则表达式用于寻找字符串中的正则模式；并且，正则表达式自身也是字符串，它可以被解析成状态机(state machine)来高效搜索字串中的模式。
@@ -577,20 +587,48 @@ replace("first second", r"(\w+) (?<agroup>\w+)", s"\g<agroup> \1")
 replace("a", r".", s"\g<0>1")
 ```
 
-## 列表／集合／字典
+## 列表／集合／元组／字典
 
+### 列表
 
+Julia中没有专门的List类型，代之以数组类型Array或者用[]生成
 
+### 集合
 
++ Set([itr])
 
+```julia
+Set([1.0, 2.0])
+```
+
+### 元组
+
++ Tuple
+
+```julia
+tuple(1, 'a', pi)
+```
+
+### 字典
+
++ Dict([itr])
++ Dict{K, V}()
+
+```julia
+Dict([("A", 1), ("B", 2)])
+Dict("A"=>1, "B"=>2)
+```
 
 ## 多维数组
+
 一般来说不同于其它科学计算语言，为了性能考虑，Julia不希望程序被写成<b>向量化</b>风格。Julia编译器使用类型推理(type inference)，生成标量数组索引的优化代码，使得程序能够被写成占有较少内存的通俗可读的风格而不牺牲性能。
 
 Julia中，函数参量都是引用传递。一些科学计算语言的数组是值传递。在Julia中，对函数内输入数组的修改是对父函数可见的，因此，如果想要展示相似行为，我们应该考虑创建输入的副本。
 
 ### 数组
+
 #### 基本函数
+
 + eltype(A)
 + length(A)
 + ndims(A)
@@ -603,6 +641,7 @@ Julia中，函数参量都是引用传递。一些科学计算语言的数组是
 + strides(A)
 
 #### 构造&初始化
+
 + Array{type}(dims...)
 + zeros(type, dims...)
 + zeros(A)
@@ -627,6 +666,7 @@ Julia中，函数参量都是引用传递。一些科学计算语言的数组是
 + [A, B, C, ...]
 
 #### 连接
+
 + cat(k, A...)
 + vcat(A...): cat(1, A...), [A; B; C; ...]
 + hcat(A...): cat(2, A...), [A B C ...], [A B; C D; ...]
@@ -667,6 +707,7 @@ x[1, [2 3; 4 1]]
 ```
 
 #### 迭代
+
 + 按元
 + 下标：如果数组类型是可以快速线性索引的(fast linear indexing)，那么下标为Int，否则下标为`CartesianIndex`
 
@@ -706,6 +747,7 @@ for i in eachindex(B)
 + broadcast, broadcast!
 
 ### 稀疏矩阵
+
 包含足够的零，以特殊的数据结构存储，节省了空间和时间。
 
 #### 压缩稀疏列(compressed sparse column, CSC)存储
@@ -738,7 +780,9 @@ for i in eachindex(B)
 + issparse
 
 ## 线性代数
+
 ### 矩阵因子化(factorization)
+
 即矩阵分解
 
 + Cholesky
@@ -811,6 +855,7 @@ f(1, 2, 3)    # not support infix notation
 ```
 
 #### 一些特殊操作符
+
 在Base.Operators包中
 
 + hcat():       [A B C ...]
@@ -884,6 +929,7 @@ parse(Int, "12", 3)      # => 5
 ```
 
 #### 关键字参量(kwargs, "keyword arguments"的缩写)
+
 通过`name`而非`position`来识别参量
 
 ```julia
@@ -906,6 +952,7 @@ end
 ```
 
 ### do语句块
+
 通常做法
 
 ```julia
@@ -951,6 +998,7 @@ end
 ```
 
 ### dot语法用于函数向量化
+
 任何Julia函数都可以通过dot语法逐元应用到数组或其它集合对象中，这就是广播(broadcast)机制，当然我们也可以通过自定义向量化函数消除dot；Julia中也有嵌套函数实现，只要函数中没有`非dot`子函数出现，它就可以熔合(fusion)到一起
 
 ```julia
@@ -992,7 +1040,9 @@ X .= X .* Y    # equivalent
 ```
 
 ## 控制流
+
 ### 复合(compound)表达式
+
 `begin`和(;)语句块都没有限定单行还是多行
 
 ```julia
@@ -1006,10 +1056,12 @@ z = (x = 1; y = 2; x + y)
 ```
 
 ### 条件表达式
+
 + `if-elseif-else`，`?:`
 + 不同于C，MATLAB，Perl，Python和Ruby等语言，但是和Java等强类型语言相同的是，在Julia的条件判断中，需要严格定义`Bool`类型，而不是任何可以表示true/false的对象，如`if 1`在Julia中是错误的
 
 ### 短路(short-circuit)计算
+
 `&&`, `||`
 
 ```julia
@@ -1029,6 +1081,7 @@ end
 没有短路的Boolean运算可以通过位运算(`&`, `|`)来实现
 
 ### 重复计算
+
 `while`, `for`，`break`，`continue`，在for-loop中，索引是局部的，在循环外不可见。
 
 ```julia
@@ -1059,7 +1112,9 @@ end
 ```
 
 ### 异常处理
+
 #### 内置异常:下面列出的都是异常类型，加()后表示异常
+
 + ArgumentError
 + BoundsError
 + CompositeException
@@ -1108,9 +1163,11 @@ typeof(DomainError) <: Exception     # false
 ```
 
 #### error()
+
 抛出异常信息，并中断程序运行
 
 #### info(), warn()
+
 只输出消息，并不中断程序运行
 
 #### try/catch: catch分句不是必要的
@@ -1182,6 +1239,7 @@ taskHdl = @task mytask(7)
 ```
 
 #### 核心任务函数
+
 + yieldto(task, value)
 + current\_task()
 + istaskdone()
@@ -1189,16 +1247,20 @@ taskHdl = @task mytask(7)
 + task\_local\_storage()
 
 #### 事件(event)
+
 + wait()
 + notify()
 + schedule(), @schedule, @async
 
 #### 任务状态
+
 + :runnable
 + :waiting
 + :queued
 + :done
 + :failed
+
+Note: 关于Task更多的信息，请阅读Julia并行计算部分。
 
 ## 类型系统[^5]
 
@@ -1211,6 +1273,7 @@ Julia类型系统是动态的，但通过指明某些值的特定类型，Julia�
 Julia中默认值可以是任意类型。
 
 ### 类型声明
+
 Julia中使用`::`操作符将类型与程序中的表达式／变量固定在一起，该操作符可以读作"is an instance of"。
 
 ```julia
@@ -1232,7 +1295,9 @@ end
 ```
 
 ### 常见类型
+
 #### 抽象类型(abstract types)
+
 抽象类型不能实例化(instantiated)，只能作为类型图中的结点。同时抽象类型可以用于类型族的构造。
 
 ```julia
@@ -1243,6 +1308,7 @@ abstract <<name>> <: <<supertype>>
 上面程序块中的`<:`读作"is a subtype of"。当不显式给定超类型时，默认超类型是`Any`。同时，Julia中预定义了抽象的最底层类型，即`Union{}`。
 
 #### 具体类型(concrete types)
+
 下面讨论的三个类型实际上是相关的，共享了许多性质，它们本质上都是`DataType`的实例
 
 + 位类型(bits types)
@@ -1320,6 +1386,7 @@ IntOrString = Union{Int, AbstractString}
 ```
 
 ### 参数化类型(parametric types)
+
 类型可以带参，因此类型声明实际上引入了整个新类型族。其实有很多语言都支持某种形式的泛化编程。如ML，Haskell，Scala等语言支持真正的带参多态，而如C++，Java等其他语言支持特殊的基于模版(template)的泛化编程。
 
 #### 参数化组合类型
@@ -1379,6 +1446,7 @@ immutable Rational{T <: Integer} <: Real
 ```
 
 #### 元组类型
+
 元组类型是协变的，即Tuple{Int}可以是Tuple{Any}的子类型。
 
 ```julia
@@ -1389,6 +1457,7 @@ end
 ```
 
 #### 变参元组类型
+
 `Vararg{T}`, `Vararg{T, N}`, `NTuple{N, T}`
 
 ```julia
@@ -1401,6 +1470,7 @@ isa(("1", 1, 2, 3.0), Tuple{AbstractString, Vararg{Int}}) # => false
 ```
 
 #### singleton类型
+
 isa(A, Type{B})为真，当且仅当A和B是相同对象，并且对象为某个类型。`Type`本身作为抽象类型。
 
 #### 参数化位类型
@@ -1433,11 +1503,13 @@ typealias AA{T} Array{Array{T, 1}, 1}
 ```
 
 ### 常见的类型函数
+
 + isa(value, Type)
 + typeof
 + supertype
 
 ### 值类型
+
 Julia不允许在如true／false这样的值上进行指派，但是我们可以在参数化类型上进行指派。
 
 ```julia
@@ -1454,6 +1526,7 @@ firstlast(Val{false}) # => "Last"
 这里为了Julia一致性，函数参数总是传递Val类型而不是创建一个实例，即foo(Val{:bar})而不是foo(Val{:bar}())。为了防止值类型无用以及性能考虑，我们应该慎用上面的值类型。
 
 ### 可空类型(nullable types)
+
 Nullable{T}是为了表示缺失值。
 
 ```julia
@@ -1471,6 +1544,7 @@ get(x2, 0)  # 1
 ```
 
 ## 方法
+
 方法包含了多态和多指派等概念。比方说，我们有一个函数`add`，但是两个整数相加和两个浮点数相加是非常不同的，这里就有两个方法，但是Julia中会落入同一个对象，即`add`函数。对于相同概念的不同实现，我们不需要每次使用都定义，我们只需要对参数类型进行某种组合从而定义函数行为。这样，一个函数的一种可能行为的定义就是一种方法。同时，当应用函数时执行其中一种方法的选择即被称为指派。Julia允许指派基于给定参数的个数和所有参数类型来选择执行哪个方法，这就是多指派。而传统的面向对象语言只允许指派基于第一个参数作出选择。它们之间是有很大不同的。
 
 ```julia
@@ -1482,6 +1556,7 @@ methods(f)
 ```
 
 ### 消除方法歧义
+
 首先定义消除歧义的方法
 
 ### 带参方法
@@ -1501,6 +1576,7 @@ function getindex{T,N}(A::AbstractArray{T,N}, indexes::Vararg{Number,N})
 ```
 
 ### 可选参数
+
 需要注意的是，可选参数与函数绑定，而非与特定方法绑定。它依赖于可选参数的类型。
 
 ```julia
@@ -1518,9 +1594,11 @@ f() = f(1, 2)  # => -3
 ```
 
 ### 关键字参数
+
 这与通常的按位置参数相当不同。关键字参数不参与方法指派。
 
 ### 函子(functor)
+
 有时也称为可调对象(callable)，即将方法添加到类型中从而使得任意Julia对象可调。
 
 构造多项式计算函数
@@ -1541,6 +1619,7 @@ p(3)
 ```
 
 ### 空泛化函数
+
 即，没有添加方法的函数。这可以用于将接口定义和接口实现分离。也可以用于文档化以及代码可读性。
 
 ```julia
@@ -1549,6 +1628,7 @@ end
 ```
 
 ## 构造器
+
 ### 外部构造器
 
 ```julia
@@ -1578,6 +1658,7 @@ end
 ```
 
 #### 自引对象／递归数据结构
+
 为了允许非完全初始化的对象创建，Julia允许调用少于类型域数目参量的new函数，返回一个未初始化的对象。然后内部构造器方法就可以使用这个非完全(incomplete)的对象，在返回之前完成初始化。
 
 ```julia
@@ -1657,9 +1738,11 @@ promote_rule{T<:Integer}(::Type{Rational{T}}, ::Type{T}) = Rational{T}promote_r
 ```
 
 ## 接口
+
 Julia很多强大的能力和扩展性都来源于非正式的接口集。
 
 ### 迭代
+
 + start(iter)
 + next(iter, state)
 + done(iter, state)
@@ -1700,6 +1783,7 @@ sum(Squares(1803))
 ```
 
 ### 索引
+
 + getindex(X, i):X[i]
 + setindex!(X, v, i):X[i] = v
 + endof(X):X[end]
@@ -1717,6 +1801,7 @@ Squares(10)[[3,4.,5]]
 ```
 
 ## 模块
+
 Julia模块是单独的变量工作空间。模块使得我们可以创建一些顶层设计而不用担心和其他模块发生命名冲突。
 
 + 模块体不缩进，因为缩进会导致整个文件缩进
@@ -1750,11 +1835,13 @@ end
 ```
 
 ### 标准模块
+
 + Main：在提示符窗口中的变量存在Main中，用`whos()`函数查看
 + Core：包含所有内置标识符，所有模块隐式地using Core
 + Base：标准库，所有模块隐式地using Base
 
 ### eval
+
 模块自动包含了`eval`函数的定义；如果不想要默认定义，我们可以使用关键字`baremodule`代替`module`，但是我们注意到Core库仍然隐式地被引入
 
 ```julia
@@ -1771,6 +1858,7 @@ end
 ```
 
 ### 模块路径
+
 当给定using Foo时，系统开始在Main内搜索Foo，当Main中不存在Foo模块时，系统设法`require("Foo")`，这会导致系统从已安装包中加载代码
 
 #### 绝对路径
@@ -1797,6 +1885,7 @@ end
 相当路径使用.Utils符号来作用，甚至我们可以使用..Utils来寻找包含Parent的模块中的Utils而非在Parent本身当中寻找
 
 ### LOAD_PATH
+
 全局变量，包含了当调用`require`时Julia搜索模块的目录；使用`push!`来扩展文件路径
 
 ```julia
@@ -1806,6 +1895,7 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 将该语句放入文件<i>~/.juliarc.jl</i>中，我们可以在每次Julia启动时扩展`LOAD_PATH`。当然我们还可以定义环境变量`JULIA_LOAD_PATH`来扩展模块加载路径
 
 ### 其它
+
 + import/export宏: import Mod.@mac
 + 其它模块中宏调用: Mod.@mac / @Mod.mac
 + M.x = y不起作用，因为全局赋值是局限在模块内的
@@ -1813,15 +1903,18 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 ### 模块初始化、预编译
 
 ###初始化
+
 \_\_init\_\_()
 
 ### 预编译
+
 加载大模块通常需要花费几分钟时间，因此Julia提供了预编译模块的创建来减少加载时间。Julia中有两种机制来实现预编译模块：
 
 + 增量编译incremental compile：在模块文件顶部(即module开始前)添加\_\_precompile\_\_()，同时我们也可以手动调用Base.compilecache(modulename)，调用\_\_precompile\_\_(false)关闭预编译，通常情况下为了安全考虑，我们都需要关闭预编译功能
 + 通常的系统镜像custom system image：在启动Julia时使用-J选项
 
 ## 文档(documentation)
+
 文档系统内置在<b>Julia0.4</b>往后版本，而<b>Julia0.3</b>中是通过`Docile.jl`包来实现的。
 
 ### docstrings
@@ -1831,6 +1924,7 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 ```
 
 ### 使用规则
+
 文档被解释成<b>Markdown</b>
 
 下面块中数字1后面的\`\`\`应该写在下一行，这里只是为了文章前后输出一致
@@ -1862,10 +1956,12 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 + 文档开始和文档结束\`\`\`单独成行
 
 ### 文档访问
+
 + REPL或者IJulia中使用?
 + Juno中使用Ctrl-D
 
 ### 函数&方法
+
 一般只有泛化方法或者函数本身可以文档化。特定方法只有在和其他更泛化的方法极其不同时才文档化。
 
 ### @doc
@@ -1887,7 +1983,8 @@ if VERSION > v"0.4"
 end
 ```
 
-### @__doc__
+### @\_\_doc\_\_
+
 如果宏返回包含多个子表达式的语句块，那么应该被文档化的子表达式必须使用@\_\_doc\_\_来标记
 
 ```julia
@@ -1899,9 +1996,11 @@ end
 ```
 
 ## 元编程(metaprogramming)
+
 Julia语言像Lisp一样将代码表示成语言本身的一个数据结构。因为代码被表示成可以在语言内创建和操纵的对象，所以程序可以变换和生成自己的代码。这使得不需要额外的构建(build)步骤就可以成熟地进行代码生成(code generation)，同时也使得类Lisp宏可以操纵在抽象语法树(abstract syntax tree, `AST`)上
 
-### :操作符
+### `:`操作符
+
 + 表示Symbol
 
 ```julia
@@ -1969,6 +2068,7 @@ eval(ex)
 ```
 
 ### 宏
+
 #### 宏将参量元组映射到被返回的表达式，相应的表达式直接编译而不是通过运行时eval调用。
 
 ```julia
@@ -2064,7 +2164,9 @@ end
 ```
 
 ## 包(package, Pkg)
+
 ### 包管理
+
 官方的Julia包注册在METADATA.jl文件库中
 
 + Pkg.init()
@@ -2096,6 +2198,7 @@ end
 + Pkg.pin()
 
 ### 包开发
+
 #### 初始设置
 
 ```shell
@@ -2114,6 +2217,7 @@ import PkgDev
 ```
 
 #### 对已存在的包进行修改
+
 + 文档修改: README.md
 + 代码修改
 
@@ -2142,17 +2246,44 @@ import PkgDev
 
 #### 创建新包
 
+##### REQUIRE中添加`julia 0.x 0.y-`
 
+##### 命名规则
 
++ 避免行话／术语：USA(good), PMA(bad, even if you know about positive mental attitude)
++ 避免在包名中出现`Julia`
++ 提供与一个新类型相关的很多功能的包应该以复数形式命名: DataFrames, BloomFilters, SortingAlgorithms, JuliaParser
++ 清晰命名: RandomMatrices(good), RndMat(bad), RMT(bad)
++ 不太系统化的名字适合用于仅仅实现某一个方式的包: Gadfly, PyPlot, Winston
++ 外部库封装: CPLEX.jl, MATLAB.jl
 
+##### 生成包
 
-	
+```julia
+pkgDev.generate("FooBar", "MIT")
+;cd ~/.julia/v0.6/FooBar && git show --stat
+```
 
+```julia
+PkgDev.register("FooBar")
+;cd ~/.julia/v0.6/METADATA && git show
+PkgDev.publish()
+PkgDev.tag("FooBar")
+;cd ~/.julia/v0.6/FooBar && git tag
+```
 
+#### 修改包需求
 
-## 内存分配
+```shell
+cd ~/.julia/v0.6/METADATA/FooBar/versions/0.0.1 && cat requires
+vi requires
+```
 
-## 性能
+## 风格指导
+
+## 常见问题
+
+## 与其它语言间的差别
 
 
 [^1]: VB Shah, A Edelman, S Karpinski and J Bezanson. Novel algebras for advanced analytics in Julia. High PERFORMANCE Extreme Computing Conference, IEEE, pp.1-4(2013).
