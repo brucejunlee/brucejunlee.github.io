@@ -69,7 +69,7 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 
   + 我们可以直接从[官网](http://julialang.org/downloads/)下载对应的预编译二进制文件或者从源码编译安装
 
-  + 打开方式
+打开方式:
 
   + 直接点击桌面图标打开
 
@@ -78,6 +78,38 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
       ```shell
       julia
       ```
+
+退出方式：
+  
+  + ^D
+  + quit()
+
+搜索模式：
+  
+  + ^R: reverse
+  + ^S: forward
+
+shell模式：
+
+```julia
+julia> ;
+shell> 
+```
+
+help模式：
+
+```julia
+julia> ?
+help> 
+```
+
+中断／取消：
+
+  + ^C
+
+清除控制台屏幕：
+
++ ^L
 
 ### <b>IJulia</b> notebook
 
@@ -127,7 +159,10 @@ Julia语言的目的是将易用性、能力和高效性融合在一种语言中
 特殊情况：下面将作用域范围从local变成global是错误的
 
 ```julia
-let	local x = 2	let		global x = 3	end
+let  local x = 2
+  let
+    global x = 3
+  end
 end
 ```
 
@@ -137,52 +172,64 @@ end
 
 ```julia
 x, y = 1, 2 
-function foo()	x = 2 # introduces a new local 
-	function bar()		x = 10 # modifies the parent's x		return x+y # y is global 
-	end	return bar() + x # 12 + 10 (x is modified in call of bar()) 
+function foo()
+  x = 2 # introduces a new local 
+  function bar()
+    x = 10 # modifies the parent's x
+    return x+y # y is global 
+  end
+  return bar() + x # 12 + 10 (x is modified in call of bar()) 
 end
 
-foo()          # => 22
+foo() # => 22
 ```
 
 这样做的好处同样适用于闭包(closure)
 
 ```julia
 let
-	state = 0	global counter 
-	counter() = state += 1endcounter()        # => 1counter()        # => 2
+  state = 0
+  global counter 
+  counter() = state += 1endcounter()  # => 1counter()  # => 2
 ```
 
 while-loop中变量i存储在同一位置，每次迭代都会重用变量
 
 ```julia
 Fs = Array{Any}(2)
-i=1while i <= 2	Fs[i] = ()->i	i += 1 
+i=1while i <= 2
+  Fs[i] = ()->i
+  i += 1 
 end
 
-Fs[1]()            # => 3
-Fs[2]()            # => 3
+Fs[1]()  # => 3
+Fs[2]()  # => 3
 ```
 
 `let x = x`对于不同的x变量存储在不同的位置
 
 ```julia
 Fs = Array{Any}(2) 
-i=1while i <= 2	let i = i		Fs[i] = ()->i	end	i += 1 
+i=1while i <= 2
+  let i = i
+    Fs[i] = ()->i
+  end
+  i += 1 
 end
 
-Fs[1]()       # => 1
-Fs[2]()       # => 2
+Fs[1]() # => 1
+Fs[2]() # => 2
 ```
 
 for-loop中每次迭代，新的变量存储都会刷新
 
 ```julia
-Fs = Array{Any}(2)for i = 1:2	Fs[i] = ()->i
+Fs = Array{Any}(2)for i = 1:2
+  Fs[i] = ()->i
 end
 
-Fs[1]()            # => 1
-Fs[2]()            # => 2
+Fs[1]()  # => 1
+Fs[2]()  # => 2
 ```
 
 但是for-loop中会重用已经存在的变量
@@ -192,7 +239,7 @@ i = 0
 for i = 1:3
 end
 
-i         # => 3
+i  # => 3
 ```
 
 comprehension(列表推导)每次都会刷新变量地址分配
@@ -200,7 +247,7 @@ comprehension(列表推导)每次都会刷新变量地址分配
 ```julia
 x = 0
 [x for x = 1:3]
-x        # => 0
+x # => 0
 ```
 
 #### const
@@ -624,11 +671,14 @@ x[1, [2 3; 4 1]]
 + 下标：如果数组类型是可以快速线性索引的(fast linear indexing)，那么下标为Int，否则下标为`CartesianIndex`
 
 ```julia
-for a in A	# Do something with the element aendfor i in eachindex(A)	# Do something with i and/or A[i]end
+for a in A
+  # Do something with the element aendfor i in eachindex(A)
+  # Do something with i and/or A[i]end
 
 A = rand(4,3)B = view(A, 1:3, 2:3)
 
-for i in eachindex(B)	@show iend
+for i in eachindex(B)
+  @show iend
 ```
 
 #### 向量化算符&函数
@@ -723,7 +773,7 @@ for i in eachindex(B)	@show iend
 
 ```python
 function f(x, y)
-	x + y
+  x + y
 end
 
 f(x, y) = x + y
@@ -740,8 +790,8 @@ g(2, 3)  # 5
 
 ```python
 function g(x, y)
-	return x * y
-	x + y
+  return x * y
+  x + y
 end
 ```
 
@@ -780,7 +830,7 @@ x -> x^2 +2x - 1
 (x, y, z) -> 2x + y - z
 
 function (x)
-	x^2 +2x - 1
+  x^2 +2x - 1
 end
 
 map(round, [1.2, 3.5, 1.7])
@@ -825,7 +875,7 @@ baz(args...)         # => 3
 ```julia
 #interpret a string num as a number in some base
 function parse(type, num, base = 10)
-	###
+  ###
 end
 
 parse(Int, "12", 10)     # => 12
@@ -838,20 +888,20 @@ parse(Int, "12", 3)      # => 5
 
 ```julia
 function plot(x, y; style = "solid", width = 1, color = "black")
-	###
+  ###
 end
 
 plot(x, y, width = 1)
-plot(x, y; width = 1)       #equivalent
-plot(x, y; (:width, 1))     #equivalent
-plot(x, y; :width => 1)     #equivalent
+plot(x, y; width = 1)     #equivalent
+plot(x, y; (:width, 1))   #equivalent
+plot(x, y; :width => 1)   #equivalent
 
 function f(; x::Int64 = 1)
-	###
+  ###
 end
 
 function f(x; y = 0, kwargs...)
-	###
+  ###
 end
 ```
 
@@ -859,35 +909,44 @@ end
 通常做法
 
 ```julia
-map(x->begin			if x < 0 && iseven(x)				return 0 
-			elseif x == 0				return 1 
-			else				return x 
-			end		end, 
-	[A, B, C])
+map(x->begin
+  if x < 0 && iseven(x)
+    return 0 
+  elseif x == 0
+    return 1 
+  else
+    return x 
+  end
+end, 
+[A, B, C])
 ```
 
 Julia中提供了`do`保留字，该语法创建的是一个匿名函数，形如`do x`, `do a, b`, `do`(声明() -> ...这样的匿名函数)
 
 ```julia
-map([A, B, C]) do x	if x < 0 && iseven(x)		return 0 
-	elseif x == 0		return 1 
-	else		return x 
-	endend
+map([A, B, C]) do x
+  if x < 0 && iseven(x)
+    return 0 
+  elseif x == 0
+    return 1 
+  else
+    return x 
+  endend
 ```
 `do`语法使得通过函数有效地扩展语言变得更加容易
 
 ```julia
 open("outfile", "w") do io
-	write(io, data)
+  write(io, data)
 end
 
 function open(f::Function, args...)
-	io = open(args...)
-	try
-		f(io)
-	finally
-		close(io)
-	end
+  io = open(args...)
+  try
+    f(io)
+  finally
+    close(io)
+  end
 end
 ```
 
@@ -906,30 +965,30 @@ f.(pi, A)            # => a new array consisting of f(pi, a) for each a in A
 f.(vector1, vector2) # => a new vector consisting of f(vector1[i], vector2[i]) for each index i
 
 sin.(cos.(X))
-broadcast(x -> sin(cos(x)), X)    # equivalent
-[sin(cos(x)) for x in X]          # equivalent
+broadcast(x -> sin(cos(x)), X)  # equivalent
+[sin(cos(x)) for x in X]        # equivalent
 
-sin.(sort(cos.(X)))               # cannot be merged
+sin.(sort(cos.(X)))    # cannot be merged
 ```
 
 当预分配向量化操作的输出数组时，Julia可以实现最大效率。
 
 ```julia
 X .= ...
-broadcast!(identity, X, ...)                # equivalent
+broadcast!(identity, X, ...)  # equivalent
 
 X .= sin.(Y)
-broadcast!(sin, X, Y)                       # overwriting X with sin.(Y) in-place
+broadcast!(sin, X, Y)         # overwriting X with sin.(Y) in-place
 
 X[2:end] .= sin.(Y)
 broadcast!(sin, view(X, 2:endof(X)), Y)
 
 # In future versions
 X .+= Y
-X .= X .+ Y                                 # equivalent
+X .= X .+ Y    # equivalent
 
 X .*= Y
-X .= X .* Y                                 # equivalent
+X .= X .* Y    # equivalent
 ```
 
 ## 控制流
@@ -938,9 +997,9 @@ X .= X .* Y                                 # equivalent
 
 ```julia
 z = begin
-	x = 1
-	y = 2
-	x + y
+  x = 1
+  y = 2
+  x + y
 end
 
 z = (x = 1; y = 2; x + y)
@@ -955,16 +1014,16 @@ z = (x = 1; y = 2; x + y)
 
 ```julia
 if <cond> 
-	<statement>
+  <statement>
 end
 
-<cond> && <statement>         # equivalent
+<cond> && <statement>  # equivalent
 
 if ! <cond>
-	<statement>
+  <statement>
 end
 
-<cond> || <statement>         # equivalent
+<cond> || <statement>  # equivalent
 ```
 
 没有短路的Boolean运算可以通过位运算(`&`, `|`)来实现
@@ -976,26 +1035,26 @@ end
 i = 1
 
 while i <= 5
-	println(i)
-	i += 1
+  println(i)
+  i += 1
 end
 
 for i = 1:5
-	println(i)
+  println(i)
 end
 
 # equivalent
 for i in [1, 2, 3, 4, 5]
-	println(i)
+  println(i)
 end
 
 for i ∈ [1, 2, 3, 4, 5]
-	println(i)
+  println(i)
 end
 
 # multiple nest
 for i = 1:2, j = 3:4
-	println((i, j))
+  println((i, j))
 end
 ```
 
@@ -1029,11 +1088,11 @@ end
 
 ```julia
 type MyCustomException <: Exception
-	###
+  ###
 end
 
 type MyUndefVarError <: Exception
-	var::Symbol
+  var::Symbol
 end
 
 Base.showerror(io::IO, e::MyUndefVarError) = print(io, e.var, "not defined")
@@ -1044,8 +1103,8 @@ Base.showerror(io::IO, e::MyUndefVarError) = print(io, e.var, "not defined")
 ```julia
 f(x) = x >=0 ? exp(-x) : throw(DomainError())
 
-typeof(DomainError()) <: Exception       # true
-typeof(DomainError) <: Exception         # false
+typeof(DomainError()) <: Exception   # true
+typeof(DomainError) <: Exception     # false
 ```
 
 #### error()
@@ -1058,22 +1117,27 @@ typeof(DomainError) <: Exception         # false
 
 ```julia
 f(x) = try
-		sqrt(x)
-	catch
-		sqrt(complex(x, 0))
-	end
+  sqrt(x)
+catch
+  sqrt(complex(x, 0))
+end
 	
 sqrt_second(x) = try 
-		sqrt(x[2])	catch y		if isa(y, DomainError)			sqrt(complex(x[2], 0)) 
-		elseif isa(y, BoundsError)			sqrt(x)		end 
-	end
+  sqrt(x[2])
+catch y
+  if isa(y, DomainError)
+    sqrt(complex(x[2], 0)) 
+  elseif isa(y, BoundsError)
+    sqrt(x)
+  end 
+end
 	
 try bad() catch; x end
 
 # equivalent
 try bad()
 catch
-	x
+  x
 end
 ```
 
@@ -1088,8 +1152,11 @@ end
 
 ```julia
 function producer() 
-	produce("start")	for n=1:4 
-		produce(2n)	end	produce("stop") 
+  produce("start")
+  for n=1:4 
+    produce(2n)
+  end
+  produce("stop") 
 end
 
 p = Task(producer)
@@ -1097,7 +1164,7 @@ p = Task(producer)
 consume(p)
 
 for x in Task(producer)
-	println(x)
+  println(x)
 end
 ```
 
@@ -1105,7 +1172,7 @@ Task()构造器期望的是一个零参量函数
 
 ```julia
 function mytask(myarg)
-	...
+  ###
 end
 
 taskHdl = Task(() -> mytask(7))   # need a partial function
@@ -1147,20 +1214,20 @@ Julia中默认值可以是任意类型。
 Julia中使用`::`操作符将类型与程序中的表达式／变量固定在一起，该操作符可以读作"is an instance of"。
 
 ```julia
-(1 + 2) :: AbstractFloat          # throw an error
+(1 + 2) :: AbstractFloat  # throw an error
 
-(1 + 2) :: Int                    # => 3
+(1 + 2) :: Int            # => 3
 
 function foo()
-	x :: Int8 = 100                # every value assigned to the variable will be converted to the declared type using convert()
-	x
+  x :: Int8 = 100  # every value assigned to the variable will be converted to the declared type using convert()
+  x
 end
 
 function sinc(x) :: Float64
-	if x == 0
-		return 1
-	end
-	return sin(pi * x) / (pi * x)
+  if x == 0
+    return 1
+  end
+  return sin(pi * x) / (pi * x)
 end
 ```
 
@@ -1205,13 +1272,13 @@ bitstype 128 UInt128 <: Unsigned
 
 ```julia
 type Foo
-	bar
-	baz :: Int
-	qux :: Float64
+  bar
+  baz :: Int
+  qux :: Float64
 end
 
 foo = Foo("Hello, world.", 23, 1.5)
-typeof(foo)                          # => Foo
+typeof(foo) # => Foo
 ```
 
 当类型像函数一样被应用时，我们称其为构造器(constructor)。Julia自动生成两个构造器，它们被称为默认构造器。
@@ -1230,7 +1297,7 @@ foo.qux = 2
 type NoFields
 end
 
-is(NoFields(), NoFields())            # => true
+is(NoFields(), NoFields())  # => true
 ```
 
 `is`函数用来验证NoFields类型的两个实例是同一个，并且是相同的。
@@ -1239,8 +1306,8 @@ is(NoFields(), NoFields())            # => true
 
 ```julia
 immutable Complex
-	real :: Float64
-	imag :: Float64
+  real :: Float64
+  imag :: Float64
 end
 ```
 
@@ -1259,24 +1326,24 @@ IntOrString = Union{Int, AbstractString}
 
 ```julia
 type Point{T}
-	x :: T
-	y :: T
+  x :: T
+  y :: T
 end
 
 Point{Float64}
 
-Point               # itself is also a valid type object
+Point # itself is also a valid type object
 ```
 
 `Float64`Point实例可以紧致高效地表示成64位浮点值对，而`Real`Point实例必须要表示成指向单独分配的Real对象的指针对。这种好处可以扩展到数组，浮点数组被存储成64位浮点数的连续内存块，而实数数组必须是指向单独分配的Real对象的指针数组。因为实数实例是任意大小，任意结构的复杂对象。
 
 ```julia
-Point{Float64} <: Point{Real}    # => false, that is, it is not covariant
+Point{Float64} <: Point{Real}  # => false, that is, it is not covariant
 ```
 
 ```julia
 function norm{T <: Real}(p :: Point{T})
-	sqrt(p.x ^ 2 + p.y ^ 2)
+  sqrt(p.x ^ 2 + p.y ^ 2)
 end
 ```
 
@@ -1289,25 +1356,26 @@ Pointy{Float64} <: Pointy
 Pointy{1} <: Pointy
 
 type Point{T} <: Pointy{T}
-	x :: T
-	y :: T
+  x :: T
+  y :: T
 end
 
 type DiagPoint{T} <: Pointy{T}
-	x :: T
+  x :: T
 end
 
 abstract Pointy{T <: Real}
 
 type Point{T <: Real} <: Pointy{T}
-	x :: T
-	y :: T
+  x :: T
+  y :: T
 end
 ```
 
 ```julia
 immutable Rational{T <: Integer} <: Real 
-	num :: T	den :: Tend
+  num :: T
+  den :: Tend
 ```
 
 #### 元组类型
@@ -1315,8 +1383,8 @@ immutable Rational{T <: Integer} <: Real
 
 ```julia
 immutable Tuple2{A, B}
-	a :: A
-	b :: B
+  a :: A
+  b :: B
 end
 ```
 
@@ -1379,8 +1447,8 @@ end
 firstlast(::Type{Val{true}}) = "First"
 firstlast(::Type{Val{false}}) = "Last"
 
-firstlast(Val{true})      # => "First"
-firstlast(Val{false})      # => "Last"
+firstlast(Val{true})  # => "First"
+firstlast(Val{false}) # => "Last"
 ```
 
 这里为了Julia一致性，函数参数总是传递Val类型而不是创建一个实例，即foo(Val{:bar})而不是foo(Val{:bar}())。为了防止值类型无用以及性能考虑，我们应该慎用上面的值类型。
@@ -1389,17 +1457,17 @@ firstlast(Val{false})      # => "Last"
 Nullable{T}是为了表示缺失值。
 
 ```julia
-x1 = Nullable{Int64}()     # a missing value of type T
-x2 = Nullable(1)           # a non-missing value of type T
+x1 = Nullable{Int64}() # a missing value of type T
+x2 = Nullable(1)       # a non-missing value of type T
 
-isnull(x1)                  # => true
-isnull(x2)                  # => false
+isnull(x1)  # => true
+isnull(x2)  # => false
 
-get(x1)                     # throw NullException
-get(x2)                     # 1
+get(x1)     # throw NullException
+get(x2)     # 1
 
-get(x1, 0)                  # 0
-get(x2, 0)                  # 1
+get(x1, 0)  # 0
+get(x2, 0)  # 1
 ```
 
 ## 方法
@@ -1421,7 +1489,7 @@ methods(f)
 ```julia
 myappend{T}(v::Vector{T}, x::T) = [v..., x]
 
-mytypeof{T}(x::T) = T                             # as the return value
+mytypeof{T}(x::T) = T   # as the return value
 
 same_type_numeric{T<:Number}(x::T, y::T) = true   # constrain the type parametersame_type_numeric(x::Number, y::Number) = false
 ```
@@ -1441,12 +1509,12 @@ f(a = 1, b = 2) = a + 2b
 # equivalent to the following three methods
 f(a, b) = a + 2 b
 f(a) = f(a, 2)
-f() = f(1, 2)           # => 5
+f() = f(1, 2)  # => 5
 
 # but
 f(a::Int, b::Int) = a - 2 b
 
-f() = f(1, 2)           # => -3
+f() = f(1, 2)  # => -3
 ```
 
 ### 关键字参数
@@ -1459,9 +1527,13 @@ f() = f(1, 2)           # => -3
 
 ```julia
 immutable Polynomial{R} 
-	coeffs::Vector{R}end
-function (p::Polynomial)(x)	v = p.coeffs[end]	for i = (length(p.coeffs)-1):-1:1		v = v*x + p.coeffs[i]
-	end	return v 
+  coeffs::Vector{R}end
+function (p::Polynomial)(x)
+  v = p.coeffs[end]
+  for i = (length(p.coeffs)-1):-1:1
+    v = v*x + p.coeffs[i]
+  end
+  return v 
 end
 
 p = Polynomial([1,10,100])
@@ -1481,8 +1553,8 @@ end
 
 ```julia
 type Foo
-	bar
-	baz
+  bar
+  baz
 end
 
 Foo(x) = Foo(x, x)
@@ -1493,15 +1565,15 @@ F() = Foo(0)
 
 ```julia
 type OrderdPair
-	x :: Real
-	y :: Real
-	
-	OrderdPair(x, y) = x > y ? error("out of order") : new(x, y)
+  x :: Real
+  y :: Real
+  
+  OrderdPair(x, y) = x > y ? error("out of order") : new(x, y)
 end
 
 type T
-	x :: Int64
-	# T(x) = new(x)        # explicit is equivalent to default constructor
+  x :: Int64
+  # T(x) = new(x)        # explicit is equivalent to default constructor
 end
 ```
 
@@ -1510,21 +1582,22 @@ end
 
 ```julia
 type SelfReferential 
-	obj::SelfReferential	SelfReferential() = (x = new(); x.obj = x) 
+  obj::SelfReferential
+  SelfReferential() = (x = new(); x.obj = x) 
 end
 
 x = SelfReferential()
-is(x, x)                  # => true
-is(x, x.obj)              # => true
-is(x, x.obj.obj)          # => true
+is(x, x)           # => true
+is(x, x.obj)       # => true
+is(x, x.obj.obj)   # => true
 ```
 
 ### 参数化构造器
 
 ```julia
 type Point{T <: Real}
-	x::T
-	y::T
+  x::T
+  y::T
 end
 
 Point(1, 2)
@@ -1533,9 +1606,9 @@ Point(1.0, 2.5)
 Point{Int64}(1, 2)
 Point{Float64}(1.0, 2.5)
 
-Point{Float64}(1, 2)        # type promotion, => Point{Float64}(1.0, 2.0)
+Point{Float64}(1, 2)  # type promotion, => Point{Float64}(1.0, 2.0)
 
-Point(x::Real, y::Real) = Point(promote(x,y)...)    #explicit promotion
+Point(x::Real, y::Real) = Point(promote(x,y)...) #explicit promotion
 ```
 
 ### Case study
@@ -1544,25 +1617,39 @@ Point(x::Real, y::Real) = Point(promote(x,y)...)    #explicit promotion
 
 ```julia
 immutable Rational{T<:Integer} <: Real 
-	num::T	den::T	function Rational(num::T, den::T) 
-		if num == 0 && den == 0			error("invalid rational: 0//0") 
-		end       g = gcd(den, num)       num = div(num, g)       den = div(den, g)       new(num, den)
-   end 
+  num::T
+  den::T
+  function Rational(num::T, den::T) 
+    if num == 0 && den == 0
+      error("invalid rational: 0//0") 
+    end
+    g = gcd(den, num)
+    num = div(num, g)
+    den = div(den, g)    new(num, den)
+  end 
 endRational{T<:Integer}(n::T, d::T) = Rational{T}(n,d)Rational(n::Integer, d::Integer) = Rational(promote(n,d)...)Rational(n::Integer) = Rational(n,one(n))//(n::Integer, d::Integer) = Rational(n,d)//(x::Rational, y::Integer) = x.num // (x.den*y)//(x::Integer, y::Rational) = (x*y.den) // y.num//(x::Complex, y::Real) = complex(real(x)//y, imag(x)//y)//(x::Real, y::Complex) = x*y'//real(y*y')function //(x::Complex, y::Complex) 
-	xy = x*y'   yy = real(y*y')	complex(real(xy)//yy, imag(xy)//yy) 
+  xy = x*y'
+  yy = real(y*y')
+  complex(real(xy)//yy, imag(xy)//yy) 
 end
 
 (1 + 2im)//(1 - 2im)
 
 convert{T<:Integer}(::Type{Rational{T}}, x::Rational) = Rational(convert(T,x.num),convert(T,x.den))convert{T<:Integer}(::Type{Rational{T}}, x::Integer) = Rational(convert(T,x), convert(T,1))
 function convert{T<:Integer}(::Type{Rational{T}}, x::AbstractFloat, tol::Real) 
-	if isnan(x); return zero(T)//zero(T); end	if isinf(x); return sign(x)//zero(T); end	y=x	a = d = one(T)
-	b = c = zero(T)
-	while true		f = convert(T,round(y));y -= f 
-		a, b, c, d = f*a+c, f*b+d, a, b 
-		if y == 0 || abs(a/b-x) <= tol			return a//b 
-		end		y = 1/y 
-	endend
+  if isnan(x); return zero(T)//zero(T); end
+  if isinf(x); return sign(x)//zero(T); end
+  y=x
+  a = d = one(T)
+  b = c = zero(T)
+  while true
+    f = convert(T,round(y));y -= f 
+    a, b, c, d = f*a+c, f*b+d, a, b 
+    if y == 0 || abs(a/b-x) <= tol
+      return a//b 
+    end
+    y = 1/y 
+  endend
 convert{T<:Integer}(rt::Type{Rational{T}}, x::AbstractFloat) = convert(rt,x,eps(x))
 convert{T<:AbstractFloat}(::Type{T}, x::Rational) = convert(T,x.num)/convert(T,x.den)convert{T<:Integer}(::Type{T}, x::Rational) = div(convert(T,x.num),convert(T,x.den))
 
@@ -1582,7 +1669,7 @@ Julia很多强大的能力和扩展性都来源于非正式的接口集。
 
 ```julia
 for i in iter       # or "for i = iter"
-	# body
+  # body
 end
 
 
@@ -1591,8 +1678,8 @@ end
 state = start(iter)
 
 while !done(iter, state)
-	(i, state) = next(iter, state)
-	# body
+  (i, state) = next(iter, state)
+  # body
 end
 ```
 
@@ -1600,12 +1687,12 @@ end
 
 ```julia
 immutable Squares 
-	count::Intend
+  count::Intend
 Base.start(::Squares) = 1Base.next(S::Squares, state) = (state*state, state+1)Base.done(S::Squares, state) = state > S.count; Base.eltype(::Type{Squares}) = Int # Note that this is defined for the type 
 Base.length(S::Squares) = S.count;
 
 for i in Squares(7)
-	println(i)
+  println(i)
 end
 
 Base.sum(S::Squares) = (n = S.count; return n*(n+1)*(2n+1)÷6)
@@ -1618,7 +1705,8 @@ sum(Squares(1803))
 + endof(X):X[end]
 
 ```julia
-function Base.getindex(S::Squares, i::Int)	1 <= i <= S.count || throw(BoundsError(S, i))	return i*i 
+function Base.getindex(S::Squares, i::Int)  1 <= i <= S.count || throw(BoundsError(S, i))
+  return i*i 
 endSquares(100)[23]
 
 Base.endof(S::Squares) = length(S) 
@@ -1651,7 +1739,7 @@ importall OtherLib
 export MyType, foo
 	
 type MyType
-	x
+  x
 end
 	
 bar(x) = 2x
@@ -1677,7 +1765,7 @@ using Base
 eval(x) = Core.eval(Mod, x)
 eval(m, x) = Core.eval(m, x)
 
-...
+###
 
 end
 ```
@@ -1697,12 +1785,12 @@ using Base.Sort
 module Parent
 
 module Utils
-...
+  ###
 end
 
 using .Utils
 
-...
+###
 end
 ```
 
@@ -1739,7 +1827,7 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 ### docstrings
 
 ```julia
-"Tell whether there are too foo items in the array."foo(xs::Array) = ...
+"Tell whether there are too foo items in the array."foo(xs::Array) = ###
 ```
 
 ### 使用规则
@@ -1748,10 +1836,11 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 下面块中数字1后面的\`\`\`应该写在下一行，这里只是为了文章前后输出一致
 
 ```julia
-"""    bar(x[, y])
+"""
+  bar(x[, y])
     Compute the Bar index between `x` and `y`. If `y` is missing, compute the Bar index between all pairs of columns of `x`.
 # Examples```juliajulia> bar([1, 2], [1, 2]) 
-1```"""function bar(x, y) ...
+1```"""function bar(x, y) ###
 ```
 
 + 在文档顶部总是展示函数标识，并以四空格方式缩进，使得能够以Julia代码方式输出
@@ -1760,7 +1849,7 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 + 仅仅对于复杂函数参量，提供参量列表
 
 ```julia
-"""...# Arguments* `n::Integer`: the number of elements to compute.* `dim::Integer=1`: the dimensions along which to perform the computation...."""
+"""#### Arguments* `n::Integer`: the number of elements to compute.* `dim::Integer=1`: the dimensions along which to perform the computation.###"""
 ```
 
 + `# Examples`段落下的事例应该用```julia块包裹，这可以用于程序运行结果与文档中给定结果的比较检测
@@ -1783,8 +1872,9 @@ push!(LOAD_PATH, "/Path/To/My/Module/")
 
 ```julia
 for (f, op) in ((:add, :+), (:subtract, :-), (:multiply, :*), (:divide, :/)) 
-	@eval begin		$f(a,b) = $op(a,b) 
-	endend
+  @eval begin
+    $f(a,b) = $op(a,b) 
+  endend
 @doc "`add(a,b)` adds `a` and `b` together" add@doc "`subtract(a,b)` subtracts `b` from `a`" subtract
 ```
 
@@ -1792,8 +1882,8 @@ for (f, op) in ((:add, :+), (:subtract, :-), (:multiply, :*), (:divide, :/))
 
 ```julia
 if VERSION > v"0.4"
-	@doc "..." ->
-	f(x) = x
+  @doc "###" ->
+  f(x) = x
 end
 ```
 
@@ -1802,7 +1892,9 @@ end
 
 ```julia
 macro example(f) 
-	quote        $(f)() = 0        @__doc__ $(f)(x) = 1        $(f)(x, y) = 2	end |> esc
+  quote
+    $(f)() = 0    @__doc__ $(f)(x) = 1    $(f)(x, y) = 2
+  end |> esc
 end
 ```
 
@@ -1829,7 +1921,7 @@ ex = :(a + b * c + 1)
 prog = "1 + 1"
 
 ex1 = parse(prog)
-typeof(ex1)                     # => Expr
+typeof(ex1)  # => Expr
 
 ex1.head
 ex1.args
@@ -1838,17 +1930,17 @@ ex1.typ
 ex2 = Expr(:call, :+, 1, 1)
 
 # equivalent
-ex1 == ex2                     # true
+ex1 == ex2  # true
 
-dump(ex2)                      # display of Expr objects
+dump(ex2)  # display of Expr objects
 
-ex3 = parse("(4 + 4) / 2")     # nested
-Meta.show_sexpr(ex3)           #another way to view expression
+ex3 = parse("(4 + 4) / 2")  # nested
+Meta.show_sexpr(ex3)  #another way to view expression
 
 ex = quote
-	x = 1
-	y = 2
-	x + y
+  x = 1
+  y = 2
+  x + y
 end
 ```
 
@@ -1869,7 +1961,7 @@ ex3 = :(:a in $(:(:a + :b)))
 
 ```julia
 function math_expr(op, op1, op2) 
-	expr = Expr(:call, op, op1, op2)	return expr
+  expr = Expr(:call, op, op1, op2)  return expr
 end
 
 ex = math_expr(:+, 1, Expr(:call, :*, 4, 5))
@@ -1881,18 +1973,18 @@ eval(ex)
 
 ```julia
 macro sayhello(name)
-	return :(println("Hello, ", $name, "!"))
+  return :(println("Hello, ", $name, "!"))
 end
 
-@sayhello("world")                           # => Hello, world!
+@sayhello("world")  # => Hello, world!
 
-ex = macroexpand(:(@sayhello("world")))      # extremely useful for debugging macros
+ex = macroexpand(:(@sayhello("world")))  # extremely useful for debugging macros
 ```
 
 #### 宏是必要的：当代码被解析时执行宏，因此宏允许在整个程序运行前生成和包含定制代码片段。
 
 ```julia
-macro twostep(arg)	println("I execute at parse time. The argument is: ", arg)	return :(println("I execute at runtime. The argument is: ", $arg)) 
+macro twostep(arg)  println("I execute at parse time. The argument is: ", arg)  return :(println("I execute at runtime. The argument is: ", $arg)) 
 end
 
 ex = macroexpand(:(@twostep :(1, 2, 3)))
@@ -1906,11 +1998,11 @@ eval(ex)
 ```julia
 @name expr1 expr2 ...
 @name(expr1, expr2, ...)
-@name (expr1, expr2, ...)        # a tuple as one argument
+@name (expr1, expr2, ...)  # a tuple as one argument
 
 macro showarg(x)
-	show(x)
-	# ...
+  show(x)
+  ###
 end
 @showarg(a)
 @showarg(1+1)
@@ -1921,8 +2013,8 @@ end
 
 ```julia
 macro assert(ex, msgs...)
-	msg_body = isempty(msgs) ? ex : msgs[1]
-	msg = string(msg_body)	return :( $ex ? nothing : throw(AssertionError($msg)))end
+  msg_body = isempty(msgs) ? ex : msgs[1]
+  msg = string(msg_body)  return :( $ex ? nothing : throw(AssertionError($msg)))end
 
 macroexpand(:(@assert a==b))
 macroexpand(:(@assert a==b "a should equal b!"))
@@ -1934,21 +2026,21 @@ macroexpand(:(@assert a==b "a should equal b!"))
 
 ```julia
 for op = (:+, :*, :&, :|, :$) 
-	eval(quote		($op)(a,b,c) = ($op)(($op)(a,b),c) 
-	end)end
+  eval(quote    ($op)(a,b,c) = ($op)(($op)(a,b),c) 
+  end)end
 
 # equivalent
 for op = (:+, :*, :&, :|, :$) 
-	eval(:(($op)(a,b,c) = ($op)(($op)(a,b),c)))end
+  eval(:(($op)(a,b,c) = ($op)(($op)(a,b),c)))end
 
-for op = (:+, :*, :&, :|, :$)	@eval ($op)(a,b,c) = ($op)(($op)(a,b),c)end
+for op = (:+, :*, :&, :|, :$)  @eval ($op)(a,b,c) = ($op)(($op)(a,b),c)end
 ```
 
 对于更大的代码块：
 
 ```julia
 @eval begin
-	# multiple lines
+  # multiple lines
 end
 ```
 
@@ -1957,8 +2049,8 @@ end
 ```julia
 # runtime loop
 function sub2ind_loop{N}(dims::NTuple{N}, I::Integer...) 
-	ind = I[N] - 1	for i = N-1:-1:1		ind = I[i]-1 + dims[i]*ind 
-	end	return ind + 1 
+  ind = I[N] - 1  for i = N-1:-1:1    ind = I[i]-1 + dims[i]*ind 
+  end  return ind + 1 
 end
 
 # recursion
@@ -1966,8 +2058,8 @@ sub2ind_rec(dims::Tuple{}) = 1sub2ind_rec(dims::Tuple{},i1::Integer, I::Integer
 
 # compile-time iteration
 @generated function sub2ind_gen{N}(dims::NTuple{N}, I::Integer...) 
-	ex = :(I[$N] - 1)	for i = N-1:-1:1		ex = :(I[$i] - 1 + dims[$i]*$ex) 
-	end	return :($ex + 1) 
+  ex = :(I[$N] - 1)  for i = N-1:-1:1    ex = :(I[$i] - 1 + dims[$i]*$ex) 
+  end  return :($ex + 1) 
 end
 ```
 

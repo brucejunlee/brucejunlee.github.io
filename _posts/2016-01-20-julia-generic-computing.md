@@ -11,7 +11,7 @@ image:
   creditlink:
 ---
 
-本文是Julia编程系列的第二篇文章，着重讲述在几个通用计算方面的应用，如网络，并行[^1]，日期等。
+本文是Julia编程系列的第二篇文章，着重讲述在几个通用计算方面的应用，如网络，并行[^1]，日期等，关于最新用法和变更请查看[在线文档](https://docs.julialang.org/en/stable/index.html)。
 
 ## 网络&流
 ### 基本I/O流
@@ -25,15 +25,15 @@ read(STDIn, 4)
 x = zeros(UInt8, 4)
 read!(STDIN, x)
 
-readline(STDIN)               # read the entire line instead
+readline(STDIN) # read the entire line instead
 
 for line in eachline(STDIN) 
-	println("Found $line")
+  println("Found $line")
 end
 
 while !eof(STDIN)
-	x = read(STDIN, Char)
-	println("Found: $x")
+  x = read(STDIN, Char)
+  println("Found: $x")
 end
 ```
 
@@ -54,46 +54,49 @@ readlines(f)
 
 f = open("hello.txt", "w")
 write(f, "Hello again.")
-close(f)                   # IOStream must be closed before the write is actually flushed to disk
+close(f) # IOStream must be closed before the write is actually flushed to disk
 ```
 
 ```julia
 function read_and_capitalize(f::IOStream) 
-	return uppercase(readstring(f))end
+  return uppercase(readstring(f))end
 open(read_and_capitalize, "hello.txt")
 
 # equivalent
 open("hello.txt") do f
-	uppercase(readstring(f))
+  uppercase(readstring(f))
 end
 ```
 
 ### TCP套接字(socket)
 
 ```julia
-@async begin	server = listen(2000)	while true		sock = accept(server)
-		println("Hello World\n")	end 
+@async begin  server = listen(2000)  while true
+    sock = accept(server)
+    println("Hello World\n")
+  end 
 end
 
-julia> listen(2000)                   # Listens on localhost:2000 (IPv4)
-julia> listen(ip"127.0.0.1", 2000)    # Equivalent to the first
-julia> listen(ip"::1", 2000)          # Listens on localhost:2000 (IPv6)
-julia> listen(IPv4(0), 2001)          # Listens on port 2001 on all IPv4 interfaces
-julia> listen(IPv6(0), 2001)          # Listens on port 2001 on all IPv6 interfaces
-julia> listen("testsocket")           # Listens on a UNIX domain socket/named pipe
+julia> listen(2000)  # Listens on localhost:2000 (IPv4)
+julia> listen(ip"127.0.0.1", 2000) # Equivalent to the first
+julia> listen(ip"::1", 2000) # Listens on localhost:2000 (IPv6)
+julia> listen(IPv4(0), 2001) # Listens on port 2001 on all IPv4 interfaces
+julia> listen(IPv6(0), 2001) # Listens on port 2001 on all IPv6 interfaces
+julia> listen("testsocket")  # Listens on a UNIX domain socket/named pipe
 
 julia> accept(2000)
 julia> connect(2000)
 
-
-@async begin	server = listen(2001)	while true		sock = accept(server)
-		@async while isopen(sock)       	write(sock,readline(sock))		end
-	endend
+@async begin  server = listen(2001)  while true
+    sock = accept(server)
+    @async while isopen(sock)
+      write(sock,readline(sock))	end
+  endend
 
 julia> clientside = connect(2001)
 
 @async while true
-	write(STDOUT,readline(clientside))end
+  write(STDOUT,readline(clientside))end
 
 julia> println(clientside,"Hello World from the Echo Server")
 julia> close(clientside)
@@ -156,8 +159,8 @@ $ julia -p <n> -L file1.jl -L file2.jl driver.jl
 ### 数据运动
 
 ```julia
-A = rand(1000, 1000)              # constructed locally
-Bref = @spawn A^2                 # sent to another process where it is squared
+A = rand(1000, 1000) # constructed locally
+Bref = @spawn A^2    # sent to another process where it is squared
 fetch(Bref)
 
 Bref = @spawn rand(1000, 1000)^2  # both constructed and squared on another process, so send much less data than the first
@@ -168,7 +171,9 @@ fetch(Bref)
 
 ```julia
 function count_heads(n) 
-	c::Int = 0	for i=1:n		c += rand(Bool)	end	cend
+  c::Int = 0  for i=1:n
+    c += rand(Bool)  end
+  cend
 
 julia> @everywhere include("count_heads.jl")julia> a = @spawn count_heads(100000000)julia> b = @spawn count_heads(100000000)julia> fetch(a)+fetch(b)
 ```
@@ -176,18 +181,19 @@ julia> @everywhere include("count_heads.jl")julia> a = @spawn count_heads(10000
 并行for-loop中迭代没有按特定顺序发生，因为迭代运行在不同进程中，所以对变量和数组的写操作不是全局可见的。并行循环中用到的任何变量都将被复制广播到每个进程中。如果只用于读取变量，那么使用并行循环外的变量是可以的。
 
 ```julia
-nheads = @parallel (+) for i=1:200000000 	Int(rand(Bool))end
+nheads = @parallel (+) for i=1:200000000
+  Int(rand(Bool))end
 ```
 
 ```julia
 # not work
 a = zeros(100000) 
-@parallel for i=1:100000	a[i] = i 
+@parallel for i=1:100000  a[i] = i 
 end
 
 # work
 a = SharedArray(Float64,10) 
-@parallel for i=1:10	a[i] = i 
+@parallel for i=1:10  a[i] = i 
 end
 ```
 
@@ -207,15 +213,30 @@ Julia并行计算使用Task在多个计算间进行切换。当代码进行fetch
 + dynamic scheduling
 
 ```julia
-function pmap(f, lst)	np = nprocs() # determine the number of processes available 
-	n = length(lst)	results = Vector{Any}(n)	i=1	# function to produce the next work item from the queue.	# in this case it's just an index.	nextidx() = (idx=i; i+=1; idx)	@sync begin
-		for p=1:np			if p != myid() || np == 1				@async begin 
-					while true						idx = nextidx() 
-						if idx > n							break 
-						end						results[idx] = remotecall_fetch(f, p, lst[idx]) 
-					end				end 
-			end		end 
-	end	resultsend
+function pmap(f, lst)
+  np = nprocs() # determine the number of processes available 
+  n = length(lst)
+  results = Vector{Any}(n)
+  i=1
+  # function to produce the next work item from the queue.
+  # in this case it's just an index.
+  nextidx() = (idx=i; i+=1; idx)
+  @sync begin
+    for p=1:np
+      if p != myid() || np == 1
+        @async begin 
+          while true
+            idx = nextidx() 
+            if idx > n
+              break 
+            end
+            results[idx] = remotecall_fetch(f, p, lst[idx]) 
+          end
+        end 
+      end
+    end 
+  end
+  resultsend
 ```
 
 ### 信道
@@ -243,23 +264,39 @@ SharedArray(T::Type, dims::NTuple; init=false, pids=Int[])
 
 ```julia
 # This function retuns the (irange,jrange) indexes assigned to this worker@everywhere function myrange(q::SharedArray) 
-	idx = indexpids(q)	if idx == 0    	# This worker is not assigned a piece		return 1:0, 1:0 
-	end	nchunks = length(procs(q))	splits = [round(Int, s) for s in linspace(0,size(q,2),nchunks+1)] 
-	1:size(q,1), splits[idx]+1:splits[idx+1]end# Here's the kernel@everywhere function advection_chunk!(q, u, irange, jrange, trange)	@show (irange, jrange, trange) # display so we can see what's happening 
-	for t in trange, j in jrange, i in irange		q[i,j,t+1] = q[i,j,t] + u[i,j,t] 
-	end	qend# Here's a convenience wrapper for a SharedArray implementation@everywhere advection_shared_chunk!(q, u) = advection_chunk!(q, u, myrange(q)..., 1:size(q,3)-1)
+  idx = indexpids(q)
+  if idx == 0
+    # This worker is not assigned a piece
+    return 1:0, 1:0 
+  end
+  nchunks = length(procs(q))
+  splits = [round(Int, s) for s in linspace(0,size(q,2),nchunks+1)] 
+  1:size(q,1), splits[idx]+1:splits[idx+1]end# Here's the kernel@everywhere function advection_chunk!(q, u, irange, jrange, trange)
+  @show (irange, jrange, trange) # display so we can see what's happening 
+  for t in trange, j in jrange, i in irange
+    q[i,j,t+1] = q[i,j,t] + u[i,j,t] 
+  end
+  qend# Here's a convenience wrapper for a SharedArray implementation@everywhere advection_shared_chunk!(q, u) = advection_chunk!(q, u, myrange(q)..., 1:size(q,3)-1)
 
 advection_serial!(q, u) = advection_chunk!(q, u, 1:size(q,1), 1:size(q,2), 1:size(q,3)-1)
 
 function advection_parallel!(q, u) 
-	for t = 1:size(q,3)-1		@sync @parallel for j = 1:size(q,2) 
-			for i = 1:size(q,1)				q[i,j,t+1]= q[i,j,t] + u[i,j,t] 
-			end		end 
-	end	qend
+  for t = 1:size(q,3)-1
+    @sync @parallel for j = 1:size(q,2) 
+      for i = 1:size(q,1)
+        q[i,j,t+1]= q[i,j,t] + u[i,j,t] 
+      end
+    end 
+  end
+  qend
 
 function advection_shared!(q, u) 
-	@sync begin		for p in procs(q)			@async remotecall_wait(advection_shared_chunk!, p, q, u)		end 
-	end	qend
+  @sync begin
+    for p in procs(q)
+      @async remotecall_wait(advection_shared_chunk!, p, q, u)
+    end 
+  end
+  qend
 
 # $ julia -p 4
 
@@ -267,7 +304,7 @@ q = SharedArray(Float64, (500,500,500))
 u = SharedArray(Float64, (500,500,500))
 # Run once to JIT-compileadvection_serial!(q, u)advection_parallel!(q, u)advection_shared!(q,u)julia> @time advection_serial!(q, u);
 julia> @time advection_parallel!(q, u);
-julia> @time advection_shared!(q,u);     # best
+julia> @time advection_shared!(q,u); # best
 ```
 
 ### 集群管理
@@ -329,20 +366,183 @@ dt = Date("2015-01-01",df)
 dt = Date("2015-01-02",df)
 ```
 
+### 时间段
 
+```julia
+dt = Date(2012, 2, 29)
+dt2 = Date(2000, 2, 1)
 
+dump(dt)  # UTInstant{Day}
+dump(dt2)
 
+dt > dt2  # true
+dt != dt2  # true
 
+dt + dt2  # operation not defined for TimeTypes
+dt * dt2  # operation not defined for TimeTypes
+dt / dt2  # operation not defined for TimeTypes
 
+dt - dt2  # 4411 days
+dt2 - dt
 
+# but
+y1 = Dates.Year(1)
+y2 = Dates.Year(2)
+y3 = Dates.Year(10)
 
+y1 + y2
+div(y3, y2)
+y3 - y2
+y3 * y2  # error
+y3 * 20
+y3 % y2
+y1 + 20  # error
+div(y3, 3)
 
+dt = DateTime(2012, 2, 29)
+dt2 = DateTime(2000, 2, 1)
 
+dump(dt)  # UTInstant{Millisecond}
 
-## 外部程序运行
+dt - dt2  # 381110402000 milliseconds
+```
+
+### 访问(accessor)函数
+
+```julia
+t = Date(2016, 1, 20)
+Dates.year(t)  # 2016
+Dates.month(t)
+Dates.week(t)  # 3
+Dates.day(t)
+
+Dates.Year(t)  # 2016 years
+Dates.Day(t)  # 20 days
+
+Dates.yearmonth(t)
+Dates.monthday(t)
+Dates.yearmonthday(t)
+
+dump(t)
+t.instant
+
+Dates.value(t)
+```
+
+### 查询(query)函数
+
+```julia
+t = Date(2016, 1, 20)
+Dates.dayofweek(t)  # 3
+Dates.dayname(t)  # "Wednesday"
+Dates.dayofweekofmonth(t)  # 3
+
+Dates.monthname(t)  # "January"
+Dates.daysinmonth(t)  # 31
+
+Dates.isleapyear(t)  # true
+Dates.dayofyear(t)  # 20
+Dates.quarterofyear(t)  # 1
+Dates.dayofquarter(t)  # 20
+```
+
+dayname()和monthname()方法可以取可选关键字locale，返回在其它语言区那一年的那一天或那一月的名字，Julia 0.6.0版本取消了VALUETODAYOFWEEK, VALUETOMONTH。
+
+```julia
+french_months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+french_monts_abbrev = ["janv","févr","mars","avril","mai","juin", "juil","août","sept","oct","nov","déc"]
+french_days = ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"]
+Dates.LOCALES["french"] = Dates.DateLocale(french_months, french_monts_abbrev, french_days, [""])
+Dates.dayname(t;locale="french")
+Dates.monthname(t;locale="french")
+Dates.monthabbr(t;locale="french")
+```
+
+### 日历算术
+
+```julia
+(Date(2014,1,29)+Dates.Day(1)) + Dates.Month(1)
+(Date(2014,1,29)+Dates.Month(1)) + Dates.Day(1)
+
+Date(2014,1,29) + Dates.Day(1) + Dates.Month(1)
+```
+
+### 适配器(adjuster)
+
+```julia
+Dates.firstdayofweek(Date(2014,7,16))
+Dates.lastdayofmonth(Date(2014,7,16))
+Dates.lastdayofquarter(Date(2014,7,16))
+
+istuesday = x->Dates.dayofweek(x) == Dates.Tuesday
+Dates.tonext(istuesday, Date(2014,7,13))
+Dates.tonext(Date(2014,7,13), Dates.Tuesday)  # equivalent
+
+Dates.tonext(Date(2014,7,13)) do x  # Return true on the 4th Thursday of November (Thanksgiving) 
+  Dates.dayofweek(x) == Dates.Thursday && 
+  Dates.dayofweekofmonth(x) == 4 && 
+  Dates.month(x) == Dates.Novemberend
+```
+
+filter通过取开始和结束日期将适配过程向量化(还可以详述StepRange), Julia 0.6.0取消了recur函数
+
+```julia
+dr = Dates.Date(2014):Dates.Date(2015)
+filter(dr) do x
+  Dates.dayofweek(x) == Dates.Tue && 
+  Dates.April <= Dates.month(x) <= Dates.Nov && 
+  Dates.dayofweekofmonth(x) == 2end
+```
+
+### 舍入
+
+```julia
+floor(Date(1985, 8, 16), Dates.Month)
+ceil(DateTime(2013, 2, 13, 0, 31, 20), Dates.Minute(15))
+round(DateTime(2016, 8, 6, 20, 15), Dates.Day)
+
+round(DateTime(2016, 7, 17, 11, 55), Dates.Hour(10))
+round(DateTime(2016, 7, 17, 8, 55, 30), Dates.Hour(2))
+round(DateTime(2016, 7, 17, 8, 55, 30), Dates.Minute(2))
+round(DateTime(2016, 7, 17, 8, 55, 30), Dates.Month(2))
+```
+
+## 运行外部程序
+
+```julia
+julia> run(`echo hello`)
+julia> run(`echo hello` & `echo world`) # the order of the output here is non-deterministic because the two echo processes are started nearly simultaneously
+julia> run(pipeline(`echo hello`, `sort`))
+
+a = readstring(`echo hello`)
+chomp(a) = "hello"
+```
 
 ## 调用C和Fortran代码
 
+```julia
+t = ccall( (:clock, "libc"), Int32, ())
 
+path = ccall((:getenv, "libc"), Cstring, (Cstring,), "SHELL")
+unsafe_string(path)
+```
+
+### C兼容的函数指针
+
+```julia
+function mycompare{T}(a::T, b::T)  return convert(Cint, a < b ? -1 : a > b ? +1 : 0)::Cintend
+const mycompare_c = cfunction(mycompare, Cint, (Ref{Cdouble}, Ref{Cdouble}))
+```
+
+### C类型映射到Julia
+
++ cconvert
++ unsafe_convert
+
+## 嵌入Julia代码
+
+```c
+#include <julia.h>int main(int argc, char *argv[]) {    /* required: setup the Julia context */jl_init(NULL);/* run Julia commands */    jl_eval_string("print(sqrt(2.0))");    /* strongly recommended: notify Julia that the         program is about to terminate. this allows         Julia time to cleanup pending write requests         and run all finalizers*/    jl_atexit_hook(0);return 0; }
+```
 
 [^1]: Jeff Bezanson, Stefan Karpinski, Viral Shah, Alan Edelman, et al., Julia Language Documentation(Release 0.6.0-dev).

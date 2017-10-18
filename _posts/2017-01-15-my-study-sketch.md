@@ -51,36 +51,6 @@ image:
 * [陶哲轩](https://terrytao.wordpress.com)
 * [张驰原](http://blog.pluskid.org/?page_id=683): Mocha.jl for deep learning
 
-## 会议&期刊
-
-+ AAAI
-+ ACL
-+ ACM
-+ AISTATS
-+ COLT
-+ CVPR
-+ ECCV
-+ ECML
-+ ICASSP
-+ ICCV
-+ ICDE
-+ ICLR
-+ ICML
-+ IEEE
-+ IJCAI
-+ IJCV
-+ JMLR
-+ Neural Computation
-+ Neural Networks
-+ NIPS
-+ PAMI
-+ PyCon
-+ SciPy
-+ SIAM
-+ SIGGRAPH
-+ SIGKDD
-+ [Strata](https://conferences.oreilly.com/strata)
-
 ## 杂志
 
 * [DataTau](http://www.datatau.com)

@@ -43,7 +43,7 @@ image:
 * Joel Grus, <u>Data Science from Scratch First Principles with Python</u>
 * Anshul Joshi, <u>Julia for Data Science</u>
 * Rachel Schutt and Cathy O'Neil, <u>Doing Data Science</u>
-* Sebastian Gutierrez, <u>Data Scientists at Work</u>
+* Sebastian Gutierrez, <u>Data Scientists at Work</u>[especially, Yann LeCun's chapter]
 * Amy N. langville and Carl D. Meyer, <u>Google's PageRank and Beyond</u>
 
 ---
@@ -54,6 +54,38 @@ image:
 * Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
 * Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>
 * Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>
+
+## 会议&期刊
+
++ AAAI
++ ACL
++ ACM
++ AISTATS
++ COLT
++ CVPR
++ ECCV
++ ECML
++ EMNLP
++ ICASSP
++ ICCV
++ ICDE
++ ICLR
++ ICML
++ IEEE
++ IJCAI
++ IJCV
++ JMLR
++ Neural Computation
++ Neural Networks
++ NIPS
++ PAMI
++ PyCon
++ SciPy
++ SIAM
++ SIGGRAPH
++ SIGKDD
++ [Strata](https://conferences.oreilly.com/strata)
++ UAI
 
 ## 实用教程
 
