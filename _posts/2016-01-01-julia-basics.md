@@ -143,11 +143,11 @@ help>
 ### 4.2 命名：除了内置语句中保留的关键字外
 
 ### 4.3 风格习惯
-+ 小写
-+  词分隔用下划线\_ （不鼓励使用）
-+  类型名和模块名开始于大写字母，词分隔采用驼峰法
-+  函数名和宏名采用无下划线的小写形式
-+  有实参的函数可以以!结尾，这些被称为可变(in-place)函数
++ 小写；多个词可以挤在一起
++ 词分隔用下划线\_表示概念组合或者为了可读性（不鼓励使用）
++ 类型名和模块名开始于大写字母，词分隔采用驼峰法
++ 函数名和宏名采用无下划线的小写形式
++ 有实参的函数可以以!结尾，这些被称为可变(in-place)函数
 
 ### 4.4 作用域(scope)
 
@@ -1357,7 +1357,7 @@ foo.bar
 foo.qux = 2
 ```
 
-无域(field)的组合类型被称为singleton，这样的类型只有一个实例。
+无属性(field)的组合类型被称为singleton，这样的类型只有一个实例。
 
 ```julia
 type NoFields
@@ -1377,7 +1377,7 @@ immutable Complex
 end
 ```
 
-不可变的组合类型中也可以包含可变对象，如数组，域等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。
+不可变的组合类型中也可以包含可变对象，如数组，属性等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。
 
 ### 14.3 类型并集(type unions)
 
@@ -1659,7 +1659,7 @@ end
 
 #### 自引对象／递归数据结构
 
-为了允许非完全初始化的对象创建，Julia允许调用少于类型域数目参量的new函数，返回一个未初始化的对象。然后内部构造器方法就可以使用这个非完全(incomplete)的对象，在返回之前完成初始化。
+为了允许非完全初始化的对象创建，Julia允许调用少于类型属性数目参量的new函数，返回一个未初始化的对象。然后内部构造器方法就可以使用这个非完全(incomplete)的对象，在返回之前完成初始化。
 
 ```julia
 type SelfReferential 
@@ -2279,9 +2279,165 @@ cd ~/.julia/v0.6/METADATA/FooBar/versions/0.0.1 && cat requires
 vi requires
 ```
 
-## 22 风格指导
+## 22 编码风格
+
+### 22.1 编写函数而不仅仅只是写脚本
+
++ 可重用
++ 可测试
+
+### 22.2 避免类型过于详细
+
+```julia
+convert(Complex{Float64}, x)  # bad
+complex(float(x))
+```
+
+```julia
+addone(x) = x + one(x)
+```
+
+### 22.3 处理调用函数中多余参量的多样性
+
+```julia
+function foo(x::Int, y::Int) 
+  ...endfoo(Int(x), Int(y))
+```
+
+这里的foo函数只处理整型值，调用者需要手动考虑任意输入参量的类型转换。这对于函数的干净整洁是有很大好处的。正像很多优秀的机器学习库，并没有过度提供数据预处理，缺失值处理等琐碎问题，好的库应该只关心核心功能本身，而将其它剥离出系统外，由用户或第三方功能库处理。
+
+### 22.4 使用`!`
+
++ sort!
++ push!
++ pop!
++ splice!
+
+```julia
+function double!{T<:Number}(a::AbstractArray{T}) 
+  for i = 1:endof(a); a[i] *= 2; end
+  aend
+```
+
+### 22.5 避免奇怪的类型并
+
+如`Union{Function, AbstractString}`
+
+### 22.6 避免在属性(field)中使用类型并
+
+```julia
+type MyType
+  ...
+  x :: Union{Void, T}
+end
+```
+
+### 22.7 避免过于精细的容器类型
+
+```julia
+a = Array{Union{Int,AbstractString,Tuple,Array}}(n)  # bad
+a = Array{Any}(n)
+```
+
+### 22.8 使用同base／一致的命名习惯
+
+### 22.9 不要滥用try-catch
+
+### 22.10 不要将条件括起来
+
+```julia
+if a == b
+```
+
+### 22.11 不要滥用`...`
+
+```julia
+[a..., b...]  # bad
+[a; b]
+[a...]  # bad
+collect(a)
+```
+
+### 22.12 不要使用没必要的静态参数
+
+```julia
+foo{T <: Real}(x :: T) = ...  # bad
+foo(x::Real) = ...
+```
+
+### 22.13 避免实例和类型混淆
+
+推荐默认使用实例，但是枚举类型除外
+
+### 22.14 不要滥用宏
+
+### 22.15 不要在接口层暴露不安全操作
+
+```julia
+type NativeType 
+  p::Ptr{UInt8}  ...end
+getindex(x::NativeType, i) = unsafe_load(x.p, i)
+```
+
+### 22.16 避免重载基本库容器类型的方法
+
+```julia
+show(io::IO, v::Vector{MyType}) = ...
+```
+
+### 22.17 小心对待类型相等
+
++ isa()
++ issubtype(): `<:`
++ ==一般只用于比较具体类型，如`T == Float64`
+
+### 22.18 不要写`x->f(x)`
+
+```julia
+map(x -> f(x), a)  # bad
+map(f, a)
+```
+
+### 22.19 避免在通用代码中的数值使用浮点数
+
+尽可能使用在类型提升中对参量影响很小的数值类型
+
+```julia
+f(x) = 2.0 * x
+f(1//2)
+f(1/2)
+f(1)
+
+g(x) = 2 * x
+g(1//2)
+g(1/2)
+g(2)
+
+h(x) = 2//1 * x
+h(1//2)
+h(1/2)
+h(1)
+```
 
 ## 23 FAQ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 24 与其它语言间的差别
 
