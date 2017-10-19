@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "数据科学"
+title: "数据科学提纲"
 author: "李军"
 categories: journal
 tags: [research, data science, deep learning, mathematics]
@@ -53,6 +53,10 @@ image:
 * Kevin P. Murphy, <u>Machine Learning: A Probabilistic Perspective</u>
 * Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
 * Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>
+* Michael Nielsen, <u>Neural Networks and Deep Learning</u>
+* Li Deng and Dong Yu, <u>Deep Learning: Methods and Applications</u>
+* Dong Yu and Li Deng, <u>Automatic Speech Recognition: A Deep Learning Approach</u>
+* Li Deng and Dong Yu, <u>Deep Learning For Signal And Information Processing</u>
 * Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>
 
 ## 会议&期刊
@@ -78,7 +82,7 @@ image:
 + Neural Computation
 + Neural Networks
 + NIPS
-+ PAMI
++ TPAMI
 + PyCon
 + SciPy
 + SIAM
@@ -103,6 +107,7 @@ image:
 
 + [Data Science Course[推荐]](http://nbviewer.jupyter.org/github/briandalessandro/)
 + [Manifold Learning](http://nbviewer.jupyter.org/github/briandalessandro/PythonDataScienceHandbook/blob/master/notebooks/05.10-Manifold-Learning.ipynb)
++ [数据可视化](http://www.datavis.ca)
 
 ### 机器学习
 
@@ -125,6 +130,8 @@ image:
 + [PaddlePaddle深度学习入门](http://book.paddlepaddle.org/index.cn.html)
   
 + [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
+
++ 深度学习云平台[FloydHub](https://www.floydhub.com)
   
 ## 视频课程
 
@@ -135,6 +142,19 @@ image:
 * [Deep Learning Specialization by Andrew Ng](https://www.coursera.org/specializations/deep-learning)
 * [Practical Deep Learning For Coders, Part1 by fast.ai](http://course.fast.ai)
 * [Cutting Edge Deep Learning For Coders, Part 2 by fast.ai](http://course.fast.ai/part2.html)
+
+## 数据集
+
+* CIFAR
+* Data.gov
+* ImageNet
+* IMDB
+* Kaggle
+* MNIST
+* MovieLens
+* Netflix
+* NOAA
+* UCI
 
 ## 实例
 

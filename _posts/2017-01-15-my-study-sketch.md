@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "我的研究提纲"
+title: "我的研究生活"
 author: "李军"
 categories: journal
 tags: [Research,Deep Learning, Machine Learning, math]
@@ -22,6 +22,7 @@ image:
 
 ## 博客
 
+* [Andrej Karpathy](http://karpathy.github.io)
 * [Andrew Gibiansky](http://andrew.gibiansky.com)
 * [AI, DL and NLP](http://www.wildml.com)
 * [AI Playbook](http://aiplaybook.a16z.com)
@@ -49,6 +50,7 @@ image:
 * [Random Thoughts](http://rt.dgyblog.com/ref/ref-learning-deep-learning.html)
 * [Tim Dettmers](http://timdettmers.com)
 * [陶哲轩](https://terrytao.wordpress.com)
+* [All Things Distributed](http://www.allthingsdistributed.com): by Amazon's VP & CTO Werner Vogels
 * [张驰原](http://blog.pluskid.org/?page_id=683): Mocha.jl for deep learning
 
 ## 杂志
@@ -73,19 +75,6 @@ image:
 * [math**overflow**](https://mathoverflow.net)
 * [StackExchange](https://stackexchange.com)
 * [知乎](https://www.zhihu.com)
-
-## 数据集
-
-* CIFAR
-* Data.gov
-* ImageNet
-* IMDB
-* Kaggle
-* MNIST
-* MovieLens
-* Netflix
-* NOAA
-* UCI
 
 ## 项目
 

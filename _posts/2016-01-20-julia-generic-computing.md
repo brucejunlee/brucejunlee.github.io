@@ -13,8 +13,9 @@ image:
 
 本文是Julia编程系列的第二篇文章，着重讲述在几个通用计算方面的应用，如网络，并行[^1]，日期等，关于最新用法和变更请查看[在线文档](https://docs.julialang.org/en/stable/index.html)。
 
-## 网络&流
-### 基本I/O流
+## 1 网络&流
+
+### 1.1 基本I/O流
 
 ```julia
 write(STDOUT, "Hello World"); # suppress return value 11 with ;
@@ -37,7 +38,7 @@ while !eof(STDIN)
 end
 ```
 
-### 文本I/O
+### 1.2 文本I/O
 
 ```julia
 write(STDOUT,0x61); # suppress return value 1 with ;
@@ -46,7 +47,7 @@ print(STDOUT, 0x61)
 # or show()
 ```
 
-### 文件流
+### 1.3 文件流
 
 ```julia
 f = open("hello.txt")
@@ -68,7 +69,7 @@ open("hello.txt") do f
 end
 ```
 
-### TCP套接字(socket)
+### 1.4 TCP套接字(socket)
 
 ```julia
 @async begin  server = listen(2000)  while true
@@ -102,7 +103,7 @@ julia> println(clientside,"Hello World from the Echo Server")
 julia> close(clientside)
 ```
 
-### 解析IP地址
+### 1.5 解析IP地址
 
 + connect(host::String, port)
 
@@ -111,7 +112,8 @@ julia> connect("google.com", 80)
 julia> getaddrinfo("google.com")
 ```
 
-## 并行计算
+## 2 并行计算
+
 大多数现代计算机拥有多块CPU，一个集群可以组合几个计算机。有两个主要因素影响性能，一个是CPU自身的速度，其次是内存访问的速度。Julia基于消息传递来提供多进程环境，使得程序能够一次在不同内存区的多进程中运行。
 
 Julia消息传递机制的实现不同于MPI等其它环境。Julia通信通常是单边的(one-sided)，即在两进程操作中，程序员只需要精确管理一个进程。
@@ -142,7 +144,7 @@ s = @spawn 1 .+ fetch(r)
 fetch(s)
 ```
 
-### 包加载
+### 2.1 包加载
 
 + include只能将文件加载到单个进程中，using使得模块被加载到所有进程中。
 + 强制操作：@everywhere
@@ -156,7 +158,7 @@ $ julia -p <n> -L file1.jl -L file2.jl driver.jl
 + --machinefile选项
 + addprocs，rmprocs，workers
 
-### 数据运动
+### 2.2 数据运动
 
 ```julia
 A = rand(1000, 1000) # constructed locally
@@ -167,7 +169,7 @@ Bref = @spawn rand(1000, 1000)^2  # both constructed and squared on another proc
 fetch(Bref)
 ```
 
-### 并行map／loop
+### 2.3 并行map／loop
 
 ```julia
 function count_heads(n) 
@@ -207,7 +209,8 @@ M = Matrix{Float64}[rand(1000, 1000) for i = 1:10]
 pmap(svd, M)
 ```
 
-### 调度
+### 2.4 调度
+
 Julia并行计算使用Task在多个计算间进行切换。当代码进行fetch，wait等通信时，当前任务被挂起，调度器挑选另一个任务运行。当等待的事件完成时重启任务。
 
 + dynamic scheduling
@@ -239,7 +242,8 @@ function pmap(f, lst)
   resultsend
 ```
 
-### 信道
+### 2.5 信道
+
 信道提供了一种快速的任务内通信方式。
 
 + Channel{T}(n::Int)
@@ -249,7 +253,8 @@ function pmap(f, lst)
 + wait
 + close
 
-### 共享数组
+### 2.6 共享数组
+
 使用系统共享内存将同一个数组映射到许多进程中。
 
 ```julia
@@ -307,14 +312,15 @@ julia> @time advection_parallel!(q, u);
 julia> @time advection_shared!(q,u); # best
 ```
 
-### 集群管理
+### 2.7 集群管理
 
 + LocalManager
 + SSHManager 
 + connect
 + kill
 
-### 其它
+### 2.8 其它
+
 网络拓扑和多线程目前在Julia中还处于实验阶段
 
 #### network topology
@@ -332,10 +338,11 @@ julia> @time advection_shared!(q,u); # best
 + @threads
 + @threadall
 
-## 日期&时间
+## 3 日期&时间
+
 Date和DateTime是Dates模块中的两种类型，分别表示day和millisecond精度。它们不考虑时区影响，或者说它们是本地时间。额外的时区功能通过TimeZones.jl包添加。
 
-### 构造器
+### 3.1 构造器
 
 ```julia
 DateTime(2013)
@@ -366,7 +373,7 @@ dt = Date("2015-01-01",df)
 dt = Date("2015-01-02",df)
 ```
 
-### 时间段
+### 3.2 时间段
 
 ```julia
 dt = Date(2012, 2, 29)
@@ -407,7 +414,7 @@ dump(dt)  # UTInstant{Millisecond}
 dt - dt2  # 381110402000 milliseconds
 ```
 
-### 访问(accessor)函数
+### 3.3 访问(accessor)函数
 
 ```julia
 t = Date(2016, 1, 20)
@@ -429,7 +436,7 @@ t.instant
 Dates.value(t)
 ```
 
-### 查询(query)函数
+### 3.4 查询(query)函数
 
 ```julia
 t = Date(2016, 1, 20)
@@ -458,7 +465,7 @@ Dates.monthname(t;locale="french")
 Dates.monthabbr(t;locale="french")
 ```
 
-### 日历算术
+### 3.5 日历算术
 
 ```julia
 (Date(2014,1,29)+Dates.Day(1)) + Dates.Month(1)
@@ -467,7 +474,7 @@ Dates.monthabbr(t;locale="french")
 Date(2014,1,29) + Dates.Day(1) + Dates.Month(1)
 ```
 
-### 适配器(adjuster)
+### 3.6 适配器(adjuster)
 
 ```julia
 Dates.firstdayofweek(Date(2014,7,16))
@@ -494,7 +501,7 @@ filter(dr) do x
   Dates.dayofweekofmonth(x) == 2end
 ```
 
-### 舍入
+### 3.7 舍入
 
 ```julia
 floor(Date(1985, 8, 16), Dates.Month)
@@ -507,7 +514,7 @@ round(DateTime(2016, 7, 17, 8, 55, 30), Dates.Minute(2))
 round(DateTime(2016, 7, 17, 8, 55, 30), Dates.Month(2))
 ```
 
-## 运行外部程序
+## 4 运行外部程序
 
 ```julia
 julia> run(`echo hello`)
@@ -518,7 +525,7 @@ a = readstring(`echo hello`)
 chomp(a) = "hello"
 ```
 
-## 调用C和Fortran代码
+## 5 调用C和Fortran代码
 
 ```julia
 t = ccall( (:clock, "libc"), Int32, ())
@@ -527,19 +534,19 @@ path = ccall((:getenv, "libc"), Cstring, (Cstring,), "SHELL")
 unsafe_string(path)
 ```
 
-### C兼容的函数指针
+### 5.1 C兼容的函数指针
 
 ```julia
 function mycompare{T}(a::T, b::T)  return convert(Cint, a < b ? -1 : a > b ? +1 : 0)::Cintend
 const mycompare_c = cfunction(mycompare, Cint, (Ref{Cdouble}, Ref{Cdouble}))
 ```
 
-### C类型映射到Julia
+### 5.2 C类型映射到Julia
 
 + cconvert
 + unsafe_convert
 
-## 嵌入Julia代码
+## 6 嵌入Julia代码
 
 ```c
 #include <julia.h>int main(int argc, char *argv[]) {    /* required: setup the Julia context */jl_init(NULL);/* run Julia commands */    jl_eval_string("print(sqrt(2.0))");    /* strongly recommended: notify Julia that the         program is about to terminate. this allows         Julia time to cleanup pending write requests         and run all finalizers*/    jl_atexit_hook(0);return 0; }

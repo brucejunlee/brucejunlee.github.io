@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "人物小传: Jerry Friedman"
+title: "人物小传: James Hardy Wilkinson"
 author: "李军"
 categories: journal
 tags: [machine learning, statistics]
@@ -11,7 +11,7 @@ image:
   creditlink:
 ---
 
-Jerry Friedman是统计机器学习领域的专家，是诸多专著的合著者。
+James Hardy Wilkinson是数值分析领域的专家，曾与Turing一起工作过，1970年ACM Turing Award得主。
 
 ## 生平
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Jerry Friedman"
+title: "人物小传: Christos Papadimitriou"
 author: "李军"
 categories: journal
 tags: [machine learning, statistics]
