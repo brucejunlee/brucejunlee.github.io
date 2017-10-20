@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Julia编程(八): 内核剖析"
+title: "Julia编程(九): 内核剖析"
 author: "李军"
 categories: journal
 tags: [Julia]

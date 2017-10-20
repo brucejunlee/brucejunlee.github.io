@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "TensorFlow：在其它学科中的应用"
+title: "TensorFlow(三)：在其它学科中的应用"
 author: "李军"
 categories: journal
 tags: [tensorflow, mathematics, PDE]
