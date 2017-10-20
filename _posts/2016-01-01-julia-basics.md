@@ -587,7 +587,7 @@ replace("first second", r"(\w+) (?<agroup>\w+)", s"\g<agroup> \1")
 replace("a", r".", s"\g<0>1")
 ```
 
-## 9 列表／集合／元组／字典
+## 9 列表/集合/元组/字典/枚举
 
 ### 9.1 列表
 
@@ -618,6 +618,14 @@ tuple(1, 'a', pi)
 Dict([("A", 1), ("B", 2)])
 Dict("A"=>1, "B"=>2)
 ```
+
+### 9.5 枚举
+
++ enumerate: @enum(name, value1, value2, ...)
+
+	```julia
+	@enum(Fruit, Banana=1, Apple, Pear)
+	```
 
 ## 10 多维数组
 
@@ -1379,7 +1387,7 @@ end
 
 不可变的组合类型中也可以包含可变对象，如数组，属性等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。
 
-### 14.3 类型并集(type unions)
+### 14.3 类型并(type unions)
 
 ```julia
 IntOrString = Union{Int, AbstractString}
@@ -2421,32 +2429,291 @@ h(1)
 
 ## 23 FAQ
 
+### 23.1 会话&REPL
 
++ 我如何删除内存中的对象？
 
+	Julia中没有类似Matlab中`clear`一样的函数。在Julia会话中一旦命名变量，那么它将一直存在。如果担心变量对内存的占用，你可以在变量不再使用时，释放内存`A = 0`，垃圾回收器下次运行时就会释放内存，或者调用`gc()`强制执行。
 
++ 我如何修改类型／immutable的声明
 
+	Main模块中的类型不能重新定义，但是我们可以重新定义模块
+	
+	```julia
+	include("mynewcode.jl") # this defines a module MyModule 
+	obj1 = MyModule.ObjConstructor(a, b)
+	obj2 = MyModule.somefunction(obj1)
+	# Got an error. Change something in "mynewcode.jl"
+	include("mynewcode.jl") # reload the module
+	obj1 = MyModule.ObjConstructor(a, b) # old objects are no longer valid, must reconstruct 
+	obj2 = MyModule.somefunction(obj1) # this time it worked!
+	obj3 = MyModule.someotherfunction(obj2, c)
+	...
+	```
 
+### 23.2 函数
 
++ 为什么我将参量x传给函数，并在函数内修改，但是在函数外x并没有改变？
 
+	Julia中将变量x作为参量传递给函数并不能改变对x的绑定；但是如果x是Array类型或任意其它可变类型，那么我们虽然不能解除Array对x的绑定，但是可以改变它的内容。
 
+	```julia
+	x = 10
+	function change_value!(y) 
+	  y = 17
+	end
+	change_value!(x)  # 17
+	x  # 10
+	```
+	
+	```julia
+	x = [1, 2, 3]
+	function change_array!(A) 
+	  A[1] = 5
+	end
+	change_array!(x)  # 5
+	x  # [5, 2, 3]
+	```
+	
++ 我能在函数内使用using或import吗？
 
+	不能。你可以在函数外使用，或者将调用模块和函数封装在一个新的模块中。
+	
++ ···算符能做什么？
 
+	Julia新手容易对此产生混淆。根据上下文不同，它可以分为两种用处。
+	
+	第一种，用于在函数定义中将多个参量组合成一个参量
+	
+	```julia
+	function printargs(args...) 
+	  @printf("%s\n", typeof(args))
+	  for (i, arg) in enumerate(args) 
+	    @printf("Arg %d = %s\n", i, arg)
+	  end 
+	end
+	printargs(1, 2, 3)
+	```
+	
+	第二种，用于在函数调用种将一个参量分成多个不同参量
+	
+	```julia
+	function threeargs(a, b, c)
+	  @printf("a = %s::%s\n", a, typeof(a))
+	  @printf("b = %s::%s\n", b, typeof(b))
+	  @printf("c = %s::%s\n", c, typeof(c)) 
+	end
+	vec = [1, 2, 3]
+	threeargs(vec...)
+	```
 
+### 23.3 类型，类型声明&构造器
 
++ 什么叫类型稳定？
 
+	它是说输出类型可以通过输入类型来预测。并且，输出类型不依赖于输入值发生变化。
+	
+	```julia
+	function unstable(flag::Bool) 
+	  if flag
+	    return 1 
+	  else
+	    return 1.0 
+	  end
+	end
+	```
 
++ 对于某些表面上看明智的操作为什么Julia会给出DomainError？
 
+	为了保证类型稳定。对于sqrt(2.0)它会返回一个浮点数，但是sqrt(-2.0)如果返回复数，就会导致类型不稳定，因此需要传入复数。2^-5道理相同。
 
+	```julia
+	sqrt(-2.0)
+	2^-5
+	sqrt(-2.0 + 0im)
+	2.0^-5
+	```
+	
++ 为什么Julia使用原生(native)机器整数算术？
 
+	这意味着Int值范围是有界的。
+	
+	```julia
+	typemax(Int)
+	ans + 1
+	-ans
+	2 * ans
+	```
+	
+	Matlab对于下面处理是错误的。
+	
+	```julia
+	julia> n = 2^62
+	julia> (n + 2n) >>> 1
+	```
 
-## 24 与其它语言间的差别
+### 23.4 包&模块
+
++ using和importall之间的差别是什么？
+
+	它们之间只有一个差别。使用using，你需要使用一个新的方法`function Foo.bar(..`来扩展模块Foo的函数bar；但是使用importall或import Foo.bar，你只需要使用`function bar(...`，它会自动扩展模块Foo的函数bar。
+
+### 23.5 nothing&缺失值
+
++ `null`或`nothing`在Julia中如何工作？
+
+	Julia中并没有空值。当引用未初始化时，对它的访问将立即造成异常的抛出。者可以使用`isdefined`函数检测。
+	
+	`nothing`仅仅只是Void类型的singleton对象。空元组()是nothing的另一种形式，通常它被当作零个值的元组而非nothing。在Julia0.4之前版本中，我们还能看到None，它是空类型(或称为底类型)。现在版本中，使用Union{}来代替表示。
+	
+	有时候有些统计数据会缺失，所以最好使用`Nullable{T}`类型
+
+### 23.6 内存
+
++ 当x和y是数组时，为什么x += y会分配内存？
+
+	在Julia解析过程中，用x = x + y来代替x += y。对于数组而言，它没有将结果存在与x相同的位置，而是分配一个新的数组来存储结果。对于不可变类型，它没有改变值本身，只是改变对变量的绑定，因此改变不可变类型值的唯一方法就是重新赋值。
+	
+	```julia
+	function power_by_squaring(x, n::Int)
+	  ispow2(n) || error("This implementation only works for powers of 2") 
+	  while n >= 2
+	    x *= x
+	    n >>= 1 
+	  end
+	  x
+	end
+	```
+
+### 23.7 异步I/O&并发同步写
+
++ 为什么对相同流的并发写操作会导致内部混合的(inter-mixed)输出呢？
+
+	```julia
+	 @sync for i in 1:3
+	   @async write(STDOUT, string(i), " Foo ", " Bar ")
+	 end
+	```
+	
+	print和println在函数调用期间会将数据流锁住。
+
+	```julia
+	 @sync for i in 1:3
+	   @async println(STDOUT, string(i), " Foo ", " Bar ")
+	 end
+	```
+	
+	或者通过锁机制实现
+	
+	```julia
+	l = ReentrantLock()
+	@sync for i in 1:3
+	  @async begin 
+	    lock(l)
+	    try
+	      write(STDOUT, string(i), " Foo ", " Bar ")
+	    finally
+	      unlock(l)
+	    end 
+	  end
+	end
+	```
+
+## 24 与其它语言间的差异
+
+### 24.1 与MATLAB的差异
+
++ 方括号索引: A[i, j]
++ 数组引用赋值: A = B
++ 值也是引用传递和赋值的
++ Julia不会自动增加数组大小: push!(), append!()
++ 虚部单位im: sqrt(-1)
++ 多个值可以作为元组返回和赋值: (a, b) = (1, 2), a, b = 1, 2
++ [x, y, z], [x y z], [a b; c d], [x; [y, z]]
++ Range对象：a:b, a:b:c, 为了构造向量，collect(a:b);linspace()
++ Julia函数从最后一个表达式中返回值，也可以用return关键字
++ 当通过单参数调用时，sum(), prod(), max()等约化方法在数组的每个元素上进行，即使数组是多维的
++ sort()等函数默认是列优先的，sort(A)等价于sort(A, 1)。对于1xN数组，使用sort(A)返回的是没有修改的参量A，正确用法是sort(A, 2)
++ 如果A是2维数组，那么fft(A计算的是2D FFT；但是fft(A, 1)计算的是列优先的1D FFT
++ 零参量函数调用也必须加()
++ 不鼓励在语句末尾使用;
++ 如果A和B是数组，那么A==B等比较不会返回布尔数组，相应地我们应该使用A .==B
++ &, \|和$等价于Matlab中的and, or和xor
++ svd()返回的是奇异值向量而不是稠密对角阵
++ Julia中不使用...来表示代码行的继续，对于不完整表达式Julia会自动连接到下一行
++ 不同于Matlab，在非交互式环境中，Julia不能设置ans
++ 不同于Matlab的class，Julia类型不支持运行时动态添加属性。代替地可以使用Dict
++ Matlab只有一个全局作用域，而Julia每个模块都有一个自己的全局作用域／命名空间
++ Matlab中移除不要的值使用逻辑索引，如x(x>3), x(x>3) = []; 而在Julia中提供了多种方式，如x[x.>3], x = x[x.>3]; filter(z->z>3, x), filter!(z->z>3, x)
++ Matlab中抽取数组所有元素使用vertcat(A{:}); Julia中使用vcat(A...)
+
+### 24.2 与R的差异
+
++ Julia单引号包裹字符，而非字符串
++ Julia可以通过字符串索引(即切片)来创建子字符串，但是R必须先转换成字符向量
++ 多行字符串使用"""..."""表示
++ Julia中使用mod(a, b)表示取模，a % b表示余数，但是R中使用%%
++ Julia中逻辑索引必须与向量等长，否则会抛出BoundError: [1, 2, 3, 4][[true, false, true, false]]
++ Julia不总是允许不同长度的向量之间的运算
++ Julia中的apply()函数首先取函数，其次取参量，不同于R中的lapply()
++ Julia中使用end表示语句块的结束，对于单行条件语句，如`if (cond) statement`，有三种表达，`if cond; statement; end`, `cond && statement`和`!cond || statement`
++ Julia中的`<-`, `<<-`和`->`不是赋值算子
++ 使用[]构造向量，如[1, 2, 3]等价于R中的c(1, 2, 3)
++ Julia中的`*`可以进行矩阵乘法，如`A * B`等价于R中的`A %*% B`, 而R中的`*`进行的是按元乘法，即Hadamard乘法。
++ **注意**: Julia中矩阵转置使用`.'`，而共轭转置使用`'`，如`A.'`等价于R中的`t(A)`
++ Julia中并没有将0，1作为布尔值，相应地我们需要`if true`, `if Bool(1)`或`if 1==1`
++ Julia不支持nrow和ncol函数，对应地，size(M, 1), size(M, 2)
++ R中1和c(1)是相同的。但是Julia严格区分标量，向量和矩阵。对于向量x和y，x' * y结果是一个单元素向量，而dot(x, y)结果是标量
++ diag(), diagm()
++ Julia不能将结果赋值给一个函数调用: 如我们不能做下面操作`diag(M) = ones(n)`
++ Julia不鼓励将函数都放在主命名空间中。很多统计相关的功能可以在JuliaStats组织下的包中找到。如Distributions包提供了与概率分布有关的函数，DataFrames包提供了data frames，GLM包提供了泛化线性模型
++ Julia提供了元组和实hash table。Julia0.6版本中取消了list, 当返回多项时，使用如(1, 2)这样的元组
++ 鼓励写自己的类型
++ Julia采用引用传递
++ Julia向量和矩阵采用hcat(), vcat()和hvcat()连接，而R中采用c, rbind和cbind
++ Julia中像a:b这样的形式不是向量的简写，它们只是特定的Range，用于迭代，好处是只有很低的内存负载。可以使用collect(a:b)转换成向量
++ max()和min()等价于R中的pmax和pmin。maximum()和minimum()代替了R中的max和min
++ Julia中, A=[[1 2], [3 4]]; sum(A); sum(A, 1); sum(A, 2); sum(A, [1, 2]) = 10。R中, B = rbind(c(1, 2); c(3, 4)); sum(B, 1) = 11; sum(B, 2) = 12
++ R中的性能提升需要通过向量化来实现；而Julia中几乎是相反的。
++ 不支持类R的惰性计算
++ 不支持NULL类型
++ 没有R中的assign和get
++ return 不需要括号
+
+### 24.3 与Python的差异
+
++ Julia中如果没有详述显式元素类型，由向量组成的向量会自动连接成一维向量: 如[1, [2, 3]] => [1, 2, 3]; Int[1, Int[2, 3]]将抛出异常; Any[1, [2,3]]不自动连接; Vector{Int}[[1, 2], [3, 4]]不自动连接，类似于Python中列表的列表，这不同于整型数组
++ Julia中没有pass关键字
++ Julia索引从1开始，Python索引从0开始
++ Julia切片包含最后一个元素, 如Julia中的a[2:3]等价于Python中的a[1:3]
++ Julia不支持负索引，列表或数组最后一个元素用end索引，而Python中用-1索引
++ Julia中的列表推导不支持可选的if分句
++ Julia中语句结束用end，Python需要严格的缩进
++ Julia数组列优先(Fortran序)，而Numpy是行优先的(C序)
++ +=，-=等更新算子不是本地改变的，需要重新分配内存空间，这不同于Numpy。如A = ones(4); B = A; B += 3不改变A中的值。如果需要精确的改变方式，使用B[:] += 3或InplaceOps.jl包
++ 每次方法调用时Julia都计算函数参量的默认值；而Python只在函数定义时计算一次。如f(x = rand()) = x每次无参调用时都返回一个新的随机数, g(x = [1, 2]) = push!(x, 3)每次无参调用g()时都返回[1, 2, 3]
+
+### 24.4 与C/C++的差异
+
++ Julia中需要小心对待空格
++ Julia中，无小数点的数字直接创建的是Int类型的有符号整型，如果太大会采用晋升机制
++ Julia中用//表示有理数，#表示注释，而在C/C++中//表示注释
++ \#=表示多行注释的开始，\#=结束注释
++ 多值返回，Julia中`(a, b) = myfunc()`, `a, b = myfunc()`；但是C/C++中，必须把指针传递给值，`a = myfunc(&b)`
++ Julia中用$表示按位异或操作，而C/C++中使用\^
++ Julia中\^表示指数运算，即pow
++ \>\>表示逻辑移位，\>\>\>表示算术移位；而C/C++中\>\>操作依赖于值的类型
++ \-\>在Julia中创建匿名函数，而C/C++中表示通过指针访问对象成员
++ Julia宏作用在解析表达式上，而非程序文本上
++ C++中默认采用静态指派。如果需要动态指派，我们需要声明函数为virtual虚函数(方法在this上指派)；另一方面，Julia中每个方法都是"virtual"(在每个参量类型上指派)。
+
 
 
 [^1]: VB Shah, A Edelman, S Karpinski and J Bezanson. Novel algebras for advanced analytics in Julia. High PERFORMANCE Extreme Computing Conference, IEEE, pp.1-4(2013).
 [^2]: J. Bezanson, A. Edelman, S. Karpinski, et al. Julia: A Fresh Approach to Numerical Computing. Eprint Arxiv, 2014.
 [^3]: Ivo Balbaert. Getting Started with Julia Programming, 2015.
 [^4]: Malcolm Sherrington. Mastering Julia, 2015.
-[^5]: Jeff Werner Bezanson. Abstraction in Technical Computing(PhD Thesis), 2015.
+[^5]: Jeff Werner Bezanson. Abstraction in Technical Computing(**PhD Thesis**), 2015.
 [^6]: Anshul Joshi. Julia for Data Science, 2016.
 [^7]: Avik Sengupta. Julia High Performance, 2016.
 [^8]: Alexander Chen, Alan Edelman, Jeremy Kepner, Vijay Gadepally, Dylan Hutchison. Julia Implementation of the Dynamic Distributed Dimensional Data Model, High Performance Extreme Computing Conference, 2016:1-7.

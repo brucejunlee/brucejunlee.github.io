@@ -552,4 +552,160 @@ const mycompare_c = cfunction(mycompare, Cint, (Ref{Cdouble}, Ref{Cdouble}))
 #include <julia.h>int main(int argc, char *argv[]) {    /* required: setup the Julia context */jl_init(NULL);/* run Julia commands */    jl_eval_string("print(sqrt(2.0))");    /* strongly recommended: notify Julia that the         program is about to terminate. this allows         Julia time to cleanup pending write requests         and run all finalizers*/    jl_atexit_hook(0);return 0; }
 ```
 
+## 7 单元测试
+
+单元测试是通过检测运行结果和所期望结果是否相等来查看代码正确的一种方式。
+
++ 如果从源代码构建Julia，`make test`
++ 如果二进制文件安装，`Base.runtests()`
+
+### 7.1 基本单元测试
+
++ @test ex
++ @test\_throws extype ex
+
+	```julia
+	using Base.Test
+	
+	foo(x) = length(x) ^ 2
+	
+	@test foo("bar") == 9  # Passed
+	@test foo("fizz") >= 10  # Passed
+	@test foo("f") == 20  # Failed
+	@test foo(:cat) == 1  # Error
+	
+	@test_throws MethodError foo(:cat)
+	```
+	
+### 7.2 测试集
+
+通常，大量的测试被用于保证在一定范围内的输入上函数能正确工作。
+
++ @testset
+
+	```julia
+	@testset [CustomTestSet] [option=val  ...] ["description"] begin ... end
+	@testset [CustomTestSet] [option=val  ...] ["description $v"] for v in (...) ... end
+	@testset [CustomTestSet] [option=val  ...] ["description $v, $w"] for v in (...), w in (...) ... end
+	``` 
+	
+	```julia
+	# Pass
+	@testset "Foo Tests" begin 
+	  @test foo("a") == 1 
+	  @test foo("ab") == 4 
+	  @test foo("abc") == 9
+	end
+	```
+	
+	```julia
+	# Pass
+	@testset "Foo Tests" begin 
+	  @testset "Animals" begin
+	    @test foo("cat") == 9
+	    @test foo("dog") == foo("cat") 
+	  end
+	  @testset "Arrays $i" for i in 1:3 
+	    @test foo(zeros(i)) == i^2 
+	    @test foo(ones(i)) == i^2
+	  end 
+	end
+	```
+	
+	```julia
+	@testset "Foo Tests" begin 
+	  @testset "Animals" begin
+	    @testset "Felines" begin 
+	      @test foo("cat") == 9
+	    end
+	    @testset "Canines" begin
+	      @test foo("dog") == 9 
+	    end
+	  end
+	  @testset "Arrays" begin
+	    @test foo(zeros(2)) == 4
+	    @test foo(ones(4)) == 15 # Failed
+	  end
+	end
+	```
+	
+### 7.3 其它测试宏
+
++ 近似相等检测: `@test a ≈ b`, 或者直接使用isapprox()
++ @test_approx_eq
++ @test_approx_eq_eps
+
+	```julia
+	@test 1 ≈ 0.999999999
+	
+	@test 1 ≈ 0.999999  # test failed
+	
+	@test_approx_eq 1. 0.999999999  # assertion failed
+	
+	@test_approx_eq 1. 0.9999999999999
+	
+	@test_approx_eq_eps 1. 0.999 1e-2
+	
+	@test_approx_eq_eps 1. 0.999 1e-3  # assertion failed
+	```
+	
++ @inferred f(x)
+
+	```julia
+	using Base.Test
+	
+	f(a, b, c) = b > 1 ? 1 : 1.0
+	
+	typeof(f(1, 2, 3))
+	@code_warntype f(1, 2, 3)
+	@inferred f(1,2,3)  # error
+	
+	@inferred max(1, 2)  # 2
+	```
+	
+### 7.4 Broken测试
+
++ @test_broken ex
++ @test_skip ex
+
+### 7.5 AbstractTestSet
+
+通过实现record和finish方法，包可以创建它们自己的AbstractTestSet子类型。这样的子类型应该有取一个描述字符串的单参量构造器，其它任何选项都以关键字参量传递。
+
++ record(ts::AbstractTestSet, res::Result)
++ finish(ts::AbstractTestSet)
++ get_testset()
++ get_testset_depth()
+
+	```julia
+	import Base.Test: record, finish
+	using Base.Test: AbstractTestSet, Result, Pass, Fail, Error 
+	using Base.Test: get_testset_depth, get_testset
+	immutable CustomTestSet <: Base.Test.AbstractTestSet
+	  description::AbstractString
+	  foo::Int
+	  results::Vector
+	  # constructor takes a description string and options keyword arguments 
+	  CustomTestSet(desc; foo=1) = new(desc, foo, [])
+	end
+	record(ts::CustomTestSet, child::AbstractTestSet) = push!(ts.results, child) 
+	record(ts::CustomTestSet, res::Result) = push!(ts.results, res)
+	function finish(ts::CustomTestSet)
+	  # just record if we're not the top-level parent
+	  if get_testset_depth() > 0 
+	    record(get_testset(), ts)
+	  end
+	  ts
+	end
+	```
+	
+	```julia
+	@testset CustomTestSet foo=4 "custom testset inner 2" begin
+	  # this testset should inherit the type, but not the argument. 
+	  @testset "custom testset inner" begin
+	    @test true
+	  end 
+	end
+	```
+
 [^1]: Jeff Bezanson, Stefan Karpinski, Viral Shah, Alan Edelman, et al., Julia Language Documentation(Release 0.6.0-dev).
