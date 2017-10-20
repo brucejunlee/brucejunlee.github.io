@@ -368,7 +368,7 @@ DateTime("20150101","yyyymmdd")
 高效的日期解析
 
 ```julia
-df = Dates.DateFormat("y-m-d");
+df = DateFormat("y-m-d");
 dt = Date("2015-01-01",df)
 dt = Date("2015-01-02",df)
 ```
@@ -463,6 +463,7 @@ Dates.LOCALES["french"] = Dates.DateLocale(french_months, french_monts_abbrev, f
 Dates.dayname(t;locale="french")
 Dates.monthname(t;locale="french")
 Dates.monthabbr(t;locale="french")
+Dates.dayabbr(t;locale="french")  # BoundsError
 ```
 
 ### 3.5 日历算术
@@ -550,6 +551,10 @@ const mycompare_c = cfunction(mycompare, Cint, (Ref{Cdouble}, Ref{Cdouble}))
 
 ```c
 #include <julia.h>int main(int argc, char *argv[]) {    /* required: setup the Julia context */jl_init(NULL);/* run Julia commands */    jl_eval_string("print(sqrt(2.0))");    /* strongly recommended: notify Julia that the         program is about to terminate. this allows         Julia time to cleanup pending write requests         and run all finalizers*/    jl_atexit_hook(0);return 0; }
+```
+
+```shell
+$gcc -o test -fPIC -I$JULIA_DIR/include/julia -L$JULIA_DIR/lib test.c -ljulia $JULIA_DIR/lib/julia/libstdc++.so.6
 ```
 
 ## 7 单元测试

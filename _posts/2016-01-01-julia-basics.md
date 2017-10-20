@@ -257,6 +257,47 @@ x # => 0
 
 常量声明适用于全局和局部范围，对于全局范围特别有用。编译器很难优化包含全局变量的代码，因为全局变量的值甚至类型经常会发生改变。因此，如果全局变量不会改变，那么我们添加`const`声明来提高性能。而编译器能够自动确定局部变量中的常量。
 
+### 4.5 环境变量
+
++ JULIA\_HOME
++ JULIA\_LOAD\_PATH
++ JULIA\_PKGDIR
++ JULIA\_HISTORY
+
+---
+
++ JULIA\_SHELL
++ JULIA\_EDITOR
+
+---
+
++ JULIA\_CPU\_CORES
++ JULIA\_WORKER\_TIMEOUT
++ JULIA\_NUM\_THREADS
++ JULIA\_THREAD\_SLEEP\_THRESHOLD
++ JULIA\_EXCLUSIVE
+
+---
+
++ JULIA\_ERROR\_COLOR
++ JULIA\_WARN\_COLOR
++ JULIA\_INFO\_COLOR
++ JULIA\_INPUT\_COLOR
++ JULIA\_ANSWER\_COLOR 
++ JULIA\_STACKFRAME\_LINEINFO\_COLOR
++ JULIA\_STACKFRAME\_FUNCTION\_COLOR
+
+---
+
++ JULIA\_GC\_ALLOC\_POOL
++ JULIA\_GC\_ALLOC\_OTHER
++ JULIA\_GC\_ALLOC\_PRINT
++ JULIA\_GC\_NO\_GENERATIONAL
++ JULIA\_GC\_WAIT\_FOR\_DEBUGGER
++ ENABLE\_JITPROFILING
++ JULIA\_LLVM\_ARGS
++ JULIA\_DEBUG\_LOADING
+
 ## 5 数值
 
 ### 5.1 类型
@@ -296,7 +337,9 @@ x # => 0
     ```julia
     a = 2; b = 3;
     num(a // b)
+    numerator(a//b)
     den(a // b)
+    denominator(a//b)
 
     float(a // b)
     ```
@@ -304,7 +347,7 @@ x # => 0
 ### 5.2 操作符
 
 * 位运算
-    * 非～，与&， 或\|， 异或\$， 逻辑右移\>\>\>， 算术右移\>\>， 逻辑/算术左移\<\<
+    * 非～，与&， 或\|， 异或⊻(xor)， 逻辑右移\>\>\>， 算术右移\>\>， 逻辑/算术左移\<\<
   
 * 数值比较
     * ==， !=或者≠， <， <=或者≤， >， >=或者≥
@@ -650,10 +693,10 @@ Julia中，函数参量都是引用传递。一些科学计算语言的数组是
 
 #### 构造&初始化
 
-+ Array{type}(dims...)
-+ zeros(type, dims...)
++ Array{T}(dims...)
++ zeros(T, dims...)
 + zeros(A)
-+ ones(type, dims...)
++ ones(T, dims...)
 + ones(A)
 + trues(dims...)
 + trues(A)
@@ -662,15 +705,15 @@ Julia中，函数参量都是引用传递。一些科学计算语言的数组是
 + reshape(A, dims...)
 + copy(A)
 + deepcopy(A)
-+ similar(A[, element_type, dims...])
-+ reinterpret(type, A)
-+ rand(dims)
-+ randn(dims)
-+ eye(n)
-+ eye(m, n)
++ similar(A, T, dims...)
++ reinterpret(T, A)
++ rand(T, dims...)
++ randn(T, dims...)
++ eye(T, n)
++ eye(T, m, n)
 + linspace(start, stop, n)
 + fill!(A, x)
-+ fill(x, dims)
++ fill(x, dims...)
 + [A, B, C, ...]
 
 #### 连接
@@ -738,7 +781,7 @@ for i in eachindex(B)
 + 二元：+, -, \*, .\*, /, ./, \, .\\, ^, .^, div, mod
 + 比较：.==, .!=, .<, .<=, .>, .>=
 + 单元Boolean／按位：~
-+ 二元Boolean／按位：&, \|, $
++ 二元Boolean／按位：&, \|, ⊻
 
 函数：
 
@@ -765,6 +808,16 @@ for i in eachindex(B)
 + nnz()
 + countnz()
 
+	```julia
+	struct SparseMatrixCSC{Tv,Ti<:Integer} <: AbstractSparseMatrix{Tv,Ti}
+      m::Int                  # Number of rows
+      n::Int                  # Number of columns
+      colptr::Vector{Ti}      # Column i is in colptr[i]:(colptr[i+1]-1)
+      rowval::Vector{Ti}      # Row indices of stored values
+      nzval::Vector{Tv}       # Stored values, typically nonzeros
+    end
+	```
+
 #### 构造器
 
 稀疏矩阵构造：
@@ -773,6 +826,7 @@ for i in eachindex(B)
 + spones(S)
 + speye(n)
 + sparse(A)
++ issparse(A)
 + sprand(m, n, d)
 + sprandn(m, n, d)
 + sprandn(m, n, d, X)
@@ -805,6 +859,29 @@ for i in eachindex(B)
 + Eigen: eig, eigvals, eigvecs
 + SVD: svd, svdvals
 + GeneralizedSVD
+
+	```julia
+	A = [1 2 3; 4 1 6; 7 8 1]
+	trace(A)
+	det(A)
+	inv(A)
+	
+	A = [1.5 2 -4; 3 -1 -6; -10 2.3 4]
+	eigvals(A)
+	eigvecs(A)
+	
+	A = [1.5 2 -4; 3 -1 -6; -10 2.3 4]
+	factorize(A)
+	
+	B = [1.5 2 -4; 2 -1 -3; -4 -3 5]
+	factorize(B)
+	
+	B = [1.5 2 -4; 2 -1 -3; -4 -3 5]
+	sB = Symmetric(B)
+	
+	x = [1; 2; 3]
+	sB\x
+	```
 
 ### 11.2 特殊矩阵
 
@@ -1309,8 +1386,8 @@ end
 抽象类型不能实例化(instantiated)，只能作为类型图中的结点。同时抽象类型可以用于类型族的构造。
 
 ```julia
-abstract <<name>>
-abstract <<name>> <: <<supertype>>
+abstract type <<name>> end
+abstract type <<name>> <: <<supertype>> end
 ```
 
 上面程序块中的`<:`读作"is a subtype of"。当不显式给定超类型时，默认超类型是`Any`。同时，Julia中预定义了抽象的最底层类型，即`Union{}`。
@@ -1319,23 +1396,23 @@ abstract <<name>> <: <<supertype>>
 
 下面讨论的三个类型实际上是相关的，共享了许多性质，它们本质上都是`DataType`的实例
 
-+ 位类型(bits types)
++ 基本原生类型(primitive type)(等同于之前的位类型bits types)
 需要注意的是，目前Julia位数只支持8的倍数
 
 ```julia
-bitstype <<bits>> <<name>>
-bitstype <<bits>> <<name>> <: <<supertype>>
+primitive type «name» «bits» end
+primitive type «name» <: «supertype» «bits» end
 ```
 
 ```julia
-bitstype 16 Float16 <: AbstractFloat
-bitstype 32 Float32 <: AbstractFloat 
-bitstype 64 Float64 <: AbstractFloat
-bitstype 8 Bool <: Integer 
-bitstype 32 Charbitstype 8 Int8 <: Signed 
-bitstype 8 UInt8 <: Unsigned
-bitstype 16 Int16 <: Signedbitstype 16 UInt16 <: Unsignedbitstype 32 Int32 <: Signedbitstype 32 UInt32 <: Unsignedbitstype 64 Int64 <: Signedbitstype 64 UInt64 <: Unsignedbitstype 128 Int128 <: Signed 
-bitstype 128 UInt128 <: Unsigned
+primitive type Float16 <: AbstractFloat 16 end
+primitive type Float32 <: AbstractFloat 32 end
+primitive type Float64 <: AbstractFloat 64 end
+primitive type Bool <: Integer 8 end
+primitive type Char 32 endprimitive type Int8 <: Signed 8 end
+primitive type UInt8 <: Unsigned 8 end
+primitive type Int16 <: Signed 16 endprimitive type UInt16 <: Unsigned 16 endprimitive type Int32 <: Signed 32 endprimitive type UInt32 <: Unsigned 32 endprimitive type Int64 <: Signed 64 endprimitive type UInt64 <: Unsigned 64 endprimitive type Int128 <: Signed 128 end
+primitive type UInt128 <: Unsigned 128 end
 ```
 
 + 组合类型(composite types): record, structure(struct in C), 对象等。
@@ -1344,8 +1421,9 @@ bitstype 128 UInt128 <: Unsigned
 
 在Julia中，所有值都是对象，但是函数并没有与其作用的对象绑定在一起。因为Julia通过多指派来选择使用函数的某个方法，也就是说一个函数的所有参量类型是在选择方法时确定的。
 
+注意这里Julia引入了struct关键字定义组合类型，当然之前的type还没有取消，仍然可用。不可变的组合类型中也可以包含可变对象，如数组，属性等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。在某些情况下不可变类型更高效，更容易推理
 ```julia
-type Foo
+struct Foo
   bar
   baz :: Int
   qux :: Float64
@@ -1353,6 +1431,7 @@ end
 
 foo = Foo("Hello, world.", 23, 1.5)
 typeof(foo) # => Foo
+Foo((), 23.5, 1)  # InexactError
 ```
 
 当类型像函数一样被应用时，我们称其为构造器(constructor)。Julia自动生成两个构造器，它们被称为默认构造器。
@@ -1362,30 +1441,37 @@ fieldnames(foo)
 
 foo.bar
 
-foo.qux = 2
+foo.baz
+
+foo.qux
 ```
 
 无属性(field)的组合类型被称为singleton，这样的类型只有一个实例。
 
 ```julia
-type NoFields
+struct NoFields
 end
 
 is(NoFields(), NoFields())  # => true
+NoFields() === NoFields()  # => true
 ```
 
 `is`函数用来验证NoFields类型的两个实例是同一个，并且是相同的。
 
-+ 不可变的组合类型(immutable composite types): 在某些情况下更高效，更容易推理
++ 可变的组合类型(mutable composite types): 引入mutable struct用于修改实例。
 
 ```julia
-immutable Complex
-  real :: Float64
-  imag :: Float64
+mutable struct Bar
+  baz
+  qux :: Float64
 end
+
+bar = Bar("Hello", 1.5)
+bar.qux = 2.0
+bar.baz = 1//2
 ```
 
-不可变的组合类型中也可以包含可变对象，如数组，属性等。不可变类型对象通过拷贝(copying)传递，而可变类型通过引用(reference)传递。
+
 
 ### 14.3 类型并(type unions)
 
@@ -1400,7 +1486,7 @@ IntOrString = Union{Int, AbstractString}
 #### 参数化组合类型
 
 ```julia
-type Point{T}
+struct Point{T}
   x :: T
   y :: T
 end
@@ -1413,6 +1499,7 @@ Point # itself is also a valid type object
 `Float64`Point实例可以紧致高效地表示成64位浮点值对，而`Real`Point实例必须要表示成指向单独分配的Real对象的指针对。这种好处可以扩展到数组，浮点数组被存储成64位浮点数的连续内存块，而实数数组必须是指向单独分配的Real对象的指针数组。因为实数实例是任意大小，任意结构的复杂对象。
 
 ```julia
+Point{Float64} <: Point  # true
 Point{Float64} <: Point{Real}  # => false, that is, it is not covariant
 ```
 
@@ -1425,30 +1512,30 @@ end
 #### 参数化抽象类型
 
 ```julia
-abstract Pointy{T}
+abstract type Pointy{T} end
 
 Pointy{Float64} <: Pointy
 Pointy{1} <: Pointy
 
-type Point{T} <: Pointy{T}
+struct Point{T} <: Pointy{T}
   x :: T
   y :: T
 end
 
-type DiagPoint{T} <: Pointy{T}
+struct DiagPoint{T} <: Pointy{T}
   x :: T
 end
 
-abstract Pointy{T <: Real}
+abstract type Pointy{T <: Real} end
 
-type Point{T <: Real} <: Pointy{T}
+struct Point{T <: Real} <: Pointy{T}
   x :: T
   y :: T
 end
 ```
 
 ```julia
-immutable Rational{T <: Integer} <: Real 
+struct Rational{T <: Integer} <: Real 
   num :: T
   den :: Tend
 ```
@@ -1458,7 +1545,7 @@ immutable Rational{T <: Integer} <: Real
 元组类型是协变的，即Tuple{Int}可以是Tuple{Any}的子类型。
 
 ```julia
-immutable Tuple2{A, B}
+struct Tuple2{A, B}
   a :: A
   b :: B
 end
@@ -1486,16 +1573,21 @@ isa(A, Type{B})为真，当且仅当A和B是相同对象，并且对象为某个
 声明指针类型
 
 ```julia
-bitstype 64 Ptr{T}
+primitive type Ptr{T} 64 end
 
 Ptr{Int64} <: Ptr
 ```
 
 ### 14.5 类型别名(aliases)
 
+Julia0.6取消了typealias
+
 ```julia
-typealias Vector{T} Array{T,1} 
-typealias Matrix{T} Array{T,2}
+if Int === Int64
+  const UInt = UInt64
+else
+  const UInt = UInt32
+end
 ```
 
 我们可以只简单地限定类型而不限定维数；但是，我们没法等价地只限定维数而不限定元素类型
@@ -1504,11 +1596,7 @@ typealias Matrix{T} Array{T,2}
 Array{Float64, 1} <: Array{Float64} <: Array   # => true
 ```
 
-特别地，下面我们不能创建关系AA{T} <: AA，因为Array{Array{T, 1}, 1}是一个具体类型。
-
-```julia
-typealias AA{T} Array{Array{T, 1}, 1}
-```
+特别地，我们不能创建关系AA{T} <: AA，因为Array{Array{T, 1}, 1}是一个具体类型。
 
 ### 14.6 常见的类型函数
 
@@ -1521,7 +1609,7 @@ typealias AA{T} Array{Array{T, 1}, 1}
 Julia不允许在如true／false这样的值上进行指派，但是我们可以在参数化类型上进行指派。
 
 ```julia
-immutable Val{T}
+struct Val{T}
 end
 
 firstlast(::Type{Val{true}}) = "First"
@@ -1571,6 +1659,7 @@ methods(f)
 
 ```julia
 myappend{T}(v::Vector{T}, x::T) = [v..., x]
+# myappend(v::Vector{T}, x::T) where {T} = [v..., x]
 
 mytypeof{T}(x::T) = T   # as the return value
 
@@ -1612,7 +1701,7 @@ f() = f(1, 2)  # => -3
 构造多项式计算函数
 
 ```julia
-immutable Polynomial{R} 
+struct Polynomial{R} 
   coeffs::Vector{R}end
 function (p::Polynomial)(x)
   v = p.coeffs[end]
@@ -1640,7 +1729,7 @@ end
 ### 16.1 外部构造器
 
 ```julia
-type Foo
+struct Foo
   bar
   baz
 end
@@ -1652,14 +1741,14 @@ F() = Foo(0)
 ### 16.2 内部构造器
 
 ```julia
-type OrderdPair
+struct OrderdPair
   x :: Real
   y :: Real
   
   OrderdPair(x, y) = x > y ? error("out of order") : new(x, y)
 end
 
-type T
+struct T
   x :: Int64
   # T(x) = new(x)        # explicit is equivalent to default constructor
 end
@@ -1670,7 +1759,7 @@ end
 为了允许非完全初始化的对象创建，Julia允许调用少于类型属性数目参量的new函数，返回一个未初始化的对象。然后内部构造器方法就可以使用这个非完全(incomplete)的对象，在返回之前完成初始化。
 
 ```julia
-type SelfReferential 
+mutable struct SelfReferential 
   obj::SelfReferential
   SelfReferential() = (x = new(); x.obj = x) 
 end
@@ -1684,7 +1773,7 @@ is(x, x.obj.obj)   # => true
 ### 16.3 参数化构造器
 
 ```julia
-type Point{T <: Real}
+struct Point{T <: Real}
   x::T
   y::T
 end
@@ -1705,7 +1794,7 @@ Point(x::Real, y::Real) = Point(promote(x,y)...) #explicit promotion
 [rational.jl](https://github.com/JuliaLang/julia/blob/master/base/rational.jl)有理数定义和表示，这是一个很好的知识点汇总
 
 ```julia
-immutable Rational{T<:Integer} <: Real 
+struct Rational{T<:Integer} <: Real 
   num::T
   den::T
   function Rational(num::T, den::T) 
@@ -1777,7 +1866,7 @@ end
 平方数迭代序列，`in`，`mean`，`std`，`collect`等函数也可以作用在这种序列上
 
 ```julia
-immutable Squares 
+struct Squares 
   count::Intend
 Base.start(::Squares) = 1Base.next(S::Squares, state) = (state*state, state+1)Base.done(S::Squares, state) = state > S.count; Base.eltype(::Type{Squares}) = Int # Note that this is defined for the type 
 Base.length(S::Squares) = S.count;
@@ -1831,7 +1920,7 @@ importall OtherLib
 	
 export MyType, foo
 	
-type MyType
+struct MyType
   x
 end
 	
@@ -2133,15 +2222,15 @@ macroexpand(:(@assert a==b "a should equal b!"))
 ### 20.7 代码生成
 
 ```julia
-for op = (:+, :*, :&, :|, :$) 
+for op = (:+, :*, :&, :|, :⊻) 
   eval(quote    ($op)(a,b,c) = ($op)(($op)(a,b),c) 
   end)end
 
 # equivalent
-for op = (:+, :*, :&, :|, :$) 
+for op = (:+, :*, :&, :|, :⊻) 
   eval(:(($op)(a,b,c) = ($op)(($op)(a,b),c)))end
 
-for op = (:+, :*, :&, :|, :$)  @eval ($op)(a,b,c) = ($op)(($op)(a,b),c)end
+for op = (:+, :*, :&, :|, :⊻)  @eval ($op)(a,b,c) = ($op)(($op)(a,b),c)end
 ```
 
 对于更大的代码块：
@@ -2334,7 +2423,7 @@ function double!{T<:Number}(a::AbstractArray{T})
 ### 22.6 避免在属性(field)中使用类型并
 
 ```julia
-type MyType
+mutable struct MyType
   ...
   x :: Union{Void, T}
 end
@@ -2369,7 +2458,7 @@ collect(a)
 ### 22.12 不要使用没必要的静态参数
 
 ```julia
-foo{T <: Real}(x :: T) = ...  # bad
+foo(x :: T)where {T <: Real} = ...  # bad
 foo(x::Real) = ...
 ```
 
@@ -2382,7 +2471,7 @@ foo(x::Real) = ...
 ### 22.15 不要在接口层暴露不安全操作
 
 ```julia
-type NativeType 
+mutable struct NativeType 
   p::Ptr{UInt8}  ...end
 getindex(x::NativeType, i) = unsafe_load(x.p, i)
 ```
@@ -2638,7 +2727,7 @@ h(1)
 + 零参量函数调用也必须加()
 + 不鼓励在语句末尾使用;
 + 如果A和B是数组，那么A==B等比较不会返回布尔数组，相应地我们应该使用A .==B
-+ &, \|和$等价于Matlab中的and, or和xor
++ &, \|和⊻等价于Matlab中的and, or和xor
 + svd()返回的是奇异值向量而不是稠密对角阵
 + Julia中不使用...来表示代码行的继续，对于不完整表达式Julia会自动连接到下一行
 + 不同于Matlab，在非交互式环境中，Julia不能设置ans
@@ -2660,7 +2749,7 @@ h(1)
 + Julia中的`<-`, `<<-`和`->`不是赋值算子
 + 使用[]构造向量，如[1, 2, 3]等价于R中的c(1, 2, 3)
 + Julia中的`*`可以进行矩阵乘法，如`A * B`等价于R中的`A %*% B`, 而R中的`*`进行的是按元乘法，即Hadamard乘法。
-+ **注意**: Julia中矩阵转置使用`.'`，而共轭转置使用`'`，如`A.'`等价于R中的`t(A)`
++ **注意**: Julia中矩阵转置使用`.'`(transpose())，而共轭转置使用`'`(ctranspose())，如`A.'`等价于R中的`t(A)`
 + Julia中并没有将0，1作为布尔值，相应地我们需要`if true`, `if Bool(1)`或`if 1==1`
 + Julia不支持nrow和ncol函数，对应地，size(M, 1), size(M, 2)
 + R中1和c(1)是相同的。但是Julia严格区分标量，向量和矩阵。对于向量x和y，x' * y结果是一个单元素向量，而dot(x, y)结果是标量
@@ -2700,9 +2789,9 @@ h(1)
 + Julia中用//表示有理数，#表示注释，而在C/C++中//表示注释
 + \#=表示多行注释的开始，\#=结束注释
 + 多值返回，Julia中`(a, b) = myfunc()`, `a, b = myfunc()`；但是C/C++中，必须把指针传递给值，`a = myfunc(&b)`
-+ Julia中用$表示按位异或操作，而C/C++中使用\^
++ Julia中用⊻表示按位异或操作，而C/C++中使用\^
 + Julia中\^表示指数运算，即pow
-+ \>\>表示逻辑移位，\>\>\>表示算术移位；而C/C++中\>\>操作依赖于值的类型
++ \>\>表示算术移位，\>\>\>表示逻辑移位；而C/C++中\>\>操作依赖于值的类型
 + \-\>在Julia中创建匿名函数，而C/C++中表示通过指针访问对象成员
 + Julia宏作用在解析表达式上，而非程序文本上
 + C++中默认采用静态指派。如果需要动态指派，我们需要声明函数为virtual虚函数(方法在this上指派)；另一方面，Julia中每个方法都是"virtual"(在每个参量类型上指派)。
