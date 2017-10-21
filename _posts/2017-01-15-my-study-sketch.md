@@ -13,12 +13,12 @@ image:
 
 ## 兴趣
 
-* <b>Cellular Automata</b> (John von Neumann, E.F. Codd, John H. Conway, Stephen Wolfram, etc.; e.g., traffic flow modeling)
+* <b>Cellular Automata</b> (John von Neumann, E.F. Codd, <u>John H. Conway</u>, <u>Stephen Wolfram</u>, etc.; e.g., traffic flow modeling)
 * <b>Formal theorem proving/Type theory in mathmatical software programs</b>(e.g., in Maple)
-* <b>Machine learning</b>/<b>deep learning</b> (Michael I. Jordan, Geoff Hinton, Yann Lecun, Yoshua Bengio, Andrew Ng, Dimitris Achlioptas)
-* `Random matrix theory` (Eugene P. Wigner, Freeman Dyson, Athony Zee, Terence(Terry) Tao, L. N. Trefethen, Alan Edelman, R. J. Muirhead, Romain Couillet, Gerard Ben Arous, David Donoho, Zhidong Bai, etc.; e.g., applications in DL(optimization, saddle points, RNN))
-* <b>Tropical geometry/Semiring algebra</b> (Imre Simon, Jean-Eric Pin, B. Sturmfels; e.g., piecewise linear function ReLU)
-* <b>Ultradiscrete system</b> (Ryogo Hirota, S. Satsuma; e.g., soliton interaction)
+* <b>Data Science</b>/<b>Machine learning</b>/<b>deep learning</b> (Vladimir Vapnik, Leslie Valiant, <u>Michael I. Jordan</u>, Geoff Hinton, Yann Lecun, Yoshua Bengio, <u>Andrew Ng</u>, Dimitris Achlioptas, E. Candes)
+* `Random matrix theory` (Eugene P. Wigner, Freeman Dyson, Athony Zee, <u>Terence(Terry) Tao</u>, L. N. Trefethen, <u>Alan Edelman</u>, Peter J. Forrester, R. J. Muirhead, Romain Couillet, Gerard Ben Arous, David Donoho, <u>Zhidong Bai</u>, etc.; e.g., applications in DL(optimization, saddle points, RNN))
+* <b>Tropical geometry/Semiring algebra</b> (Imre Simon, Jean-Eric Pin, <u>B. Sturmfels</u>; e.g., piecewise linear function ReLU)
+* <b>Ultradiscrete system</b> (<u>Ryogo Hirota</u>, S. Satsuma; e.g., soliton interaction)
 
 ## 博客
 

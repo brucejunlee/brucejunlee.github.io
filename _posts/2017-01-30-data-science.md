@@ -107,7 +107,8 @@ image:
 
 + [Data Science Course[推荐]](http://nbviewer.jupyter.org/github/briandalessandro/)
 + [Manifold Learning](http://nbviewer.jupyter.org/github/briandalessandro/PythonDataScienceHandbook/blob/master/notebooks/05.10-Manifold-Learning.ipynb)
-+ [数据可视化](http://www.datavis.ca)
++ [Data Vision](http://www.datavis.ca)
++ 数据可视化工具**Tableau**
 
 ### 机器学习
 
