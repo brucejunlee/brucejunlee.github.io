@@ -66,6 +66,7 @@ image:
 * [DeepMind](https://deepmind.com/blog/)
 * [Distill](https://distill.pub)⭐️⭐️
 * [IBM-Watson](https://developer.ibm.com/clouddataservices/blog/#)
+* [IEEE Spectrum](https://spectrum.ieee.org)
 * [Intel-Nervana](https://www.intelnervana.com/blog/)
 * KDNuggets
 * [Microsoft Azure Blog](https://azure.microsoft.com/en-us/blog/)
