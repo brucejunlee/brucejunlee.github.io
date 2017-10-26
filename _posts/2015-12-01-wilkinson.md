@@ -3,7 +3,7 @@ layout: post
 title: "人物小传: James Hardy Wilkinson"
 author: "李军"
 categories: journal
-tags: [machine learning, statistics]
+tags: [linear algebra, numerical analysis]
 image:
   feature: 
   teaser: 

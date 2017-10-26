@@ -28,14 +28,15 @@ image:
 ## 书籍
 
 * Eric Lehman, F Thomson Leighton and Albert R Meyer, <u>Mathematics for Computer Science</u>
-* Gilbert Strang, <u>Linear Algebra</u>⭐️⭐️⭐️
+* Gilbert Strang, <u>Linear Algebra</u>⭐️⭐️⭐️⭐️
 * E. T. Jaynes, <u>Probability Theory: The Logic of Science</u>
 * Larry Wasserman, <u>All of Statistics</u>⭐️⭐️⭐️
 
 ---
 
-* Trevor Hastie, Robert Tibshirani and Jerome Friedman, <u>The Elements of Statistical Learning</u>⭐️⭐️⭐️
+* Trevor Hastie, Robert Tibshirani and Jerome Friedman, <u>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</u>⭐️⭐️⭐️
 * Jiawei Han, Micheline Kamber and Jian Pei, <u>Data Mining: Concepts and Techniques</u>⭐️⭐️⭐️⭐️
+* Christopher D. Manning, Prabhakar Raghavan and Hinrich Schutze, <u>Introduction to Information Retrieval</u>⭐️⭐️⭐️⭐️
 
 ---
 
@@ -43,14 +44,19 @@ image:
 * Joel Grus, <u>Data Science from Scratch First Principles with Python</u>
 * Anshul Joshi, <u>Julia for Data Science</u>
 * Rachel Schutt and Cathy O'Neil, <u>Doing Data Science</u>
-* Sebastian Gutierrez, <u>Data Scientists at Work</u>[especially, Yann LeCun's chapter]
+* Sebastian Gutierrez, <u>Data Scientists at Work</u>[That chapter written by Yann LeCun, especially]
 * Amy N. langville and Carl D. Meyer, <u>Google's PageRank and Beyond</u>
 
 ---
 
 * Stuart J. Russell and Peter Norvig, <u>Artificial Intelligence: A Modern Approach</u>⭐️⭐️
-* Christopher Bishop, <u>Pattern Recognition and Machine Learning</u>⭐️⭐️⭐️⭐️
+* Tom M. Mitchell, <u>Machine Learning</u>⭐️⭐️⭐️
+* Christopher Bishop, <u>Pattern Recognition and Machine Learning</u>⭐️⭐️⭐️
 * Kevin P. Murphy, <u>Machine Learning: A Probabilistic Perspective</u>⭐️⭐️⭐️⭐️
+* Daphne Koller and Nir Friedman, <u>Probalistic graphical Models: Principles and Techniques</u>⭐️⭐️⭐️⭐️
+* 周志华, <u>机器学习</u>[西瓜书]⭐️⭐️⭐️
+* 李航, <u>统计机器学习</u>⭐️⭐️⭐️
+* Peter Harrington, <u>Machine Learning in Action</u>[中文版: 机器学习实战]⭐️⭐️
 * Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
 * Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>⭐️⭐️⭐️⭐️
 * Michael Nielsen, <u>Neural Networks and Deep Learning</u>⭐️⭐️
@@ -193,6 +199,7 @@ image:
 + Caffe2(Facebook)
 + TensorFlow(Google)
 + Keras
++ Lasagne
 + MXNet(Amazon)
 + MLlib: Spark
 + DL4J: Java

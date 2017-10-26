@@ -3,7 +3,7 @@ layout: post
 title: "人物小传: Christos Papadimitriou"
 author: "李军"
 categories: journal
-tags: [machine learning, statistics]
+tags: [machine learning]
 image:
   feature: 
   teaser: 
@@ -11,7 +11,7 @@ image:
   creditlink:
 ---
 
-Christos H. Papadimitriou[^1]是著名的计算机科学家，是诸多论文的合著者，并与Bill Gates合写过唯一一篇学术论文。
+Christos H. Papadimitriou[^1]是著名的计算机科学家，是诸多论文的合著者，计算机科学领域的高引学者，并与Bill Gates合写过一篇学术论文，这是Gates目前唯一的一篇学术论文。
 
 ## 生平
 
