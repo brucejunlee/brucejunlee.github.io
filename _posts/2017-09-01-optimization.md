@@ -37,6 +37,12 @@ $$z = x^2 - y^2$$
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize02.jpg)
 
+Rosenbrock函数
+
+$$z = 100 (y - x^2)^2 + (1 - x)^2$$
+
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/rosenbrock.jpg)
+
 $$z = x^4 - 2 x^2 + y^2$$
 
 ```matlab
