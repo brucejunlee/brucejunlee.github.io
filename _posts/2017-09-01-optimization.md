@@ -33,6 +33,10 @@ Boyd
 
 $$y = x^3$$
 
+$$z = 2xy$$
+
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize08.jpg)
+
 $$z = x^2 - y^2$$
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize02.jpg)
@@ -42,6 +46,20 @@ Rosenbrock函数
 $$z = 100 (y - x^2)^2 + (1 - x)^2$$
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/rosenbrock.jpg)
+
+$$F = 7 + 2(x+y)^2 - ysiny - x^3$$
+
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize07.jpg)
+
+$$f = 2x^2 + 4xy + y^2$$
+
+![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/optimize06.jpg)
+
+函数F和f来自于Gil Strang, "Linear Algebra and Its Applications"，对应函数具有一般形式
+
+$$f(x,y) = ax^2 + 2bxy + cy^2$$
+
+a,b,c之间存在特殊关系
 
 $$z = x^4 - 2 x^2 + y^2$$
 
