@@ -24,6 +24,7 @@ image:
 
 个人博客：
 
+* [Adit Deshpande](https://adeshpande3.github.io): CS Undergrad at UCLA
 * [ALGOBEANS](https://algobeans.com/all-posts/): Layman tutorials in analytics
 * [All Things Distributed](http://www.allthingsdistributed.com): by Amazon's VP & CTO Werner Vogels
 * [Andrej Karpathy](http://karpathy.github.io)
@@ -36,15 +37,20 @@ image:
 * [Cal Newport](http://calnewport.com)
 * [Christopher Rackauckas](http://www.stochasticlifestyle.com)
 * [Christopher Olah](http://colah.github.io): Neural Networks⭐️
+* [Cleve Moler](https://blogs.mathworks.com/cleve/): Matlab and MathWorks
 * [Denny](http://blog.dennybritz.com)
 * [斗大的熊猫](http://blog.topspeedsnail.com)
 * [Galea](https://galeascience.wordpress.com)
+* [i am trask](http://iamtrask.github.io)
+* [inFERENCe](http://www.inference.vc)
+* [Jeffrey Pennington](https://nlp.stanford.edu/~jpennin/): Physics(mathematical physics & high-energy physics) and Machine Learning(NLP and deep learning)
 * [John Langford](http://hunch.net): Machine Learning Theory
 * [Lepisma](https://lepisma.github.io/archive/)
 * [林达华](https://dahuasky.wordpress.com)⭐️
 * [Machine Learning Mastery](https://machinelearningmastery.com/blog/)⭐️
 * [Moody Rd](http://blog.mrtz.org)
 * [Michael Nielsen](http://michaelnielsen.org)⭐️⭐️
+* [Nick Higham](https://nickhigham.wordpress.com): President of SIAM
 * [Nikhil Buduma](http://nikhilbuduma.com)
 * [非凸优化](http://www.offconvex.org)⭐️⭐️
 * [大トロ](http://blog.otoro.net)
@@ -53,7 +59,7 @@ image:
 * [Random Thoughts](http://rt.dgyblog.com/ref/ref-learning-deep-learning.html)
 * [Sebastian Ruder](http://ruder.io/#open)
 * [Tim Dettmers](http://timdettmers.com)
-* [陶哲轩](https://terrytao.wordpress.com)
+* [陶哲轩](https://terrytao.wordpress.com): Fields Award Winner
 * [Ujjwal Karn](https://ujjwalkarn.me/blog/)
 * [张驰原](http://blog.pluskid.org/?page_id=683): Mocha.jl for deep learning⭐️
 
@@ -61,6 +67,7 @@ image:
 
 * [AI Playbook: from a16z](http://aiplaybook.a16z.com)⭐️⭐️
 * [ARIMO](https://arimo.com/blog/)
+* [Berkeley Artificial Intelligence Research(BAIR)](http://bair.berkeley.edu/blog/)
 * [Baidu Research](research.baidu.com)⭐️
 * [深度学习](http://deeplearning.net/reading-list/)⭐️
 * [DeepMind](https://deepmind.com/blog/)
@@ -84,6 +91,7 @@ image:
 * [TechCrunch](https://techcrunch.com)
 * O'Reilly
 * [Scientific American](https://www.scientificamerican.com)
+* [SIAM NEWS](https://sinews.siam.org)⭐️
 * [Washington Post](https://www.washingtonpost.com)
 * [连线](https://www.wired.com/category/magazine/)
 * [哈佛商业评论](https://hbr.org)

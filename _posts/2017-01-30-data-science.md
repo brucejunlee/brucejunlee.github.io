@@ -55,6 +55,7 @@ image:
 * Kevin P. Murphy, <u>Machine Learning: A Probabilistic Perspective</u>⭐️⭐️⭐️⭐️
 * Daphne Koller and Nir Friedman, <u>Probalistic graphical Models: Principles and Techniques</u>⭐️⭐️⭐️⭐️
 * 周志华, <u>机器学习</u>[西瓜书]⭐️⭐️⭐️
+* 周志华, <u>Ensemble Methods</u>
 * 李航, <u>统计机器学习</u>⭐️⭐️⭐️
 * Peter Harrington, <u>Machine Learning in Action</u>[中文版: 机器学习实战]⭐️⭐️
 * Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
@@ -63,6 +64,7 @@ image:
 * Li Deng and Dong Yu, <u>Deep Learning: Methods and Applications</u>
 * Dong Yu and Li Deng, <u>Automatic Speech Recognition: A Deep Learning Approach</u>
 * Li Deng and Dong Yu, <u>Deep Learning For Signal And Information Processing</u>
+* Romain Couillet and Merouane Debbah, <u>Random Matrix Methods for Wireless Communications</u>
 * Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>⭐️⭐️⭐️⭐️⭐️
 
 ## 实用教程
@@ -111,6 +113,8 @@ image:
 + [TensorFlow入门](http://www.tensorfly.cn/tfdoc/get_started/introduction.html)
 
 + 深度学习云平台[FloydHub](https://www.floydhub.com)
+
++ [Theories of Deep Learning(STATS 385)](https://stats385.github.io) by David Donoho et al. ⭐️⭐️⭐️⭐️⭐️
   
 ## 视频课程
 
