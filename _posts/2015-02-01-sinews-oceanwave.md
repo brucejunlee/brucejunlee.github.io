@@ -44,4 +44,5 @@ Along with the phase shift, some of these distinctive nonlinear interactions are
 **References**
 
 [1] M.J. Ablowitz and H. Segur, Solitons and the Inverse Scattering Transform, SIAM, Philadelphia, 1981.
+
 [2] M.J. Ablowitz and D.E. Baldwin, Nonlinear shallow ocean-wave soliton interactions on flat beaches, Phys. Rev. E, 86 (2012), 036305.
