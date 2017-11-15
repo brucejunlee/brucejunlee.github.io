@@ -91,7 +91,7 @@ Much like the standard RIP, if A has the RIPL (for small $δ_{s,M}$), then all (
 
 Returning to Fourier sampling with wavelet sparsity, this novel sparsity model calls for a new type of sampling, known as multilevel random subsampling. The idea is to break up the rows of the matrix U into levels [1], following the block-diagonal structure illustrated in Figure 2d. Specifically, we introduce sampling levels N=($N_1$,…,$N_r$), where 1≤$N_1$<…<$N_r$=N, and a vector m=($m_1$,…,$m_r$) of local numbers of measurements. Within each sampling level, $m_k$ samples are chosen uniformly at random. Using this approach, one can show that the matrix (2) satisfies the RIPL (in the one-dimensional setting) [7], provided
 
-$$m_k≈C(s_k+∑_{l=1,j≠k}^r 2^{−|l−k|}s_l)⋅log^3(N)⋅log^2(s)$$,k=1,…,r.(3)
+$$m_k \approx C(s_k + \sum^r_{l=1,j \neq k} 2^{−|l−k|}s_l) log^3(N) log^2(s)$$, k=1,…,r.(3)
  
 That is, the number of measurements $m_k$ required to capture each wavelet scale should be roughly proportional to the corresponding sparsity $s_k$.
 
@@ -116,6 +116,7 @@ Finally, Figure 5 considers a class of problems informally known as compressive 
 **Acknowledgments:** The authors thank Andy Ellison for the MR images used in Figures 3 and 4.
 
 References
+
 [1] Adcock, B., Hansen, A.C., Poon, C., & Roman, B. (2017). Breaking the coherence barrier: A new theory for compressed sensing. Forum of Mathematics, Sigma, 5.
 
 [2] Bastounis, A., & Hansen, A.C. (2017). On the absence of uniform recovery in many real-world applications of compressed sensing and the restricted isometry property and nullspace property in levels. SIAM J. Imaging Sci., 10(1), 335-371.
