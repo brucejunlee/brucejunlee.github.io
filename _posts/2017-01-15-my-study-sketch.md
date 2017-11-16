@@ -45,6 +45,7 @@ image:
 * [inFERENCe](http://www.inference.vc)
 * [Jeffrey Pennington](https://nlp.stanford.edu/~jpennin/): Physics(mathematical physics & high-energy physics) and Machine Learning(NLP and deep learning)
 * [John Langford](http://hunch.net): Machine Learning Theory
+* [Kasper Fred](https://kasperfred.com)
 * [Lepisma](https://lepisma.github.io/archive/)
 * [林达华](https://dahuasky.wordpress.com)⭐️
 * [Machine Learning Mastery](https://machinelearningmastery.com/blog/)⭐️
