@@ -40,6 +40,7 @@ image:
 * [Cleve Moler](https://blogs.mathworks.com/cleve/): Matlab and MathWorks
 * [Denny](http://blog.dennybritz.com)
 * [斗大的熊猫](http://blog.topspeedsnail.com)
+* [Francois Chollet](https://blog.keras.io/index.html)⭐️⭐️
 * [Galea](https://galeascience.wordpress.com)
 * [i am trask](http://iamtrask.github.io)
 * [inFERENCe](http://www.inference.vc)
