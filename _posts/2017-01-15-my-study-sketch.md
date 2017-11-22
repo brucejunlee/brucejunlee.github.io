@@ -77,7 +77,11 @@ image:
 * [IBM-Watson](https://developer.ibm.com/clouddataservices/blog/#)
 * [IEEE Spectrum](https://spectrum.ieee.org)
 * [Intel-Nervana](https://www.intelnervana.com/blog/)
-* KDNuggets
+* [今日头条 技术博客](https://techblog.toutiao.com)
+* [KDnuggets](https://www.kdnuggets.com)
+* [Linkedin Engineering](https://engineering.linkedin.com)
+* [Linkedin Official Blog](https://blog.linkedin.com)
+* [美团点评技术团队](https://tech.meituan.com)
 * [Microsoft Azure Blog](https://azure.microsoft.com/en-us/blog/)
 * [Microsoft Research-AI](https://blogs.microsoft.com/ai/)⭐️
 * [Nvidia Blog](https://devblogs.nvidia.com/parallelforall/)

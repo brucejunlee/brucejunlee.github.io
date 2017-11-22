@@ -21,18 +21,37 @@ This post is adapted from Section 3 of Chapter 9 of my book, [Deep Learning with
 
 Given what we know of how deep nets work, of their limitations, and of the current state of the research landscape, can we predict where things are headed in the medium term? Here are some purely personal thoughts. Note that I don't have a crystal ball, so a lot of what I anticipate might fail to become reality. This is a completely speculative post. I am sharing these predictions not because I expect them to be proven completely right in the future, but because they are interesting and actionable in the present.
 
+假设我们了解深度网络如何工作，以及它们的局限性和研究的当前状况，我们能否预测一段时间内事情的走向呢？这里是一些纯粹的个人想法。我并没有水晶球，所以我预测的许多事情也许并不能成真。这是一篇完全推测性的文章。我分享这些预测不是因为我希望它们能够在将来被证明完全正确，而是因为它们非常有趣，目前非常有价值。
+
 At a high-level, the main directions in which I see promise are:
 
+我能够在一个很高层面上看到希望的主要方向是：
+
 * Models closer to general-purpose computer programs, built on top of far richer primitives than our current differentiable layers—this is how we will get to reasoning and abstraction, the fundamental weakness of current models.
+
+* 模型构建在更加丰富的基础上而非我们目前的可微层上，更加接近于通用目的计算机程序-这就是我们需要获知的推理和抽象能力，这也是目前模型的基本弱势。
+
 * New forms of learning that make the above possible—allowing models to move away from just differentiable transforms.
+
+* 使得上面成为可能的新的学习形式-允许模型远离可微变换。
+
 * Models that require less involvement from human engineers—it shouldn't be your job to tune knobs endlessly.
+
+* 很少需要人类工程师参与的模型-无休止地调整按钮不应该是你的工作。
+
 * Greater, systematic reuse of previously learned features and architectures; meta-learning systems based on reusable and modular program subroutines.
 
+* 对之前学到的特征和结构的更好更系统的重用；基于可重用和模块化程序子例程的元学习系统。
+
 Additionally, do note that these considerations are not specific to the sort of supervised learning that has been the bread and butter of deep learning so far—rather, they are applicable to any form of machine learning, including unsupervised, self-supervised, and reinforcement learning. It is not fundamentally important where your labels come from or what your training loop looks like; these different branches of machine learning are just different facets of a same construct.
+
+此外，这些考虑并不特定于监督学习，它们能够应用到机器学习的任何形式中，包括无监督学习，自监督学习和强化学习。你的标签来自于哪里，你的训练循环看起来像什么都不重要；这些不同的机器学习分支只是同一个结构体的不同面。
 
 Let's dive in.
 
 **Models as programs**
+
+**模型即程序**
 
 As we noted in our previous post, a necessary transformational development that we can expect in the field of machine learning is a move away from models that perform purely pattern recognition and can only achieve local generalization, towards models capable of abstraction and reasoning, that can achieve extreme generalization. Current AI programs that are capable of basic forms of reasoning are all hard-coded by human programmers: for instance, software that relies on search algorithms, graph manipulation, formal logic. In DeepMind's AlphaGo, for example, most of the "intelligence" on display is designed and hard-coded by expert programmers (e.g. Monte-Carlo tree search); learning from data only happens in specialized submodules (value networks and policy networks). But in the future, such AI systems may well be fully learned, with no human involvement.
 
@@ -52,6 +71,8 @@ Figure: A learned program relying on both geometric primitives (pattern recognit
 
 **Beyond backpropagation and differentiable layers**
 
+**超越反向传播和可微层**
+
 If machine learning models become more like programs, then they will mostly no longer be differentiable—certainly, these programs will still leverage continuous geometric layers as subroutines, which will be differentiable, but the model as a whole would not be. As a result, using backpropagation to adjust weight values in a fixed, hard-coded network, cannot be the method of choice for training models in the future—at least, it cannot be the whole story. We need to figure out to train non-differentiable systems efficiently. Current approaches include genetic algorithms, "evolution strategies", certain reinforcement learning methods, and ADMM (alternating direction method of multipliers). Naturally, gradient descent is not going anywhere—gradient information will always be useful for optimizing differentiable parametric functions. But our models will certainly become increasingly more ambitious than mere differentiable parametric functions, and thus their automatic development (the "learning" in "machine learning") will require more than backpropagation.
 
 Besides, backpropagation is end-to-end, which is a great thing for learning good chained transformations, but is rather computationally inefficient since it doesn't fully leverage the modularity of deep networks. To make something more efficient, there is one universal recipe: introduce modularity and hierarchy. So we can make backprop itself more efficient by introducing decoupled training modules with some synchronization mechanism between them, organized in a hierarchical fashion. This strategy is somewhat reflected in DeepMind's recent work on "synthetic gradients". I would expect more more work along these lines in the near future.
@@ -59,6 +80,8 @@ Besides, backpropagation is end-to-end, which is a great thing for learning good
 One can imagine a future where models that would be globally non-differentiable (but would feature differentiable parts) would be trained—grown—using an efficient search process that would not leverage gradients, while the differentiable parts would be trained even faster by taking advantage of gradients using some more efficient version of backpropagation.
 
 **Automated machine learning**
+
+**自动机器学习**
 
 In the future, model architectures will be learned, rather than handcrafted by engineer-artisans. Learning architectures automatically goes hand in hand with the use of richer sets of primitives and program-like machine learning models.
 
@@ -71,6 +94,8 @@ Another important AutoML direction is to learn model architecture jointly with m
 When this starts happening, the jobs of machine learning engineers will not disappear—rather, engineers will move higher up the value creation chain. They will start putting a lot more effort into crafting complex loss functions that truly reflect business goals, and understanding deeply how their models impact the digital ecosystems in which they are deployed (e.g. the users that consume the model's predictions and generate the model's training data) —problems that currently only the largest company can afford to consider.
 
 **Lifelong learning and modular subroutine reuse**
+
+**终身学习和模块化子程序重用**
 
 If models get more complex and are built on top of richer algorithmic primitives, then this increased complexity will require higher reuse between tasks, rather than training a new model from scratch every time we have a new task or a new dataset. Indeed, a lot datasets would not contain enough information to develop a new complex model from scratch, and it will become necessary to leverage information coming from previously encountered datasets. Much like you don't learn English from scratch every time you open a new book—that would be impossible. Besides, training models from scratch on every new task is very inefficient due to the large overlap between the current tasks and previously encountered tasks.
 
@@ -87,6 +112,8 @@ A meta-learner capable of quickly developing task-specific models using reusable
 Figure: A meta-learner capable of quickly developing task-specific models using reusable primitives (both algorithmic and geometric), thus achieving "extreme generalization".
 
 **In summary: the long-term vision**
+
+**总结: 长期愿景**
 
 In short, here is my long-term vision for machine learning:
 
