@@ -27,7 +27,7 @@ Even Newton (1642-1727) was interested in providing a mathematical description o
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/siam-oceanwave-1.jpg)
 
-Figure 1. Short-stem X-type interaction; see also [2]. (a) Contour plot of an analytical line-soliton interaction solution of the KP equation (here $e^Φ$ ≈ 2:3)). (b) Photograph taken in Mexico, December 31, 2011. (c) 3D plot of the solution shown in (a).
+Figure 1. Short-stem X-type interaction; see also [2]. (a) Contour plot of an analytical line-soliton interaction solution of the KP equation (here e^Φ ≈ 2:3)). (b) Photograph taken in Mexico, December 31, 2011. (c) 3D plot of the solution shown in (a).
 
 In 1847, Stokes derived the correct nonlinear boundary conditions on the water’s free surface and used it to show that the speed of a traveling wave in deep water depends on its amplitude. In the 1870s, understanding that the nonlinear water-wave equations are simplified when the water is shallow or the waves are long, Boussinesq derived (1+1)-dimensional equations (one space and one time dimension); he found a solitary wave solution that is localized and nonperiodic. In 1895 Korteweg and his student de Vries followed Boussinesq’s pioneering path and derived a unidirectional (1+1)-dimensional nonlinear equation for shallow water, usually called the Korteweg–de Vries (KdV) equation. They also found special periodic solutions, which they called cnoidal waves, that can be written in terms of Jacobian elliptic functions. The cnoidal wave, in a special limit, becomes a solitary wave. A solitary wave had been observed in 1834 by Russell, a naval engineer; he found that the wave’s speed depends on its amplitude, which agrees with the KdV equation’s solitary wave.
 
@@ -43,7 +43,7 @@ Equations solvable with the IST method, like the KdV equation, are often called 
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/siam-oceanwave-2.jpg)
 
-Figure 2. Contour plot (a) and photographs (b), (c) of a Y-type interaction ($e^Φ$ = 0); see also [2]. (b) Taken in Mexico, January 6, 2010. (c) Taken in California, May 3, 2012.
+Figure 2. Contour plot (a) and photographs (b), (c) of a Y-type interaction (e^Φ = 0); see also [2]. (b) Taken in Mexico, January 6, 2010. (c) Taken in California, May 3, 2012.
 
 The well-known two-soliton solutions, first found in the 1970s, are more interesting; surprisingly, similar interactions are visible on a daily basis on relatively flat beaches. It is useful to write the two-soliton solution of the KP equation, with small surface tension, with a phase-shift parameter that we label $e^ϕ$. We concentrate on four cases: $e^ϕ$ order one, $e^ϕ$ large, $e^ϕ$ zero, and $e^ϕ$ small. Remarkably, we have seen each of these types at the beach; we call them short-stem X-, long-stem X-, Y-, and H-type interactions, respectively.
 

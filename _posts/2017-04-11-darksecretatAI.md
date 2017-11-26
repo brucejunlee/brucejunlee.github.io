@@ -21,65 +21,130 @@ April 11, 2017
 
 **Last year, a strange self-driving car was released onto the quiet roads of** Monmouth County, New Jersey. The experimental vehicle, developed by researchers at the chip maker Nvidia, didn’t look different from other autonomous cars, but it was unlike anything demonstrated by Google, Tesla, or General Motors, and it showed the rising power of artificial intelligence. The car didn’t follow a single instruction provided by an engineer or programmer. Instead, it relied entirely on an algorithm that had taught itself to drive by watching a human do it.
 
+**去年，一个奇怪的自驾车被释放在安静的道路上**蒙茅斯县，新泽西。由芯片制造商NVIDIA公司研发的实验车与其他自主汽车不同，但与谷歌、特斯拉或通用汽车展示的任何东西不同，它显示了人工智能的不断增强。汽车没有按照工程师或程序员提供的单一指令进行操作。取而代之的是，它完全依赖于一种通过观察人类来驱动自己的算法。
+
 Getting a car to drive this way was an impressive feat. But it’s also a bit unsettling, since it isn’t completely clear how the car makes its decisions. Information from the vehicle’s sensors goes straight into a huge network of artificial neurons that process the data and then deliver the commands required to operate the steering wheel, the brakes, and other systems. The result seems to match the responses you’d expect from a human driver. But what if one day it did something unexpected—crashed into a tree, or sat at a green light? As things stand now, it might be difficult to find out why. The system is so complicated that even the engineers who designed it may struggle to isolate the reason for any single action. And you can’t ask it: there is no obvious way to design such a system so that it could always explain why it did what it did.
+
+开一辆这样的车是个了不起的壮举。但它也有点令人不安，因为它不完全清楚汽车如何作出决定。来自车辆传感器的信息直接进入一个巨大的人工神经元网络，处理这些数据，然后传送操作方向盘、刹车和其他系统所需的指令。结果似乎与人类驾驶者期望的结果相吻合。但是如果有一天它意外地撞到了一棵树上，或者坐在绿灯下呢？就目前情况来看，可能很难找到原因。这个系统太复杂了，以至于设计它的工程师们也很难孤立任何一个动作的原因。你不能问它：没有明显的方法来设计这样一个系统，这样它总能解释它为什么这么做。
 
 The mysterious mind of this vehicle points to a looming issue with artificial intelligence. The car’s underlying AI technology, known as deep learning, has proved very powerful at solving problems in recent years, and it has been widely deployed for tasks like image captioning, voice recognition, and language translation. There is now hope that the same techniques will be able to diagnose deadly diseases, make million-dollar trading decisions, and do countless other things to transform whole industries.
 
+这辆车神秘的头脑指出了人工智能的一个迫在眉睫的问题。汽车的基础的人工智能技术，被称为深度学习，已被证明是非常强大的解决近年来存在的问题，并已被广泛部署的任务，如图像字幕、语音识别和语言翻译。现在人们希望，同样的技术能够诊断出致命的疾病，做出百万美元的交易决定，并做无数其他的事情来改变整个行业。
+
 But this won’t happen—or shouldn’t happen—unless we find ways of making techniques like deep learning more understandable to their creators and accountable to their users. Otherwise it will be hard to predict when failures might occur—and it’s inevitable they will. That’s one reason Nvidia’s car is still experimental.
+
+但是，除非我们找到使他们的创作者更容易理解和对用户负责的技术，否则这种情况不会发生或不应该发生。否则很难预测什么时候会发生故障，这是不可避免的。这也是Nvidia汽车仍在试验的原因之一。
 
 Already, mathematical models are being used to help determine who makes parole, who’s approved for a loan, and who gets hired for a job. If you could get access to these mathematical models, it would be possible to understand their reasoning. But banks, the military, employers, and others are now turning their attention to more complex machine-learning approaches that could make automated decision-making altogether inscrutable. Deep learning, the most common of these approaches, represents a fundamentally different way to program computers. “It is a problem that is already relevant, and it’s going to be much more relevant in the future,” says Tommi Jaakkola, a professor at MIT who works on applications of machine learning. “Whether it’s an investment decision, a medical decision, or maybe a military decision, you don’t want to just rely on a ‘black box’ method.”
 
+数学模型已经被用来帮助决定谁假释，谁批准贷款，谁被录用为一个工作。如果你能接触到这些数学模型，就有可能理解它们的推理。但银行、军事、雇主和其他人现在正在把注意力转移到更复杂的机器学习方法，可以使自动决策完全不可思议。深学习是最常用的方法，它代表了编程计算机的一种根本不同的方法。“这是一个问题，已经是相关的，并将更多有关在未来，”Tommi Jaakkola说，一个教授在麻省理工学院机器学习的应用工作的人。无论是投资决策、医疗决策，还是军事决策，你都不想仅仅依赖于“黑箱”方法。
+
 There’s already an argument that being able to interrogate an AI system about how it reached its conclusions is a fundamental legal right. Starting in the summer of 2018, the European Union may require that companies be able to give users an explanation for decisions that automated systems reach. This might be impossible, even for systems that seem relatively simple on the surface, such as the apps and websites that use deep learning to serve ads or recommend songs. The computers that run those services have programmed themselves, and they have done it in ways we cannot understand. Even the engineers who build these apps cannot fully explain their behavior.
 
-This raises mind-boggling questions. As the technology advances, we might soon cross some threshold beyond which using AI requires a leap of faith. Sure, we humans can’t always truly explain our thought processes either—but we find ways to intuitively trust and gauge people. Will that also be possible with machines that think and make decisions differently from the way a human would? We’ve never before built machines that operate in ways their creators don’t understand. How well can we expect to communicate—and get along with—intelligent machines that could be unpredictable and inscrutable? These questions took me on a journey to the bleeding edge of research on AI algorithms, from Google to Apple and many places in between, including a meeting with one of the great philosophers of our time. 
+已经有一个论点，即能够询问人工智能系统如何得出结论是一项基本的法律权利。从2018夏季开始，欧洲联盟可能要求公司能够向用户解释自动化系统达成的决定。这可能是不可能的，即使是表面上看起来比较简单的系统，比如应用程序和网站，使用深度学习来提供广告或推荐歌曲。运行这些服务的计算机已经进行了编程，他们以我们无法理解的方式完成了这些工作。即使是构建这些应用程序的工程师也不能完全解释他们的行为。
+
+This raises mind-boggling questions. As the technology advances, we might soon cross some threshold beyond which using AI requires a leap of faith. Sure, we humans can’t always truly explain our thought processes either—but we find ways to intuitively trust and gauge people. Will that also be possible with machines that think and make decisions differently from the way a human would? We’ve never before built machines that operate in ways their creators don’t understand. How well can we expect to communicate—and get along with—intelligent machines that could be unpredictable and inscrutable? These questions took me on a journey to the bleeding edge of research on AI algorithms, from Google to Apple and many places in between, including a meeting with one of the great philosophers of our time.
+
+这就提出了令人难以置信的问题。随着科技的进步，我们可能很快就会跨过一个门槛，超过这个门槛，使用人工智能需要一个飞跃的信念。当然，我们人类不能总是真正地解释我们的思维过程，但我们可以找到直觉地信任和衡量人的方法。对于那些思考和做出决策的机器来说，这也可能和人类的方式不同吗？我们以前从未制造过机器，它们以创造者不理解的方式运行。我们如何能沟通和相处的智能机器，可能是不可预知的和不可预测的？这些问题把我带到了一个关于人工智能算法研究的前沿，从谷歌到苹果，还有许多地方，包括与我们这个时代伟大的哲学家之一的会议。 
 
 In 2015, a research group at Mount Sinai Hospital in New York was inspired to apply deep learning to the hospital’s vast database of patient records. This data set features hundreds of variables on patients, drawn from their test results, doctor visits, and so on. The resulting program, which the researchers named Deep Patient, was trained using data from about 700,000 individuals, and when tested on new records, it proved incredibly good at predicting disease. Without any expert instruction, Deep Patient had discovered patterns hidden in the hospital data that seemed to indicate when people were on the way to a wide range of ailments, including cancer of the liver. There are a lot of methods that are “pretty good” at predicting disease from a patient’s records, says Joel Dudley, who leads the Mount Sinai team. But, he adds, “this was just way better.”
 
+2015，纽约西奈山医院的一个研究小组受到启发，对医院庞大的病历数据库进行深入学习。这个数据集有数百个病人的变量，从他们的测试结果，医生访问，等等。由研究人员Deep Patient命名的结果是通过使用大约700000个人的数据进行训练的，当对新记录进行测试时，它在预测疾病方面表现得非常好。没有任何专家的指导，深的病人发现了隐藏在医院数据中的模式，这些数据似乎表明人们正在走向各种各样的疾病，包括肝脏癌。西奈山团队领导的Joel Dudley说，有很多方法可以从病人的病历中预测疾病。但是，他补充说，“这只是更好的方式。”
+
 **“We can build these models, but we don’t know how they work.”**
+
+**“我们可以建立这些模型，但我们不知道它们是如何工作的。”**
 
 At the same time, Deep Patient is a bit puzzling. It appears to anticipate the onset of psychiatric disorders like schizophrenia surprisingly well. But since schizophrenia is notoriously difficult for physicians to predict, Dudley wondered how this was possible. He still doesn’t know. The new tool offers no clue as to how it does this. If something like Deep Patient is actually going to help doctors, it will ideally give them the rationale for its prediction, to reassure them that it is accurate and to justify, say, a change in the drugs someone is being prescribed. “We can build these models,” Dudley says ruefully, “but we don’t know how they work.”
 
+同时，深病人也有点困惑。这似乎预示着精神分裂症如精神分裂症的发作出奇地好。但是，由于精神分裂症是众所周知的困难，医生预测，杜德利想知道这是可能的。他还是不知道。新工具没有提供关于它是如何运行的线索。如果像深病人这样的药物实际上能帮助医生，它将给他们提供理想的预测依据，使他们确信这是准确的，并证明某人正在被处方药物的改变。“我们可以建立这些模型，”杜德利沮丧地说，“但我们不知道他们是如何工作的。”
+
 Artificial intelligence hasn’t always been this way. From the outset, there were two schools of thought regarding how understandable, or explainable, AI ought to be. Many thought it made the most sense to build machines that reasoned according to rules and logic, making their inner workings transparent to anyone who cared to examine some code. Others felt that intelligence would more easily emerge if machines took inspiration from biology, and learned by observing and experiencing. This meant turning computer programming on its head. Instead of a programmer writing the commands to solve a problem, the program generates its own algorithm based on example data and a desired output. The machine-learning techniques that would later evolve into today’s most powerful AI systems followed the latter path: the machine essentially programs itself.
+
+人工智能并非一直如此。从一开始，有两个学派关于如何理解或解释，我应该。许多人认为建立机器是最有意义的，它们根据规则和逻辑推理，让那些关心检查代码的人透明。另一些人则认为，如果机器从生物学中获得灵感，并通过观察和体验学习，智能就会更容易出现。这意味着要在头上进行计算机编程。程序不是编写程序员来解决问题的命令，而是根据实例数据和期望的输出生成自己的算法。后来发展成为今天最强大的人工智能系统的机器学习技术遵循后一种方法：机器本质上是程序本身。
 
 At first this approach was of limited practical use, and in the 1960s and ’70s it remained largely confined to the fringes of the field. Then the computerization of many industries and the emergence of large data sets renewed interest. That inspired the development of more powerful machine-learning techniques, especially new versions of one known as the artificial neural network. By the 1990s, neural networks could automatically digitize handwritten characters.
 
+起初，这种方法的实际应用有限，在60年代和70年代，它基本上只局限于野外的边缘。然后，许多行业的计算机化和大型数据集的出现再次引起人们的兴趣。这启发了更强大的机器学习技术的发展，特别是一种称为人工神经网络的新版本。到20世纪90年代，神经网络可以自动对手写体进行数字化。
+
 But it was not until the start of this decade, after several clever tweaks and refinements, that very large—or “deep”—neural networks demonstrated dramatic improvements in automated perception. Deep learning is responsible for today’s explosion of AI. It has given computers extraordinary powers, like the ability to recognize spoken words almost as well as a person could, a skill too complex to code into the machine by hand. Deep learning has transformed computer vision and dramatically improved machine translation. It is now being used to guide all sorts of key decisions in medicine, finance, manufacturing—and beyond.
+
+但直到本世纪初，经过几次巧妙的调整和改进，巨大的或“深”的神经网络在自动感知方面表现出了巨大的进步。深度学习是今天人工智能爆炸的原因。它给计算机带来了非凡的力量，比如几乎能像一个人那样识别口语的能力，这项技术太复杂，无法用手工编码到机器中。深刻的学习改变了计算机视觉，极大地改进了机器翻译。它现在被用来指导医学、金融、制造业和其他领域的各种关键决策。
 
 The workings of any machine-learning technology are inherently more opaque, even to computer scientists, than a hand-coded system. This is not to say that all future AI techniques will be equally unknowable. But by its nature, deep learning is a particularly dark black box.
 
+任何机器学习技术的工作本质上都比手工编码系统更不透明，甚至对计算机科学家来说也是如此。这并不是说所有的人工智能技术将同样不可知的未来。但就其性质而言，深度学习是一个特别黑暗的黑箱。
+
 You can’t just look inside a deep neural network to see how it works. A network’s reasoning is embedded in the behavior of thousands of simulated neurons, arranged into dozens or even hundreds of intricately interconnected layers. The neurons in the first layer each receive an input, like the intensity of a pixel in an image, and then perform a calculation before outputting a new signal. These outputs are fed, in a complex web, to the neurons in the next layer, and so on, until an overall output is produced. Plus, there is a process known as back-propagation that tweaks the calculations of individual neurons in a way that lets the network learn to produce a desired output.
+
+你不能只看一个深层的神经网络，看看它是如何工作的。一个网络的推理被嵌入数千个模拟神经元的行为中，排列成几十个甚至数百个错综复杂的相互连接的层。第一层中的每个神经元接收一个输入，就像图像中像素的强度一样，然后在输出一个新信号之前执行计算。在一个复杂的网络中，这些输出被馈送到下一层的神经元，等等，直到产生一个整体输出。另外，还有一个被称为反向传播的过程，它通过使网络学习产生期望输出的方式来调整单个神经元的计算。
 
 The many layers in a deep network enable it to recognize things at different levels of abstraction. In a system designed to recognize dogs, for instance, the lower layers recognize simple things like outlines or color; higher layers recognize more complex stuff like fur or eyes; and the topmost layer identifies it all as a dog. The same approach can be applied, roughly speaking, to other inputs that lead a machine to teach itself: the sounds that make up words in speech, the letters and words that create sentences in text, or the steering-wheel movements required for driving.
 
+深层网络中的许多层使它能够在不同抽象层次上识别事物。例如，在一个识别狗的系统中，较低的层识别轮廓或颜色等简单的事物；较高的层次识别皮毛或眼睛等更复杂的东西；而最上层的图层则将其视为一只狗。粗略地说，同样的方法也可以应用于引导机器自学的其他输入：语音合成词，文本中生成句子的字母和单词，或驱动所需的方向盘运动。
+
 **“It might be part of the nature of intelligence that only part of it is exposed to rational explanation. Some of it is just instinctual.”**
+
+**“这可能是智力的一部分，只有其中的一部分暴露在理性的解释之下。”。有些是本能。”**
 
 Ingenious strategies have been used to try to capture and thus explain in more detail what’s happening in such systems. In 2015, researchers at Google modified a deep-learning-based image recognition algorithm so that instead of spotting objects in photos, it would generate or modify them. By effectively running the algorithm in reverse, they could discover the features the program uses to recognize, say, a bird or building. The resulting images, produced by a project known as Deep Dream, showed grotesque, alien-like animals emerging from clouds and plants, and hallucinatory pagodas blooming across forests and mountain ranges. The images proved that deep learning need not be entirely inscrutable; they revealed that the algorithms home in on familiar visual features like a bird’s beak or feathers. But the images also hinted at how different deep learning is from human perception, in that it might make something out of an artifact that we would know to ignore. Google researchers noted that when its algorithm generated images of a dumbbell, it also generated a human arm holding it. The machine had concluded that an arm was part of the thing.
 
+巧妙的策略被用来试图捕捉并更详细地解释这种系统中正在发生的事情。2015，谷歌的研究人员修改了一种基于深度学习的图像识别算法，以避免在照片中发现物体，而是生成或修改它们。通过有效地反向运行该算法，他们可以发现程序用来识别的功能，例如，一个鸟或建筑物。由此产生的图像，通过一个项目称为深梦，表现出怪诞，像外星人一样的云彩，植物出现动物，和幻觉的宝塔绽放在森林和山脉。图像表明，深度学习不必完全不可思议的；他们发现算法在熟悉的视觉特征，如鸟的喙和羽毛。但是，这些图像也暗示了不同的深度学习与人类的感知有多么不同，因为它可能会使我们知道忽略的人造物产生某种影响。谷歌的研究人员注意到，当它的算法生成一个哑铃的图像时，它也产生了一个手臂。机器断定手臂是这件事的一部分。
+
 Further progress has been made using ideas borrowed from neuroscience and cognitive science. A team led by Jeff Clune, an assistant professor at the University of Wyoming, has employed the AI equivalent of optical illusions to test deep neural networks. In 2015, Clune’s group showed how certain images could fool such a network into perceiving things that aren’t there, because the images exploit the low-level patterns the system searches for. One of Clune’s collaborators, Jason Yosinski, also built a tool that acts like a probe stuck into a brain. His tool targets any neuron in the middle of the network and searches for the image that activates it the most. The images that turn up are abstract (imagine an impressionistic take on a flamingo or a school bus), highlighting the mysterious nature of the machine’s perceptual abilities.
+
+利用神经科学和认知科学的想法取得了进一步的进展。由Jeff Clune领导的一个团队，一个在怀俄明大学的助理教授，采用光学错觉的AI相当于测试的深度神经网络。2015克鲁恩组显示某些图像可以愚弄这样一个网络，为不存在的事的感知，因为图像的低层次开发模式的系统搜索。Clune的一位合作者，Jason Yosinski，还建立了一个工具，就像一个探针插入大脑。他的工具瞄准网络中间的任何一个神经元，并搜索最能激活它的图像。图像，把抽象的（想象一个写意以火烈鸟或校车），突出了机器的感知能力的神秘性。
 
 We need more than a glimpse of AI’s thinking, however, and there is no easy solution. It is the interplay of calculations inside a deep neural network that is crucial to higher-level pattern recognition and complex decision-making, but those calculations are a quagmire of mathematical functions and variables. “If you had a very small neural network, you might be able to understand it,” Jaakkola says. “But once it becomes very large, and it has thousands of units per layer and maybe hundreds of layers, then it becomes quite un-understandable.”
 
+然而，我们需要更多地了解AI的想法，而且没有简单的解决方案。深层神经网络中的计算相互作用对高级模式识别和复杂决策至关重要，但这些计算是数学函数和变量的泥潭。“如果你有一个很小的神经网络，你可以了解它，”Jaakkola说。但是一旦它变得非常大，它每层有几千个单元，可能有上百个层，那么就变得不可理解了。
+
 In the office next to Jaakkola is Regina Barzilay, an MIT professor who is determined to apply machine learning to medicine. She was diagnosed with breast cancer a couple of years ago, at age 43. The diagnosis was shocking in itself, but Barzilay was also dismayed that cutting-edge statistical and machine-learning methods were not being used to help with oncological research or to guide patient treatment. She says AI has huge potential to revolutionize medicine, but realizing that potential will mean going beyond just medical records. She envisions using more of the raw data that she says is currently underutilized: “imaging data, pathology data, all this information.”
+
+在办公室旁边雅科拉是Regina Barzilay，麻省理工教授决定将机器学习应用于医学。几年前，她被诊断出患有乳腺癌，享年43岁。诊断本身是令人震惊的，但Barzilay也很沮丧，尖端的统计和机器学习的方法被用来帮助或指导患者治疗肿瘤的研究。她说，人工智能有巨大的潜力，革命性的医学，但认识到这一潜力将意味着超越公正的医疗记录。她希望用更多的原始数据，她说：“目前没有充分利用影像资料、病理资料，所有这些信息。”
 
 **How well can we get along with machines that are unpredictable and inscrutable?**
 
+**我们如何相处，是不可预测的和不可预测的机器吗？**
+
+
 After she finished cancer treatment last year, Barzilay and her students began working with doctors at Massachusetts General Hospital to develop a system capable of mining pathology reports to identify patients with specific clinical characteristics that researchers might want to study. However, Barzilay understood that the system would need to explain its reasoning. So, together with Jaakkola and a student, she added a step: the system extracts and highlights snippets of text that are representative of a pattern it has discovered. Barzilay and her students are also developing a deep-learning algorithm capable of finding early signs of breast cancer in mammogram images, and they aim to give this system some ability to explain its reasoning, too. “You really need to have a loop where the machine and the human collaborate,” -Barzilay says.
+
+她完成了癌症治疗的最后一年后，Barzilay和她的学生们开始在马萨诸塞州总医院的医生们制定一个能够挖掘病理报告来确定患者的具体临床特点，研究人员可以研究系统。然而，Barzilay明白，系统就需要解释其推理。所以，跟Jaakkola一起，一个学生，她加了一步：系统提取和突出的文本片段，是一个具有代表性的模式发现。Barzilay和她的学生也正在开发一种能够发现早期乳腺癌的症状乳腺X线图像深度学习算法，他们的目标是给这个系统的一些解释其推理能力，太。“你真的需要有一个循环，机器和人类的合作，”Barzilay说。
 
 The U.S. military is pouring billions into projects that will use machine learning to pilot vehicles and aircraft, identify targets, and help analysts sift through huge piles of intelligence data. Here more than anywhere else, even more than in medicine, there is little room for algorithmic mystery, and the Department of Defense has identified explainability as a key stumbling block.
 
+美国军方正在投入数十亿美元，用于利用机器学习引导车辆和飞机，确定目标，并帮助分析人员筛选大量的情报数据。这里比其他任何地方都多，甚至超过了在医学上，有小房间算法的奥秘，和国防部已确定的可解释性作为一个关键的绊脚石。
+
 David Gunning, a program manager at the Defense Advanced Research Projects Agency, is overseeing the aptly named Explainable Artificial Intelligence program. A silver-haired veteran of the agency who previously oversaw the DARPA project that eventually led to the creation of Siri, Gunning says automation is creeping into countless areas of the military. Intelligence analysts are testing machine learning as a way of identifying patterns in vast amounts of surveillance data. Many autonomous ground vehicles and aircraft are being developed and tested. But soldiers probably won’t feel comfortable in a robotic tank that doesn’t explain itself to them, and analysts will be reluctant to act on information without some reasoning. “It’s often the nature of these machine-learning systems that they produce a lot of false alarms, so an intel analyst really needs extra help to understand why a recommendation was made,” Gunning says.
+
+David Gunning，在美国国防高级研究计划局的项目经理，负责命名贴切的解释的人工智能程序。该机构的一位银发老兵曾负责监督DARPA项目，最终促成了Siri的创建，他说自动化正在逐渐蔓延到军事领域。情报分析员正在测试机器学习，以此来识别大量监视数据中的模式。许多自主地面车辆和飞机正在研制和试验中。但士兵们可能不会在一个无法解释自己的机器人坦克中感到舒适，分析家们也不愿在没有推理的情况下行动。Gunning说：“这些机器学习系统的本质通常是产生大量的假警报，所以英特尔分析师确实需要额外的帮助才能理解为什么会有这样的建议。”。
 
 This March, DARPA chose 13 projects from academia and industry for funding under Gunning’s program. Some of them could build on work led by Carlos Guestrin, a professor at the University of Washington. He and his colleagues have developed a way for machine-learning systems to provide a rationale for their outputs. Essentially, under this method a computer automatically finds a few examples from a data set and serves them up in a short explanation. A system designed to classify an e-mail message as coming from a terrorist, for example, might use many millions of messages in its training and decision-making. But using the Washington team’s approach, it could highlight certain keywords found in a message. Guestrin’s group has also devised ways for image recognition systems to hint at their reasoning by highlighting the parts of an image that were most significant.
 
+今年3月，DARPA选择了13个来自学术界和工业界的项目，以资助其项目。他们中的一些人可以工作在Carlos Guestrin的带领下，华盛顿大学教授。他和他的同事已经开发出一种机器学习系统的方法，为他们的输出提供理论基础。本质上，在这种方法下，计算机自动从一个数据集中找到几个示例，并在简短的解释中提供它们。例如，设计一种将电子邮件作为来自恐怖分子的分类系统，可能会在其培训和决策中使用数百万条信息。但是使用华盛顿团队的方法，它可以突出显示消息中发现的某些关键字。Guestrin的集团还设计了图像识别系统暗示突出的形象，是最重要的部分他们的推理方式。
+
 One drawback to this approach and others like it, such as Barzilay’s, is that the explanations provided will always be simplified, meaning some vital information may be lost along the way. “We haven’t achieved the whole dream, which is where AI has a conversation with you, and it is able to explain,” says Guestrin. “We’re a long way from having truly interpretable AI.”
+
+一个缺点这种方法和其他类似的东西，如巴尔齐莱，是说明的内容总是会简化，意义的一些重要的信息可能会丢失在路上。“我们还没有达到整体的梦想，这是在AI与你交谈，它是能够解释，”Guestrin说。“我们离真正可解释的人工智能还有很长的路要走。”
 
 It doesn’t have to be a high-stakes situation like cancer diagnosis or military maneuvers for this to become an issue. Knowing AI’s reasoning is also going to be crucial if the technology is to become a common and useful part of our daily lives. Tom Gruber, who leads the Siri team at Apple, says explainability is a key consideration for his team as it tries to make Siri a smarter and more capable virtual assistant. Gruber wouldn’t discuss specific plans for Siri’s future, but it’s easy to imagine that if you receive a restaurant recommendation from Siri, you’ll want to know what the reasoning was. Ruslan Salakhutdinov, director of AI research at Apple and an associate professor at Carnegie Mellon University, sees explainability as the core of the evolving relationship between humans and intelligent machines. “It’s going to introduce trust,” he says.
 
+它不一定是一个高风险的情况，如癌症诊断或军事演习，这成为一个问题。知道AI的推理也将是至关重要的，如果该技术将成为一个共同的和有用的日常生活的一部分。Tom Gruber，谁领导在苹果西丽的团队，称为他的团队考虑语言适应性的关键因为它试图让Siri更聪明和更强大的虚拟助理。他不愿意讨论Siri未来的具体计划，但很容易想象，如果你收到一个来自Siri的餐馆推荐，你会想知道理由是什么。Ruslan Salakhutdinov，苹果和卡内基梅隆大学副教授的人工智能研究室主任，看到explainability作为演化关系人类与智能机器之间的核心。“这将引入信任，”他说。
+
 Just as many aspects of human behavior are impossible to explain in detail, perhaps it won’t be possible for AI to explain everything it does. “Even if somebody can give you a reasonable-sounding explanation [for his or her actions], it probably is incomplete, and the same could very well be true for AI,” says Clune, of the University of Wyoming. “It might just be part of the nature of intelligence that only part of it is exposed to rational explanation. Some of it is just instinctual, or subconscious, or inscrutable.”
+
+正如人类行为的许多方面都无法详细解释，也许人工智能无法解释它所做的每一件事。“如果有人能给你一个看似合理的解释[他或她的行动]，它可能是不完整的，这同样很好，爱是真的，”Clune说，怀俄明大学的。“这可能只是智力的一部分，只有其中的一部分暴露在理性的解释之下。”。有些是本能的，或潜意识的，或不可理解的。”
 
 If that’s so, then at some stage we may have to simply trust AI’s judgment or do without using it. Likewise, that judgment will have to incorporate social intelligence. Just as society is built upon a contract of expected behavior, we will need to design AI systems to respect and fit with our social norms. If we are to create robot tanks and other killing machines, it is important that their decision-making be consistent with our ethical judgments.
 
+如果是这样的话，那么在某个阶段，我们可能不得不简单地相信AI的判断或者不使用它。同样，这种判断也必须纳入社会智能。正如社会建立在预期行为的契约之上，我们需要设计人工智能系统来尊重和适应我们的社会规范。如果我们要创造机器人坦克和其他杀人机器，重要的是他们的决策符合我们的道德判断。
+
 To probe these metaphysical concepts, I went to Tufts University to meet with Daniel Dennett, a renowned philosopher and cognitive scientist who studies consciousness and the mind. A chapter of Dennett’s latest book, From Bacteria to Bach and Back, an encyclopedic treatise on consciousness, suggests that a natural part of the evolution of intelligence itself is the creation of systems capable of performing tasks their creators do not know how to do. “The question is, what accommodations do we have to make to do this wisely—what standards do we demand of them, and of ourselves?” he tells me in his cluttered office on the university’s idyllic campus.
 
+探讨这些形而上的概念，我去塔夫斯大学会见Daniel Dennett，一个著名的哲学家和认知科学家研究意识和心灵。一章丹尼特的新书，从细菌到巴赫回来，对意识的百科全书式的论述，认为智慧本身的进化的一部分是创造系统能够执行任务，他们的创造者都不知道怎么做。问题是，我们要做什么样的事情才能明智地去做这些事？我们对他们和我们自己有什么要求？他在杂乱的办公室里告诉我大学里田园诗般的校园。
+
 He also has a word of warning about the quest for explainability. “I think by all means if we’re going to use these things and rely on them, then let’s get as firm a grip on how and why they’re giving us the answers as possible,” he says. But since there may be no perfect answer, we should be as cautious of AI explanations as we are of each other’s—no matter how clever a machine seems. “If it can’t do better than us at explaining what it’s doing,” he says, “then don’t trust it.”
+
+他也有一句关于explainability任务警告。他说：“我认为，如果我们打算使用这些东西，并依赖它们，那么我们就牢牢地把握它们为什么会给我们答案。”。但由于可能没有完美的答案，我们应该谨慎，AI的解释我们是彼此的's-no多么聪明的机器似乎。“如果它不能比我们更好地解释它在做什么，”他说，“那么不要相信它。”
 
