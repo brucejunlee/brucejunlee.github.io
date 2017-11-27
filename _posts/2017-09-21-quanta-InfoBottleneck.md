@@ -15,7 +15,7 @@ image:
 
 A new idea called the “information bottleneck” is helping to explain the puzzling success of today’s artificial-intelligence algorithms — and might also explain how human brains learn.
 
-一个被称为“信息瓶颈”的新想法有助于解释目前人工智能算法令人费解的成功，也可能解释人脑是如何学习的。
+一个被称为“信息瓶颈”的新想法有助于解释目前人工智能算法令人费解的成功，或许也能解释人脑是如何学习的。
 
 By <u>Natalie Wolchover</u>
 
