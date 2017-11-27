@@ -23,33 +23,33 @@ September 21, 2017
 
 Even as machines known as “deep neural networks” have learned to converse, drive cars, beat video games and Go champions, dream, paint pictures and help make scientific discoveries, they have also confounded their human creators, who never expected so-called “deep-learning” algorithms to work so well. No underlying principle has guided the design of these learning systems, other than vague inspiration drawn from the architecture of the brain (and no one really understands how that operates either).
 
-即使被称为“深神经网络”的机器也学会了交谈、驾驶汽车、打电子游戏、去追逐冠军、梦想、绘画和帮助科学发现，他们也使他们的人类创造者困惑不已，他们从来没想到所谓的“深度学习”算法能起到如此好的作用。除了大脑结构的模糊灵感之外，没有任何基本原理指导了这些学习系统的设计（也没有人真正理解它是如何运作的）。
+虽然“深度神经网络”这样的机器已经学会了交谈、开车、打视频游戏、击败围棋冠军、做梦、绘画以及帮助科学发现等，但它们也使人类创造者困惑不已，他们从没想到所谓的“深度学习”算法能够表现得如此好。除了来自大脑结构的模糊灵感（其实也没人真正理解它是如何运作的）外，没有任何基本原理能指导这些学习系统的设计。
 
 Like a brain, a deep neural network has layers of neurons — artificial ones that are figments of computer memory. When a neuron fires, it sends signals to connected neurons in the layer above. During deep learning, connections in the network are strengthened or weakened as needed to make the system better at sending signals from input data — the pixels of a photo of a dog, for instance — up through the layers to neurons associated with the right high-level concepts, such as “dog.” After a deep neural network has “learned” from thousands of sample dog photos, it can identify dogs in new photos as accurately as people can. The magic leap from special cases to general concepts during learning gives deep neural networks their power, just as it underlies human reasoning, creativity and the other faculties collectively termed “intelligence.” Experts wonder what it is about deep learning that enables generalization — and to what extent brains apprehend reality in the same way.
 
-像一个大脑，一个深层神经网络层神经元人工那些计算机记忆虚构。当神经元起火时，它向上面的层相连的神经元发出信号。在深入学习，在网络连接的加强或需要使系统更好的数据输入-一只狗的照片像素发送信号减弱，例如通过层与正确的高层概念相关的神经元，如“狗”。后深神经网络”从样本的狗照片成千上万学会”，它可以识别新的照片狗地人。神奇的飞跃从特殊情况的一般概念进行了深入的学习过程中神经网络的力量，正如它是人类推理、创造力和其他能力统称为“智能”。专家不知道什么是深度学习，使泛化到什么程度的大脑理解同样的现实。
+像大脑一样，一个深度神经网络也有很多层神经元，只是这些神经元是人造的，它们只是计算机内存中凭空想象出来的事物。当一个神经元被激活时，它会向上层中与之相连的神经元发送信号。在深度学习期间，网络连接会按需加强或减弱以使系统更适合从输入数据（如一张狗照中的像素）中发送信号沿着网络层直到与正确的高级概念相关的神经元，如“狗”。一个深度神经网络从成千上万的狗照样本中学习后，它可以像人一样精确地从新的照片中识别出狗来。从特殊情况到一般概念的神奇飞跃赋能深度神经网络，就像它处于人类推理、创造力和其他一切被统称为“智能”的官能当中。专家不知道是什么使深度学习具有泛化能力，同时以相同的方式大脑能在多大程度上捕获到事实。
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/quanta-InfoBottleneck-2.jpg)
 
 Last month, a YouTube video of a conference talk in Berlin, shared widely among artificial-intelligence researchers, offered a possible answer. In the talk, Naftali Tishby, a computer scientist and neuroscientist from the Hebrew University of Jerusalem, presented evidence in support of a new theory explaining how deep learning works. Tishby argues that deep neural networks learn according to a procedure called the “information bottleneck,” which he and two collaborators first described in purely theoretical terms in 1999. The idea is that a network rids noisy input data of extraneous details as if by squeezing the information through a bottleneck, retaining only the features most relevant to general concepts. Striking new computer experiments by Tishby and his student Ravid Shwartz-Ziv reveal how this squeezing procedure happens during deep learning, at least in the cases they studied.
 
-上个月，YouTube视频会议在柏林举行，在人工智能研究人员中广泛交流，提供了一个可能的答案。在谈话中，Naftali Tishby，一个计算机科学家和神经科学家从耶路撒冷希伯来大学，提供的证据中的一个新的理论解释学习工作多么深的支持。Tishby认为深层神经网络学会按照程序被称为“信息瓶颈，“他和第一次描述了在纯粹的理论在1999个合作者。这个想法是，一个网络可无关的细节噪声的输入数据，如挤压的信息通过一个瓶颈，只保留一般概念最相关的特征。引人注目的新的计算机实验是由Tishby和他的学生Ravid Shwartz Ziv揭示这个压缩过程发生在深度学习，至少在他们的案例研究。
+上个月，在柏林举行的一个会议演讲的YouTube视频，在人工智能研究者间广泛分享，它给出了一个可能答案。在演讲中，来自Hebrew University of Jerusalem的计算机科学家和神经科学家Naftali Tishby提供了证据用于支持一种解释深度学习如何工作的新理论。Tishby认为深度神经网络按照一个被称为“信息瓶颈”的过程来学习，他和两名合作者在1999年以纯理论的形式首次描述了该过程。想法是，一个网络可以消除含无关细节的带噪声输入数据，这就好像把信息挤过瓶颈，只剩下与一般概念最相关的特征。由Tishby和他的学生Ravid Shwartz-Ziv进行的全新计算机实验揭示了至少在他们的案例研究中，在深度学习期间这个挤压过程是如何发生的。
 
 Tishby’s findings have the AI community buzzing. “I believe that the information bottleneck idea could be very important in future deep neural network research,” said Alex Alemi of Google Research, who has already developed new approximation methods for applying an information bottleneck analysis to large deep neural networks. The bottleneck could serve “not only as a theoretical tool for understanding why our neural networks work as well as they do currently, but also as a tool for constructing new objectives and architectures of networks,” Alemi said.
 
-Tishby发现AI的嗡嗡声有。“我认为，信息瓶颈的想法可能在未来深神经网络的研究是非常重要的，”谷歌研究Alex Alemi，谁已经开发了新的近似方法将信息瓶颈分析大面积深度神经网络。瓶颈可以”不仅作为一种理论工具来理解为什么我们的神经网络的工作以及他们目前，也为建立新的目标和体系结构的网络工具，”Alemi说。
+Tishby的发现使AI界兴奋不已。来自Google Research的Alex Alemi说“我相信，信息瓶颈的想法将在未来深度神经网络研究中非常重要”，他已经开发了新的近似方法将信息瓶颈分析应用到非常大的深度神经网络中。Alemi说瓶颈“不仅可以作为用来理解为什么我们的神经网络可以工作以及它们目前所做的一种理论工具，也可以作为构建网络新目标和架构的工具”。
 
 Some researchers remain skeptical that the theory fully accounts for the success of deep learning, but Kyle Cranmer, a particle physicist at New York University who uses machine learning to analyze particle collisions at the Large Hadron Collider, said that as a general principle of learning, it “somehow smells right.”
 
-一些研究人员仍持怀疑态度，充分的理论占深学习，成功的Kyle Cranmer，在纽约大学的粒子物理学家们使用机器学习来分析在大Hadron Collider粒子的碰撞，说作为学习的一般原则，它“不知味道好。”
+一些研究者仍然对这个理论作为深度学习的全部原因持怀疑态度，来自New York University的粒子物理学家Kyle Cranmer说，作为学习的一般原则，它“听上去还是不错的”，他使用机器学习来分析大型强子对撞机中的粒子碰撞。
 
 Geoffrey Hinton, a pioneer of deep learning who works at Google and the University of Toronto, emailed Tishby after watching his Berlin talk. “It’s extremely interesting,” Hinton wrote. “I have to listen to it another 10,000 times to really understand it, but it’s very rare nowadays to hear a talk with a really original idea in it that may be the answer to a really major puzzle.”
 
-Geoffrey Hinton，一个先锋深度学习谁的作品在谷歌和多伦多大学，电子邮件Tishby看完他的柏林谈话。“这是非常有趣的，”Hinton写道。“我还得再听10000遍才能真正理解它，但现在很少听到一个真正有创意的谈话，它可能是一个真正大难题的答案。”
+深度学习先驱Geoffrey Hinton，目前工作于Google和University of Toronto，他看完Tishby的柏林演讲后给他发了一封电邮。Hinton写道“这非常有趣，我还得再听10000遍才能真正理解，现在真的很少听到一个真正原创的谈话了，它可能是一个真正谜题的答案”。
 
 According to Tishby, who views the information bottleneck as a fundamental principle behind learning, whether you’re an algorithm, a housefly, a conscious being, or a physics calculation of emergent behavior, that long-awaited answer “is that the most important part of learning is actually forgetting.”
 
-根据Tishby的观点，人的信息瓶颈为后面的学习的一个基本原则，无论你是一个算法，一个苍蝇，一个有意识的存在，或一个物理计算的突发行为，期待已久的回答”是学习中最重要的部分其实是遗忘。”
+根据Tishby（他将信息瓶颈视作学习背后的一个基本原则）的观点，无论你是一个算法、苍蝇、有意识的人或突发行为的物理计算，期待已久的回答是“学习中最重要的部分其实是遗忘。”
 
 **The Bottleneck**
 
