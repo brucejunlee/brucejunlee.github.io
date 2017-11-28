@@ -19,7 +19,7 @@ November 01, 2013
 
 Next time you’re at a picnic and you discover a procession of ants marching over your meal, wait just a second before you throw your hamburger into the nearest trash can. Take a moment to admire the rapid, purposeful flow of traffic on the ant highway. Pause to appreciate what you don’t see: stopped ants.
 
-下次你去野餐的时候，你会发现一排蚂蚁在你的食物上行进，在你把汉堡包扔进最近的垃圾桶之前等一下。花点时间欣赏蚂蚁公路上快速而有目的的交通。停下来欣赏你看不到的东西：停止的蚂蚁。
+下次你去野餐的时候，你把汉堡包扔进最近的垃圾桶，只需稍等秒秒钟，你就会发现一排蚂蚁在你的食物上行进。花点时间欣赏一下在蚂蚁公路上快速而有目的的交通流。停一下，你意识到没看到的东西：不动的蚂蚁。
 
 Now compare this ant highway to an interstate highway through any large American city at rush hour. Whether it’s Route 5 in Seattle or Route 95 outside Washington, DC, the story will be the same—long lines of stopped vehicles.
 
@@ -75,7 +75,7 @@ You don’t have to wait, however, if a retired engineer and amateur scientist n
 
 . . . In the neighboring lanes I could see maybe five of the traffic stop-waves. But in the lane behind ME, for miles, TOTALLY UNIFORM DISTRIBUTION. . . . By driving at the average speed of traffic, my car had been ‘eating’ the traffic waves.” [Emphasis present in original.]
 
-。..在相邻的车道上，我可以看到大约五的交通停止波。但在我身后的车道上，英里，完全均匀分布。..以平均车速行驶，我的车一直在“吃”交通波。
+. . .在相邻的车道上，我可以看到大约五的交通停止波。但在我身后的车道上，英里，完全均匀分布. . .以平均车速行驶，我的车一直在“吃”交通波。
 
 Because his article was not published in a scientific journal, Beaty’s home-brewed experiment did not attract a lot of attention. Last year, though, Nishinari and three co-authors put “jam-absorption driving” to the test. In a simple computer model of a single-lane road, they confirmed that Beaty’s strategy works. “Slow-in, fast-out” driving, even by one driver, could give an already-formed jam time to dissolve and also prevent the creation of new jams behind the jam-absorbing driver. Beyond that, Nishinari and his colleagues showed (in work not yet published) that the total fuel consumption of all the vehicles on the highway would be decreased by as much as 35%. Thus, one person can make the driving experience more pleasant for everyone and benefit the environment.
 
