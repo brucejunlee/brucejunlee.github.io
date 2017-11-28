@@ -37,7 +37,7 @@ In a nutshell, compressed sensing allows the recovery of a low-dimensional struc
 
 简单来讲，压缩感知可以从高维空间中恢复低维结构。令人惊讶的是，这是通过先进行非自适应随机测量然后求解一个易处理的凸规划来实现的。当运用到我们的有趣模型时，压缩感知理论保证了我们可以通过求解ℓ<sub>1</sub>范数最小化问题
 
-$$min \limits_x ||x||_{ℓ_1}$$
+$$min\limits_x ||x||_{ℓ_1}$$
 
 among all signals x consistent with the data. Moreover, the recovery scheme can be stable in the presence of noise. This is possible because the random-sensing operator is well conditioned when its domain is restricted to the class of sparse signals. Intuitively, such a condition is necessary for recovery by any method in a realistic setting; otherwise, the signal could be completely lost in the measurement process.
 
