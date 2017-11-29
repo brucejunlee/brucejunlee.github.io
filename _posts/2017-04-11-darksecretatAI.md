@@ -13,15 +13,17 @@ image:
 
 No one really knows how the most advanced algorithms do what they do. That could be a problem.
 
+没人真正知道最高级的算法是如何做它们要做的事的。那可能是个问题。
+
 by <u>Will Knight</u> 
 
 April 11, 2017
 
 [I am the senior editor for AI at MIT Technology Review. I mainly cover machine intelligence, robots, and automation, but I’m interested in most aspects of computing. I grew up in south London, and I wrote my first line of code (a spell-binding infinite loop) on a mighty Sinclair ZX Spectrum. Before joining this publication, I worked as the online editor at New Scientist magazine.] 
 
-**Last year, a strange self-driving car was released onto the quiet roads of** Monmouth County, New Jersey. The experimental vehicle, developed by researchers at the chip maker Nvidia, didn’t look different from other autonomous cars, but it was unlike anything demonstrated by Google, Tesla, or General Motors, and it showed the rising power of artificial intelligence. The car didn’t follow a single instruction provided by an engineer or programmer. Instead, it relied entirely on an algorithm that had taught itself to drive by watching a human do it.
+Last year, a strange self-driving car was released onto the quiet roads of Monmouth County, New Jersey. The experimental vehicle, developed by researchers at the chip maker Nvidia, didn’t look different from other autonomous cars, but it was unlike anything demonstrated by Google, Tesla, or General Motors, and it showed the rising power of artificial intelligence. The car didn’t follow a single instruction provided by an engineer or programmer. Instead, it relied entirely on an algorithm that had taught itself to drive by watching a human do it.
 
-**去年，一个奇怪的自驾车被释放在安静的道路上**蒙茅斯县，新泽西。由芯片制造商NVIDIA公司研发的实验车与其他自主汽车不同，但与谷歌、特斯拉或通用汽车展示的任何东西不同，它显示了人工智能的不断增强。汽车没有按照工程师或程序员提供的单一指令进行操作。取而代之的是，它完全依赖于一种通过观察人类来驱动自己的算法。
+去年，一辆奇怪的自动驾驶汽车被投放在Monmouth County, New Jersey安静的路上。由芯片制造商Nvidia公司研发的实验车与其他无人驾驶汽车看上去没什么不同，但它不同于谷歌、特斯拉或通用汽车展示的任何东西，它显示了人工智能的不断增强。汽车没有按照工程师或程序员提供的单一指令进行操作。相反，它完全依赖于一种通过观察人类行为来自学的算法。
 
 Getting a car to drive this way was an impressive feat. But it’s also a bit unsettling, since it isn’t completely clear how the car makes its decisions. Information from the vehicle’s sensors goes straight into a huge network of artificial neurons that process the data and then deliver the commands required to operate the steering wheel, the brakes, and other systems. The result seems to match the responses you’d expect from a human driver. But what if one day it did something unexpected—crashed into a tree, or sat at a green light? As things stand now, it might be difficult to find out why. The system is so complicated that even the engineers who designed it may struggle to isolate the reason for any single action. And you can’t ask it: there is no obvious way to design such a system so that it could always explain why it did what it did.
 
