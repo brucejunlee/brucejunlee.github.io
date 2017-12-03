@@ -27,6 +27,7 @@ image:
 * [Adit Deshpande](https://adeshpande3.github.io): CS Undergrad at UCLA
 * [ALGOBEANS](https://algobeans.com/all-posts/): Layman tutorials in analytics
 * [All Things Distributed](http://www.allthingsdistributed.com): by Amazon's VP & CTO Werner Vogels
+* [Andrew Brooks](http://brooksandrew.github.io/simpleblog/): data science side projects, thoughts & experiments
 * [Andrej Karpathy](http://karpathy.github.io)
 * [Andrew Gibiansky](http://andrew.gibiansky.com)
 * [Andrew L. Beam](http://beamandrew.github.io/index.html): Machine Learning and Medicine
@@ -63,14 +64,17 @@ image:
 * [Tim Dettmers](http://timdettmers.com)
 * [陶哲轩](https://terrytao.wordpress.com): Fields Award Winner
 * [Ujjwal Karn](https://ujjwalkarn.me/blog/)
+* [Vijay Bhat](https://vijaybhat.com): data scientist. rethinking the possible.
 * [张驰原](http://blog.pluskid.org/?page_id=683): Mocha.jl for deep learning⭐️
 
 机构博客：
 
 * [AI Playbook: from a16z](http://aiplaybook.a16z.com)⭐️⭐️
+* [Apple Machine Learning Journal](https://machinelearning.apple.com)
 * [ARIMO](https://arimo.com/blog/)
 * [Berkeley Artificial Intelligence Research(BAIR)](http://bair.berkeley.edu/blog/)
 * [Baidu Research](research.baidu.com)⭐️
+* [DataCamp](https://www.datacamp.com/community/blog)
 * [深度学习](http://deeplearning.net/reading-list/)⭐️
 * [DeepMind](https://deepmind.com/blog/)
 * [Distill](https://distill.pub)⭐️⭐️
@@ -85,6 +89,7 @@ image:
 * [Microsoft Azure Blog](https://azure.microsoft.com/en-us/blog/)
 * [Microsoft Research-AI](https://blogs.microsoft.com/ai/)⭐️
 * [Nvidia Blog](https://devblogs.nvidia.com/parallelforall/)
+* [TeraData](http://www.teradata.com/blogs)
 
 ## 杂志
 
@@ -102,6 +107,7 @@ image:
 * [连线](https://www.wired.com/category/magazine/)
 * [哈佛商业评论](https://hbr.org)
 * [Fast Company](https://www.fastcompany.com)
+* [VentureBeat](https://venturebeat.com)
 
 ## 问答类
 

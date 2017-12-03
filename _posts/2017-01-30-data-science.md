@@ -116,6 +116,9 @@ image:
 + 深度学习云平台[FloydHub](https://www.floydhub.com)
 
 + [Theories of Deep Learning(STATS 385)](https://stats385.github.io) by David Donoho et al. ⭐️⭐️⭐️⭐️⭐️
+
+## 博客汇总
++ [Data Science Blogs](https://github.com/rushter/data-science-blogs)
   
 ## 视频课程
 
