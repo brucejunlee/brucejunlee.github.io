@@ -17,15 +17,11 @@ October 02, 2017
 
 [Alexander Bastounis is a final-year Ph.D. student in the Applied Functional and Harmonic Analysis group in the Department of Applied Mathematics and Theoretical Physics at the University of Cambridge. His research interests include compressed sensing, optimisation theory, computability theory, and applied functional analysis. Ben Adcock is an assistant professor at Simon Fraser University. He received the Leslie Fox Prize for Numerical Analysis in 2011, an Alfred P. Sloan Research Fellowship in 2015, and the CAIMS-PIMS Early Career Award in 2017. His research interests include applied and computational harmonic analysis, numerical analysis, and approximation theory. Anders C. Hansen is the head of the Applied Functional and Harmonic Analysis group at the University of Cambridge, where he is a reader (associate professor) in mathematics. He is also a Royal Society University Research Fellow. His research interests are include computational harmonic analysis, foundations of computational mathematics, mathematical signal processing, functional analysis, numerical analysis, and mathematical physics.]
 
-**Other resources:**
-
-[The Dark Side of Image Reconstruction](https://sinews.siam.org/Details-Page/the-dark-side-of-image-reconstruction-1)
-
-[See Light Move: Compressed Sensing and the World’s Fastest 2-D Camera](https://sinews.siam.org/Details-Page/see-light-move-compressed-sensing-and-the-worlds-fastest-2-d-camera)
+---
 
 Over the last decade, compressed sensing and sparse recovery techniques have had a significant impact on applied mathematics and its uses in science and engineering. Compressed sensing applications have moved beyond experimentation and are beginning to be seen in new implementations. An area of particular note is imaging, where compressed sensing can be used in magnetic resonance imaging (MRI), electron tomography, and radio interferometry, among other applications. With this in mind, it is timely to revisit the mathematics of compressed sensing as it pertains to imaging. While the standard theory of compressed sensing is justifiably celebrated, it falls somewhat short of explaining phenomena that result from the application of these techniques to imaging. In this article, we describe recent work that seeks to bridge this gap. As we demonstrate, our approach yields significant practical benefits in imaging, allowing researchers to further push the limits of performance.
 
-在过去的十年中，压缩感知和稀疏恢复技术对应用数学及其在科学和工程中的应用产生了重大影响。压缩感知应用已经超越了实验，并开始出现在新的实现中。特别值得注意的一个领域是成像，其中压缩感知可用于磁共振成像（MRI）、电子层析成像和无线电干涉测量，以及其他应用中。考虑到这一点，它是及时重新审视压缩感知的数学，因为它涉及到成像。虽然压缩感知的标准理论是值得庆祝的，但它却不能解释应用这些技术成像的现象。在这篇文章中，我们描述了最近试图弥合这一差距的工作。正如我们所展示的，我们的方法在成像方面产生了显著的实际效益，使研究人员能够进一步推动性能的极限。
+在过去十年中，压缩感知和稀疏恢复技术对应用数学及其在科学和工程中的应用产生了重大影响。压缩感知应用已经超越了实验，并开始出现在新的实现中。特别值得注意的一个领域是成像，这里压缩感知可用于核磁共振（magnetic resonance imaging，MRI）、电子层析成像、无线电干涉测量以及其它应用中。考虑到这一点，重温压缩感知的数学是适时的，因为它涉及到成像。虽然压缩感知的标准理论是值得庆祝的，但在解释这些技术在图像方面应用时产生的现象仍有不足。在这篇文章中，我们描述了最近试图弥合这一差距的工作。正如我们所展示的，我们的方法在成像方面产生了显著的实际效益，使研究者能够进一步推动性能极限。
 
 **Standard Compressed Sensing**
 
@@ -33,33 +29,37 @@ Over the last decade, compressed sensing and sparse recovery techniques have had
 
 Compressed sensing [3, 4, 6] concerns the recovery of an object from an incomplete set of linear measurements. In a discrete setting, one can formulate this as the linear system
 
-压缩感知[ 3, 4, 6 ]涉及从一组不完全线性测量中恢复对象的问题。在离散的环境中，人们可以把它描述成线性系统。
+压缩感知 [3, 4, 6] 涉及从一组不完全的线性测量中恢复对象的问题。在离散情况中，人们可以把它描述成线性系统
 
 $$y=Ax$$,
 
 where y∈ℂ<sup>m</sup> is the vector of measurements, x∈ℂ<sup>N</sup> is the object to recover, and A∈ℂ<sup>m×N</sup> is the so-called measurement matrix. In practice, the number of measurements m is often substantially smaller than the dimension N, making recovery generally impossible. To overcome this, compressed sensing leverages two key properties: sparsity of the vector x and incoherence of the measurement vectors (rows of A). The first property asserts that x should have at most s≤m significant components, with the remaining components relatively small, while the second states that the measurement vectors should be (in a formally-defined sense) spread out, rather than concentrated around a small number of entries.
 
-在y∈ℂ＜sup＞＜／sup＞m is the of矢量测量，x∈ℂ＜sup＞N＞＜／sup is the object to <恢复>，< m×n and a∈ℂ/ SUP SUP＞is the so-called测量矩阵。measurements in practice，the number of smaller than the M通常是更一般的二维N，制作不可能复苏。to”这两个键，leverages：压缩传感的稀疏向量x of the Properties of the Measurement and支离破碎的载体（行of a）。the first Property asserts that should have at most significant s≤m X with the remaining组件，组件比较小，while the second states that should be the Measurement矢量（defined in a formally - SENSE）展开，集中在rather than a small number of entries。
+这里，y∈ℂ<sup>m</sup>是测量向量，x∈ℂ<sup>N</sup>是要恢复的对象，A∈ℂ<sup>m×N</sup>是所谓的测量矩阵。实践过程中，测量数m通常比维数N小得多，这使得通常不能恢复。为了克服这种情况，压缩感知利用两个关键性质：向量x的稀疏性以及测量向量（A的行）的不相干。第一个性质要求x至多有s≤m个重要分量，剩下的分量相对很小，而第二个性质要求测量向量应该（在正式定义的角度看）分散而不是集中在一小部分元素周围。
 
 A popular tool in compressed sensing theory is the Restricted Isometry Property (RIP). A matrix has the RIP or order s if there exists a δ∈(0,1), such that 
 
-一种流行的工具在压缩感知理论的限制等距属性（RIP）。一个矩阵的RIP或命令，如果存在一个δ∈（0,1），这样
+在压缩感知理论中的一种常用工具是受限等距性质（Restricted Isometry Property，RIP）。如果存在一个δ∈（0,1），使得对于所有s-稀疏的向量x，都有
 
 $$(1−δ)‖x‖^2_{ℓ^2}≤‖Ax‖^2_{ℓ^2}≤(1+δ)‖x‖^2_{ℓ^2}$$, for all s-sparse vectors x.
 
+那么矩阵就具有RIP性质或者s阶。
+
 For instance, if recovery is performed by solving the convex basis pursuit problem
 
-例如，如果恢复是通过求解凸基追踪问题进行的。
+例如，如果通过求解凸基追踪问题
 
 $$min_{z∈ℂ^N} ‖z‖_{ℓ^1}$$, subject to $$Az=y$$,(1)
 
+来进行恢复过程
+
 then the RIP (with sufficiently small δ) implies exact recovery of any s-sparse x and robustness with respect to perturbations in x (i.e., inexact sparsity) or y (i.e., noise).
 
-然后RIP（足够小的δ）意味着任何S-稀疏X和鲁棒性与X相对于扰动的精确恢复（即非精确稀疏）或Y（即噪声）。
+那么RIP（δ足够小）意味着任何s-稀疏的向量x都能精确恢复，对于x（即不精确的稀疏）或y（即噪声）的扰动也是健壮的。
 
 Typically, the rows of A are drawn independently according to some random distribution. An elegant demonstration of compressed sensing mathematics considers Gaussian random vectors. These are incoherent, and a signature result asserts that A has the RIP with an optimal number of measurements m≈Cslog(N/s).
 
-通常，A的行是根据一些随机分布独立绘制的。压缩感知数学的一个优雅演示——考虑高斯随机向量。这些都是不相干的，和一个签名的结果表明与测量的≈cslog最优数量的RIP（N / S）。
+通常，A的行是根据一些随机分布独立获得的。压缩感知数学的一个优秀示范考虑高斯随机向量。这些都是不相干的，一个标志结果表明A具有RIP性质，此时最优测量数为m≈Cslog(N/s)。
 
 **The Flip Test**
 
@@ -171,7 +171,13 @@ Finally, Figure 5 considers a class of problems informally known as compressive 
 
 **Acknowledgments:** The authors thank Andy Ellison for the MR images used in Figures 3 and 4.
 
-References
+**Other resources:**
+
+[The Dark Side of Image Reconstruction](https://sinews.siam.org/Details-Page/the-dark-side-of-image-reconstruction-1)
+
+[See Light Move: Compressed Sensing and the World’s Fastest 2-D Camera](https://sinews.siam.org/Details-Page/see-light-move-compressed-sensing-and-the-worlds-fastest-2-d-camera)
+
+**References**
 
 [1] Adcock, B., Hansen, A.C., Poon, C., & Roman, B. (2017). Breaking the coherence barrier: A new theory for compressed sensing. Forum of Mathematics, Sigma, 5.
 
