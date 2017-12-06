@@ -13,15 +13,17 @@ image:
 
 Moderators: Zamfir, Hawknc, Moderators General, Prelates
 
-SUPPOSE we had a theory that could explain everything. Not just atoms and quarks but aspects of our everyday lives too. Sound impossible? Perhaps not.
+**SUPPOSE we had a theory that could explain everything. Not just atoms and quarks but aspects of our everyday lives too. Sound impossible? Perhaps not.**[^1]
+
+**假设我们有一个可以解释一切的理论。不仅是原子和夸克，而且是我们日常生活的方方面面。听起来不可能？也许不是。**
 
 **Spoiler**: It's all part of the recent explosion of work in an area of physics known as random matrix theory. Originally developed more than 50 years ago to describe the energy levels of atomic nuclei, the theory is turning up in everything from inflation rates to the behaviour of solids. So much so that many researchers believe that it points to some kind of deep pattern in nature that we don't yet understand. "It really does feel like the ideas of random matrix theory are somehow buried deep in the heart of nature," says electrical engineer Raj Nadakuditi of the University of Michigan, Ann Arbor.
 
-**拆台**：这是物理学领域最近爆炸性工作的一部分，被称为随机矩阵理论。这个理论最初是在50多年前发展起来的，用来描述原子核的能量水平。以至于许多研究者认为它指的是某种我们尚未理解的深层模式。它真的感觉像随机矩阵理论的思想都埋在大自然的内心深处，”密歇根大学的电气工程师Raj Nadakuditi，安娜堡。
+**拆台**：这是一个被称为随机矩阵论的物理学领域的最近爆炸性工作的一部分。这一理论最初在50多年前被开发用来描述原子核的能级，现在它已经出现在从通胀率到固体行为等一切事物中。以至于许多研究者认为它指向某种我们尚未理解的深层模式。University of Michigan, Ann Arbor的电气工程师Raj Nadakuditi说：“随机矩阵论的思想感觉真的埋在大自然的内心深处”。
 
 All of this, oddly enough, emerged from an effort to turn physicists' ignorance into an advantage. In 1956, when we knew very little about the internal workings of large, complex atomic nuclei, such as uranium, the German physicist Eugene Wigner suggested simply guessing.
 
-奇怪的是，所有这些都是为了把物理学家的无知变成一种优势而产生的。1956，当我们对原子核等大型复杂原子核的内部运作知之甚少时，德国物理学家Eugene Wigner简单地猜测了一下。
+奇怪的是，所有这些都是为了把物理学家的无知转为某种优势。1956年，那时我们对铀等大的、复杂原子核的内部运行机制知之甚少，而德国物理学家Eugene Wigner简单地猜测了一下。
 
 Quantum theory tells us that atomic nuclei have many discrete energy levels, like unevenly spaced rungs on a ladder. To calculate the spacing between each of the rungs, you would need to know the myriad possible ways the nucleus can hop from one to another, and the probabilities for those events to happen. Wigner didn't know, so instead he picked numbers at random for the probabilities and arranged them in a square array called a matrix.
 
@@ -163,6 +165,4 @@ Wigner might be surprised by how far his idea about nuclear energy levels has co
 
 维格纳可能会惊讶于他关于核能水平的想法有多么遥远，以及它正在走向的奇怪方向，从物理学和数学的普遍模式到社会科学的实用工具。这显然不像他最初想的那样简单。
 
-**Other sources:**
-
-[](https://www.newscientist.com/article/mg20627550.200-enter-the-matrix-the-deep-law-that-shapes-our-reality/?full=true)
+[^1]: [Enter the matrix: the deep law that shapes our reality](https://www.newscientist.com/article/mg20627550.200-enter-the-matrix-the-deep-law-that-shapes-our-reality/?full=true)
