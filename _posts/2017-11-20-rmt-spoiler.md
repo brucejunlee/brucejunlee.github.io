@@ -29,7 +29,7 @@ All of this, oddly enough, emerged from an effort to turn physicists' ignorance 
 
 Quantum theory tells us that atomic nuclei have many discrete energy levels, like unevenly spaced rungs on a ladder. To calculate the spacing between each of the rungs, you would need to know the myriad possible ways the nucleus can hop from one to another, and the probabilities for those events to happen. Wigner didn't know, so instead he picked numbers at random for the probabilities and arranged them in a square array called a matrix.
 
-量子论告诉我们，原子核有许多离散的能级，就像梯子上不均匀排列的横木。为了计算每层之间的间距，你需要知道原子核无数可能的从一层跳到另一层的方式以及那些事件发生的概率。Wigner并不知道如何做，相反他随机挑选一些数字作为概率，并把它们排列成一个被称为矩阵的方形数组。
+量子论告诉我们，原子核有许多离散的能级，就像梯子上不均匀排列的横木。为了计算每层之间的间距，你需要知道原子核从一层迁跃到另一层无数可能的方式以及那些事件发生的概率。Wigner并不知道如何做，相反他随机挑选一些数字作为概率，并把它们排列成一个被称为矩阵的方形数组。
 
 The matrix was a neat way to express the many connections between the different rungs. It also allowed Wigner to exploit the powerful mathematics of matrices in order to make predictions about the energy levels.
 

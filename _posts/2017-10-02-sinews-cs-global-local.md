@@ -35,7 +35,7 @@ $$y=Ax$$,
 
 where y∈ℂ<sup>m</sup> is the vector of measurements, x∈ℂ<sup>N</sup> is the object to recover, and A∈ℂ<sup>m×N</sup> is the so-called measurement matrix. In practice, the number of measurements m is often substantially smaller than the dimension N, making recovery generally impossible. To overcome this, compressed sensing leverages two key properties: sparsity of the vector x and incoherence of the measurement vectors (rows of A). The first property asserts that x should have at most s≤m significant components, with the remaining components relatively small, while the second states that the measurement vectors should be (in a formally-defined sense) spread out, rather than concentrated around a small number of entries.
 
-这里，y∈ℂ<sup>m</sup>是测量向量，x∈ℂ<sup>N</sup>是要恢复的对象，A∈ℂ<sup>m×N</sup>是所谓的测量矩阵。实践过程中，测量数m通常比维数N小得多，这使得通常不能恢复。为了克服这种情况，压缩感知利用两个关键性质：向量x的稀疏性以及测量向量（A的行）的不相干。第一个性质要求x至多有s≤m个重要分量，剩下的分量相对很小，而第二个性质要求测量向量应该（在正式定义的角度看）分散而不是集中在一小部分元素周围。
+这里，y∈ℂ<sup>m</sup>是测量向量，x∈ℂ<sup>N</sup>是要恢复的对象，A∈ℂ<sup>m×N</sup>是所谓的测量矩阵。实践过程中，测量数m通常比维数N小得多，这使得通常不能恢复。为了克服这种情况，压缩感知利用两个关键性质：向量x的稀疏性以及测量向量（A的行）的不相干。第一个性质要求x至多有s≤m个重要分量，剩下的分量相对很小，而第二个性质要求测量向量应该（在正式定义的角度看）分散而不是集中在一小块元素周围。
 
 A popular tool in compressed sensing theory is the Restricted Isometry Property (RIP). A matrix has the RIP or order s if there exists a δ∈(0,1), such that 
 
@@ -59,7 +59,7 @@ then the RIP (with sufficiently small δ) implies exact recovery of any s-sparse
 
 Typically, the rows of A are drawn independently according to some random distribution. An elegant demonstration of compressed sensing mathematics considers Gaussian random vectors. These are incoherent, and a signature result asserts that A has the RIP with an optimal number of measurements m≈Cslog(N/s).
 
-通常，A的行是根据一些随机分布独立获得的。压缩感知数学的一个优秀示范考虑高斯随机向量。这些都是不相干的，一个标志结果表明A具有RIP性质，此时最优测量数为m≈Cslog(N/s)。
+通常，A的行是根据一些随机分布独立抽取的。压缩感知的一个简明表达考虑高斯随机向量。这些向量都是不相干的，结果表明A具有RIP性质，且最优测量数为m≈Cslog(N/s)。
 
 **The Flip Test**
 
@@ -71,23 +71,23 @@ Figure 1. The flip test. 1a. Radial sampling map in k-space. White pixels denote
 
 Imaging is an ideal fit for compressed sensing, and one of its original areas of application [5, 8, 11]. Though not typically sparse themselves, images can be represented sparsely in certain dictionaries, such as wavelets. Furthermore, acquisition devices found in many imaging applications are modelled with the Fourier transform, which tends to be fairly incoherent.
 
-成像是一种理想的压缩感知，也是它最初的应用领域之一[ 5, 8, 11 ]。虽然图像本身并不稀疏，但可以在某些字典中稀疏地表示图像，如小波。此外，在许多成像应用中发现的捕获设备都是用傅立叶变换来建模的，后者往往相当不连贯。
+成像非常适合于压缩感知，而且也是它最初的应用领域之一[5, 8, 11]。虽然图像本身并不稀疏，但它可以在小波等字典中稀疏表示。此外，在许多成像应用中发现的图像获取设备都是用傅立叶变换来建模的，这往往相当不相干。
 
 In their seminal work [3], Emmanuel Candès, Justin Romberg, and Terence Tao demonstrated the benefits of compressed sensing by recovering the classical Shepp-Logan phantom from incomplete Fourier measurements. This experiment is repeated in Figures 1a-1c. The theoretical basis for this result is twofold. First, the image x∈ℂ<sup>N</sup> has a sparse representation in a wavelet basis. Specifically, if Φ∈ℂ<sup>N×N</sup> is the matrix of the wavelet transform, then
 
-在他们的开创性工作[ 3 ]，Emmanuel CandèS，Justin Romberg和Terence Tao证明了压缩不完全恢复的经典傅里叶测量Shepp洛根幻象传感的好处。本实验在数字1A-1C重复。这一结果的理论基础是双重的。首先，图像X∈ℂ<增刊> n < /支持>在小波稀疏表示。具体来说，如果Φ∈ℂ<增刊> N×n <可>是小波变换矩阵，然后
+Emmanuel Candès，Justin Romberg和Terence Tao在他们的开创性工作[3]中，通过从不完全傅立叶测量中恢复经典的Shepp-Logan幽灵来证明压缩感知的好处。该实验在图1a-1c中被重复。这一结果的理论基础分两部分。首先，图像x∈ℂ<sup>N</sup>在小波基上有一个稀疏表示。具体来说，如果Φ∈ℂ<sup>N×N</sup>是小波变换矩阵，那么对于一些s-稀疏的系数向量c∈ℂ<sup>N</sup>有
 
 $$x=Φc$$
 
 for some s-sparse vector of coefficients c∈ℂ<sup>N</sup>. Second, the matrix 
 
-对于一些S-稀疏向量的系数C∈ℂ<增刊>，< /支持>。第二，矩阵
+其次，矩阵
 
 $$A=PFΦ$$(2)
 
 has the RIP, where F∈ℂ<sup>N×N</sup> is the discrete Fourier matrix and P∈ℂ<sup>m×N</sup> is the matrix of the sampling map, i.e., P selects rows of F according to frequencies shown in Figure 1b. As per the theory, x should recover to high accuracy as x̂ =Φĉ, where ĉ is a solution of (1).
 
-有裂口，其中F∈ℂ<增刊> N×n <可>是离散傅里叶矩阵和P∈ℂ<增刊> M×n <可>是采样图，即矩阵，P选择行F根据如图1B所示频率。根据理论，X要恢复到高精度X̂=Φĉĉ，哪里是一个解（1）。
+有RIP性质，这里F∈ℂ<sup>N×N</sup>是离散傅立叶矩阵，P∈ℂ<sup>m×N</sup>是采样映射矩阵，即P根据图1b所示的频率来选择F的行。根据理论，x应该恢复到高精度x̂ =Φĉ，其中ĉ是（1）的一个解。
 
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/raw/master/assets/img/siam-cs-globallocal-2.jpg)
 
