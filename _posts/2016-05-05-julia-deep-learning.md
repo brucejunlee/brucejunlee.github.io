@@ -36,7 +36,7 @@ image:
 + MXNet.jl
 + TensorFlow.jl：封装了TensorFLow
 + Flux.jl
-+ Knet.jl
++ Knet.jl ⭐️
 
 ## 4 Neural Networks
 
