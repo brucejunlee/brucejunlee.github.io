@@ -57,15 +57,17 @@ image:
 * 周志华, <u>机器学习</u>[西瓜书]⭐️⭐️⭐️
 * 周志华, <u>Ensemble Methods</u>
 * 李航, <u>统计机器学习</u>⭐️⭐️⭐️
-* Peter Harrington, <u>Machine Learning in Action</u>[中文版: 机器学习实战]⭐️⭐️
+* Peter Harrington, <u>Machine Learning in Action</u>[中文版: 机器学习实战]⭐️⭐️⭐️
 * Bradley Efron and Robert J. Tibshirani, <u>An Introduction to the Bootstrap</u>
-* Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>⭐️⭐️⭐️⭐️
+* Stephen Boyd and Lieven Vandenberghe, <u>Convex Optimization</u>⭐️⭐️⭐️⭐️：优化领域的必读经典
 * Michael Nielsen, <u>Neural Networks and Deep Learning</u>⭐️⭐️
 * Li Deng and Dong Yu, <u>Deep Learning: Methods and Applications</u>
 * Dong Yu and Li Deng, <u>Automatic Speech Recognition: A Deep Learning Approach</u>
 * Li Deng and Dong Yu, <u>Deep Learning For Signal And Information Processing</u>
 * Romain Couillet and Merouane Debbah, <u>Random Matrix Methods for Wireless Communications</u>
-* Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>⭐️⭐️⭐️⭐️⭐️
+* Ian Goodfellow, Yoshua Bengio and Aaron Courville, <u>Deep Learning</u>⭐️⭐️⭐️⭐️⭐️：DL领域三代顶尖学者联合打造，包含basics, background, ML, optimization, regularization, practice, CNN(conv+pooling), RNN(LSTM/GRU), more research parts，内容层次适合各类研究兴趣
+* Nikhil Ketkar, <u>Deep Learning with Python</u>⭐️⭐️:图文并茂，通俗易懂，很适合入门
+* Francois Chollet, <u>Deep Learning with Python</u>⭐️⭐️⭐️:Keras开发者最新力作
 
 ## 实用教程
 

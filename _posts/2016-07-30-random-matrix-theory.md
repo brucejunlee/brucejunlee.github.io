@@ -49,6 +49,11 @@ image:
 + Laguerre ensemble
 + Circular ensemble
 
+#### softwares
++ [Mathematica](https://www.wolfram.com/language/11/random-matrices/?product=mathematica)
++ Python: see github.com
++ Julia: RandomMatrices.jl
+
 #### 应用
 
 * 数学：Riemann zeta function，正交多项式，HorngTzer Yau，Terry Tao，Alan Edelman，Peter Forrester
