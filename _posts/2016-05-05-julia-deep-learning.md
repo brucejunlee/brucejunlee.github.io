@@ -44,8 +44,9 @@ image:
 + Mocha.jl
 + MXNet.jl
 + TensorFlow.jl：封装了TensorFLow
-+ Flux.jl
++ Flux.jl ⭐️
 + Knet.jl ⭐️
++ DataFlow.jl ⭐️
 
 ## 4 Neural Networks
 

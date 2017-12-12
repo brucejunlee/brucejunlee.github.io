@@ -48,11 +48,14 @@ image:
 * [Jeffrey Pennington](https://nlp.stanford.edu/~jpennin/): Physics(mathematical physics & high-energy physics) and Machine Learning(NLP and deep learning)
 * [John Langford](http://hunch.net): Machine Learning Theory
 * [Kasper Fred](https://kasperfred.com)
+* [Kevin Modzelewski](http://blog.kevmod.com)
 * [Lepisma](https://lepisma.github.io/archive/)
 * [林达华](https://dahuasky.wordpress.com)⭐️
 * [Machine Learning Mastery](https://machinelearningmastery.com/blog/)⭐️
-* [Moody Rd](http://blog.mrtz.org)
 * [Michael Nielsen](http://michaelnielsen.org)⭐️⭐️
+* [Mike J Innes](http://mikeinnes.github.io): Julia Computing
+* [Moody Rd](http://blog.mrtz.org)
+* [Neil Lawrence](http://inverseprobability.com/blog): Amazon Research Cambridge and University of Sheffield
 * [Nick Higham](https://nickhigham.wordpress.com): President of SIAM
 * [Nikhil Buduma](http://nikhilbuduma.com)
 * [非凸优化](http://www.offconvex.org)⭐️⭐️
