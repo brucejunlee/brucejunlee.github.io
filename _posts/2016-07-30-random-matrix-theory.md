@@ -42,7 +42,7 @@ the probability distribution supported on the interval [−R, R] the graph of wh
 
 $$f(x) = \frac{2}{\pi R^2} \sqrt{R^2 - x^2}$$
 
-for $-R \le x \le R$, and f(x)=0 if |x| > R.
+for -R ≤ x ≤ R, and f(x)=0 if |x| > R.
 
 This distribution arises as the limiting distribution of eigenvalues of many random symmetric matrices as the size of the matrix approaches infinity.
 
@@ -60,15 +60,15 @@ In number-theoretic literature, the Wigner distribution is sometimes called the 
 
 + [Marcenko-Pastur定律](https://en.wikipedia.org/wiki/Marčenko–Pastur_distribution)[bulk statistics]: describes the asymptotic behavior of singular values of large rectangular random matrices.
 
-If X denotes a M×N random matrix whose entries are independent identically distributed random variables with mean 0 and variance $\sigma^2 < \infty$, let
+If X denotes a M×N random matrix whose entries are independent identically distributed random variables with mean 0 and variance σ<sup>2</sup> < ∞, let
 
 $$Y_N = N^{-1} X X^T$$
 
-and let $\lambda_{1}$, $\lambda_{2}$, $\dots$, $\lambda_{M}$ be the eigenvalues of $Y_{N}$ (viewed as random variables). Finally, consider the random measure
+and let λ<sub>1</sub>, λ<sub>2</sub>, …, λ<sub>M</sub> be the eigenvalues of Y<sub>N</sub> (viewed as random variables). Finally, consider the random measure
 
-$$\mu_{M}(A) = \frac{1}{M}\#\left{\lambda_{j}\in A\right},\quad A \subset \mathbb{R}.$$
+$$\mu_{M}(A) = \frac{1}{M} # \left{\lambda_j \in A\right}, \quad A \subset \mathbb{R}.$$
 
-**Theorem.** Assume that $M, N \rightarrow \infty$ so that the ratio $M/N \rightarrow \lambda \in (0,+\infty)$. Then $\mu_{{M}} \rightarrow \mu$ (in weak* topology in distribution), where
+**Theorem.** Assume that M, N → ∞ so that the ratio M/N → λ ∈ (0,+ ∞). Then µ<sub>M</sub> → µ (in weak* topology in distribution), where
 
 $$\mu(A) =\begin{cases} 
 (1 - \frac{1}{\lambda}) \mathbf{1}_{0 \in A} + \nu(A), &\text{if} \lambda > 1\\
@@ -83,19 +83,19 @@ with
 
 $$\lambda_{\pm} = \sigma^2 (1 \pm \sqrt{\lambda})^2.$$
 
-The Marčenko–Pastur law also arises as the [free Poisson law](https://en.wikipedia.org/wiki/Free_Poisson_distribution) in free probability theory, having rate 1/$\lambda$ and jump size $\sigma^{2}$.
+The Marčenko–Pastur law also arises as the [free Poisson law](https://en.wikipedia.org/wiki/Free_Poisson_distribution) in free probability theory, having rate 1/λ and jump size σ<sup>2</sup>.
 
 + [Tracy-Widom定律](https://en.wikipedia.org/wiki/Tracy–Widom_distribution)[edge statistics]: the probability distribution of the normalized largest eigenvalue of a random Hermitian matrix.
 
 $$F_2(s) = \lim_{n \rightarrow \infty} Prob\left( (\lambda_{max} - \sqrt{2n})(\sqrt{2})^{1/6} \le s \right),$$
 
-The shift by $\sqrt{2n}$ is used to keep the distributions centered at 0. The multiplication by $(\sqrt{2})n^{1/6}$ is used because the standard deviation of the distributions scales as $n^{-1/6}$.
+The shift by √2n is used to keep the distributions centered at 0. The multiplication by (√2)n<sup>1/6</sup> is used because the standard deviation of the distributions scales as n<sup>-1/6</sup>.
 
 The cumulative distribution function of the Tracy–Widom distribution can be given as the Fredholm determinant
 
 $$F_2(s) = \det(I - A_s),$$
 
-of the operator $A_s$ on square integrable functions on the half line (s, ∞) with kernel given in terms of Airy functions Ai by
+of the operator A<sub>s</sub> on square integrable functions on the half line (s, ∞) with kernel given in terms of Airy functions Ai by
 
 $$\frac{\textrm{Ai}(x)\textrm{Ai}'(y) - \textrm{Ai}'(x)\textrm{Ai}(y)}{x - y}.$$
 
@@ -111,7 +111,7 @@ where q, called the Hastings–McLeod solution, satisfies the boundary condition
 
 $$\displaystyle q(s) \sim \textrm{Ai}(s), s\rightarrow\infty.$$
 
-The distribution $F_2$ is associated to unitary ensembles in random matrix theory. There are analogous Tracy–Widom distributions F1 and F4 for orthogonal (β = 1) and symplectic ensembles (β = 4) that are also expressible in terms of the same Painlevé transcendent q
+The distribution F<sub>2</sub> is associated to unitary ensembles in random matrix theory. There are analogous Tracy–Widom distributions F<sub>1</sub> and F<sub>4</sub> for orthogonal (β = 1) and symplectic ensembles (β = 4) that are also expressible in terms of the same Painlevé transcendent q
 
 $$F_1(s)=\exp\left(-\frac{1}{2}\int_s^\infty q(x) dx\right)\left(F_2(s)\right)^{1/2}$$
 
@@ -121,7 +121,7 @@ $$F_4(s/\sqrt{2})=\cosh\left(\frac{1}{2}\int_s^\infty q(x) dx\right) \left(F_2(s
 
 In practical terms, Tracy–Widom is the crossover function between the two phases of weakly versus strongly coupled components in a system. It also appears in the distribution of the length of the longest increasing subsequence of random permutations (<u>Baik, Deift & Johansson 1999</u>), in current fluctuations of the <u>asymmetric simple exclusion process (ASEP)</u> with step initial condition (Johansson 2000, <u>Tracy & Widom 2009</u>), and in simplified mathematical models of the behavior of the longest common subsequence problem on random inputs.
 
-The distribution $F_1$ is of particular interest in multivariate statistics (<u>Johnstone 2007, 2008, 2009</u>). For a discussion of the universality of $F_β$, β = 1, 2, and 4, see <u>Deift (2007)</u>. For an application of $F_1$ to inferring population structure from genetic data see <u>Patterson, Price & Reich (2006)</u>. In 2017 it was proved that the distribution F is not infinitely divisible see <u>Domínguez-Molina, J. Armando 2017</u>.
+The distribution F<sub>1</sub> is of particular interest in multivariate statistics (<u>Johnstone 2007, 2008, 2009</u>). For a discussion of the universality of F<sub>β</sub>, β = 1, 2, and 4, see <u>Deift (2007)</u>. For an application of F<sub>1</sub> to inferring population structure from genetic data see <u>Patterson, Price & Reich (2006)</u>. In 2017 it was proved that the distribution F is not infinitely divisible see <u>Domínguez-Molina, J. Armando 2017</u>.
 
 For numerical approximations, see Edelman&Persson, Bornemann.
 
@@ -130,7 +130,7 @@ For numerical approximations, see Edelman&Persson, Bornemann.
 + Edelman的奇异值分布
 + level spacings 分布
 + eigenvalue fluctuations
-+ [free probability theory](https://en.wikipedia.org/wiki/Free_probability): Stieltjes transform, R transform[$\boxplus$], S transform[$\boxtimes$]
++ [free probability theory](https://en.wikipedia.org/wiki/Free_probability): Stieltjes transform, R transform[⊞], S transform[⊠]
 
 #### Types
 
@@ -142,9 +142,9 @@ Gaussian measure with density:
 
 $$\frac{1}{Z_{\beta, n}}e^{-\frac{\beta n}{4}trH^2}$$ 
 
-where $\beta$=1 for GOE, $\beta$=2 for GUE and $\beta$=4 for GSE.
+where β =1 for GOE, β =2 for GUE and β =4 for GSE.
 
-joint probability density for the eigenvalues $\lambda_1$, $\lambda_2$, $\dots$, $\lambda_n$ of GOE/GUE/GSE: 
+joint probability density for the eigenvalues λ<sub>1</sub>, λ<sub>2</sub>, …, λ<sub>n</sub> of GOE/GUE/GSE: 
 
 $$\frac{1}{Z_{\beta, n}} \prod_{k=1}^n e^{-\frac{\beta n}{4}\lambda_k^2} \prod_{i<j} \lvert \lambda_j - \lambda_i \rvert^{\beta}$$
 
