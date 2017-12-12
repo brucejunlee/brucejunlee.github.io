@@ -66,7 +66,7 @@ $$Y_N = N^{-1} X X^T$$
 
 and let λ<sub>1</sub>, λ<sub>2</sub>, …, λ<sub>M</sub> be the eigenvalues of Y<sub>N</sub> (viewed as random variables). Finally, consider the random measure
 
-$$\mu_{M}(A) = \frac{1}{M} # \left{\lambda_j \in A\right}, \quad A \subset \mathbb{R}.$$
+$$\mu_{M}(A) = \frac{1}{M} #{\lambda_j \in A}, \quad A \subset \mathbb{R}.$$
 
 **Theorem.** Assume that M, N → ∞ so that the ratio M/N → λ ∈ (0,+ ∞). Then µ<sub>M</sub> → µ (in weak* topology in distribution), where
 
@@ -89,7 +89,7 @@ The Marčenko–Pastur law also arises as the [free Poisson law](https://en.wiki
 
 $$F_2(s) = \lim_{n \rightarrow \infty} Prob\left( (\lambda_{max} - \sqrt{2n})(\sqrt{2})^{1/6} \le s \right),$$
 
-The shift by √2n is used to keep the distributions centered at 0. The multiplication by (√2)n<sup>1/6</sup> is used because the standard deviation of the distributions scales as n<sup>-1/6</sup>.
+The shift by √(2n) is used to keep the distributions centered at 0. The multiplication by (√2)n<sup>1/6</sup> is used because the standard deviation of the distributions scales as n<sup>-1/6</sup>.
 
 The cumulative distribution function of the Tracy–Widom distribution can be given as the Fredholm determinant
 
