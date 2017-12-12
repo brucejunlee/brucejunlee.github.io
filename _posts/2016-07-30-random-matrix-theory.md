@@ -66,7 +66,7 @@ $$Y_N = N^{-1} X X^T$$
 
 and let λ<sub>1</sub>, λ<sub>2</sub>, …, λ<sub>M</sub> be the eigenvalues of Y<sub>N</sub> (viewed as random variables). Finally, consider the random measure
 
-$$\mu_{M}(A) = \frac{1}{M} #{\lambda_j \in A}, \quad A \subset \mathbb{R}.$$
+$$\mu_M(A) = \frac{1}{M} \#{\lambda_j \in A}, A \subset \mathbb{R}.$$
 
 **Theorem.** Assume that M, N → ∞ so that the ratio M/N → λ ∈ (0,+ ∞). Then µ<sub>M</sub> → µ (in weak* topology in distribution), where
 
