@@ -17,7 +17,7 @@ image:
 
 A random matrix is a matrix-valued random variable—that is, a matrix some or all of whose elements are random variables.
 
-Or see Persi Diaconis(2005), <u>What is ... a random matrix?</u>
+For more details, see Persi Diaconis(2005), <u>What is ... a random matrix?</u> or Romain Couillet and Merouane Debbah(2011), <u>Random Matrix Methods for Wireless Communications</u>
 
 #### 预备知识
 
