@@ -54,7 +54,32 @@ In the limit of R approaching zero, the Wigner semicircle distribution becomes a
 
 In number-theoretic literature, the Wigner distribution is sometimes called the [Sato–Tate distribution](https://en.wikipedia.org/wiki/Sato–Tate_conjecture).
 
-+ [Girko圆律](https://en.wikipedia.org/wiki/Circular_law): for non-Hermitian random matrices
+```julia
+# finite semi-circle law
+
+using Plots,StatsBase
+n=5;
+#using Christoffel-Darboux formula
+x=-1:0.001:1
+x=x*sqrt(2*n)*1.3
+pold=0*x#-1st Hermite polynomial
+p=1+0*x#0th Hermite polynomial
+k=p
+for j=1:n
+    pnew=(sqrt(2)*x.*p-sqrt(j-1)*pold)/sqrt(j)
+    pold=p
+    p=pnew
+end
+pnew=(sqrt(2)*x.*p-sqrt(n)*pold)/sqrt(n+1)
+k=n*p.^2-sqrt(n*(n+1))*pnew.*pold#use Page 420 of Mehta
+k=k.*exp(-x.^2)/sqrt(π)#correct normalization multiplied
+#rescale on [-1,1] and the area is π/2
+plot(x/sqrt(2*n),k*π/sqrt(2*n))
+```
+
++ [Girko圆律](https://en.wikipedia.org/wiki/Circular_law): for non-Hermitian random matrices on the complex plane
+
++ Girko's Elliptic Law
 
 + Quartercircle law: singular values for normal Gaussian random matrices
 
@@ -125,12 +150,33 @@ The distribution F<sub>1</sub> is of particular interest in multivariate statist
 
 For numerical approximations, see Edelman&Persson, Bornemann.
 
++ Simple ring law: for circular ensemble
+
 #### 其它性质
 
-+ Edelman的奇异值分布
-+ level spacings 分布
++ Edelman的条件数分布
++ level spacings 分布: Wigner surmise
 + eigenvalue fluctuations
 + [free probability theory](https://en.wikipedia.org/wiki/Free_probability): Stieltjes transform, R transform[⊞], S transform[⊠]
+
+```julia
+using Plots,StatsBase
+t = 10;n = 1000;dx = .1
+x = -1.9:dx:1.9
+v = zeros(n,t);w = zeros(n,t)
+for j = 1:t
+    #coin flipping example
+    A = sign(randn(n))
+    B = sign(randn(n))
+    Q = qr(randn(n,n))[1]
+    v[:,j] = A + B  #classical probability
+    
+    #calculate the asymptotic eigenvalue distribution of sums of random matrices which are asymptotically free
+    w[:,j] = eigvals(diagm(A)+Q'*diagm(B)*Q)  #free probability with Haar unitary measure
+end
+histogram(w[:],normed=true,lab="experiment",palette=:blues)
+plot!(x,(π*sqrt(4-x.^2)).^(-1),lab="theory",w=2)
+```
 
 #### Types
 
@@ -171,6 +217,22 @@ where the function V is called the potential.
 
 * 数学：Riemann zeta function，L function，正交多项式，HorngTzer Yau，Terry Tao，Alan Edelman，Peter Forrester
 * 组合学：longest increasing subsequence
+
+```julia
+function LIS(;n=4,k=2,trials=100_000)
+  expec=[]
+  for i=1:trials
+    A=randn(k,k)+im*randn(k,k)
+    Q,R=qr(A) #QR algorithm does not guarantee nonnegative diagonal entries in R
+    # obtain a Haar-distributed unitary matrix
+    Q=Q*diagm(exp(im*2*pi*rand(k))) #a simple correction by randomly perturbing the phase
+    #Q=Q*diagm(sign(diag(R)))
+    expec=[expec;abs(trace(Q))^(2n)]
+  end
+  mean(expec)
+end
+```
+
 * 物理：原子核能级，固体行为，晶体学，totally asymmetric simple exclusion process，spin glass，量子物理，<u>量子混沌</u>，QCD，多体系统
 * 数学物理：可积系统，Percy Deift，Tracy，Widom
 * 信号处理：random matrix-based signal detection[Raj Rao Nadakuditi]，wireless communication[Tulino & Verdu]，Roman Couillet[Random matrix methods in wireless communications]，Robert C. Qiu's works on smart grid，compressed sensing[Donoho, Candes，Tao]
