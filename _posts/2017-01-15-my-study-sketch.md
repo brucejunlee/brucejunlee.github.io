@@ -91,6 +91,7 @@ image:
 * [美团点评技术团队](https://tech.meituan.com)
 * [Microsoft Azure Blog](https://azure.microsoft.com/en-us/blog/)
 * [Microsoft Research-AI](https://blogs.microsoft.com/ai/)⭐️
+* [MonkeyLearn](https://monkeylearn.com/blog/)
 * [Nvidia Blog](https://devblogs.nvidia.com/parallelforall/)
 * [TeraData](http://www.teradata.com/blogs)
 
