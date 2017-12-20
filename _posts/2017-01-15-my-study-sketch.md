@@ -34,8 +34,9 @@ image:
 * [Andrey Kurenkov](http://www.andreykurenkov.com/writing/)
 * [AI, DL and NLP](http://www.wildml.com)⭐️
 * [Analytics Vidhya](https://www.analyticsvidhya.com/blog/)
-* [Chris Albon](https://chrisalbon.com)
 * [Cal Newport](http://calnewport.com)
+* [Chris Albon](https://chrisalbon.com)
+* [Chris McCormick](http://mccormickml.com)
 * [Christopher Rackauckas](http://www.stochasticlifestyle.com)
 * [Christopher Olah](http://colah.github.io): Neural Networks⭐️
 * [Cleve Moler](https://blogs.mathworks.com/cleve/): Matlab and MathWorks
