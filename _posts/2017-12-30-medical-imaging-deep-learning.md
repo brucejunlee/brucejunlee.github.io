@@ -28,6 +28,8 @@ image:
 
 [解析深度学习如何改变医疗成像领域](http://www.chinacloud.cn/show.aspx?id=24551&cid=17)
 
+[三维形状数据的深度特征表示](https://zhuanlan.zhihu.com/p/26806047)
+
 [convnet benchmarks](https://github.com/soumith/convnet-benchmarks)
 
 [Applying a 3D convolutional neural network to the data](https://www.kaggle.com/sentdex/first-pass-through-data-w-3d-convnet)
