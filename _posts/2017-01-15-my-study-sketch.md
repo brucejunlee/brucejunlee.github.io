@@ -40,6 +40,7 @@ image:
 * [Christopher Rackauckas](http://www.stochasticlifestyle.com)
 * [Christopher Olah](http://colah.github.io): Neural Networks⭐️
 * [Cleve Moler](https://blogs.mathworks.com/cleve/): Matlab and MathWorks
+* [deepdish](http://deepdish.io): Serving Up Chicago-Style Deep Learning
 * [Denny](http://blog.dennybritz.com)
 * [斗大的熊猫](http://blog.topspeedsnail.com)
 * [Francois Chollet](https://blog.keras.io/index.html)⭐️⭐️

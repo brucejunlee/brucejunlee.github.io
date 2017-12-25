@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(六): 金融分析"
+title: "随机矩阵理论(VI): 金融分析"
 author: "李军"
 categories: journal
 tags: [RMT, finance]

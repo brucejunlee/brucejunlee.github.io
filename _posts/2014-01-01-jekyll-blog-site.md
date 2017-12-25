@@ -120,3 +120,8 @@ git  checkout -- _post/2017-01-01-delete.markdown
     username.site
     ```
 
+# [懒人的福音](http://www.ituring.com.cn/article/216240)
+
+甚至无需了解Git, Ruby等技术。
+
+[Jekyll Writer](http://jekyllwriter.com/)是一款可视化的Jekyll网站管理程序，使用它可以避免接触Git和Jekyll来部署和管理Jekyll网站。

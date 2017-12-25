@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(二): 自由概率论"
+title: "随机矩阵理论(II): 自由概率论"
 author: "李军"
 categories: journal
 tags: [RMT, probability theory, free probability theory]

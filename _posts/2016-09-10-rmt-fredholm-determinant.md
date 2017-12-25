@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(三): Fredholm行列式"
+title: "随机矩阵理论(III): Fredholm行列式"
 author: "李军"
 categories: journal
 tags: [RMT, Fredholm]

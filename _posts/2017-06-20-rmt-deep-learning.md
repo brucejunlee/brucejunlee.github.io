@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(九): 深度学习"
+title: "随机矩阵理论(XII): 深度学习"
 author: "李军"
 categories: journal
 tags: [RMT, deep learning]
@@ -11,7 +11,7 @@ image:
   creditlink: ""
 ---
 
-本文是随机矩阵理论系列的第九篇文章，讲述了随机矩阵在深度学习中的应用，探究深度学习为什么如此有效。
+本文是随机矩阵理论系列的第十二篇文章，讲述了随机矩阵在深度学习中的应用，探究深度学习为什么如此有效。
 
 #### 深度学习
 
@@ -26,6 +26,7 @@ image:
 
 研究现状
 
++ J. Silverstein, Asymptotics Applied to a Neural Network, Biol. Cybernetics, 1976.
 + Y. L. Cun., I. I. Kanter and S. A. Solla (1991). Eigenvalues of covariance matrices: application to neural-network learning. **Physical Review Letters**, 66(18), 2396.
 + A. Auffinger, G.B. Arous and Jiri Cerny (2013). Random matrices and complexity of spin glasses. **Communications on Pure & Applied Mathematics**, 66(2), 165-201.⭐️
 + Y.N. Dauphin, R. Pascanu, C. Gulcehre, K. Cho, S. Ganguli and Y. Bengio (2014). Identifying and attacking the saddle point problem in high-dimensional non-convex optimization. **International Conference on Neural Information Processing Systems** (Vol.111, pp.2933-2941). MIT Press.
@@ -39,4 +40,7 @@ image:
 + C. Louart, Z. Liao and R. Couillet (2017). A random matrix approach to neural networks. **The 33rd International Conference on Machine
   Learning**, New York, NY, USA, 2016.⭐️
 + M. Suzen, C. Weber and J.J. Cerda (2017). Spectral ergodicity in deep learning architectures via surrogate random matrices.⭐️⭐️
-+ Jeffrey Pennington, Sam Schoenholz and Ganguli. Investigating the learning dynamics of deep neural networks using random matrix theory. to appear in **NIPS** 2017.⭐️⭐️
++ Jeffrey Pennington and Yasaman Bahri, Geometry of Neural Network Loss Surfaces via Random Matrix Theory, **ICML**2017.⭐️⭐️
++ Jeffrey Pennington and Pratik Worah, Nonlinear random matrix theory for deep learning, **NIPS** 2017.⭐️⭐️
++ Jeffrey Pennington, Samuel S. Schoenholz and Surya Ganguli, Resurrecting the sigmoid in deep learning through dynamical isometry: theory and practice, **NIPS** 2017. ⭐️⭐️
++ Rene Vidal et al., Mathematics of deep learning.

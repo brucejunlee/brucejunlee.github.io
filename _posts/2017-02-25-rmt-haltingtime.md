@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(五): 数值算法的停机时间"
+title: "随机矩阵理论(V): 数值算法的停机时间"
 author: "李军"
 categories: journal
 tags: [RMT, halting time]

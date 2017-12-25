@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随机矩阵理论(四): 普适性"
+title: "随机矩阵理论(IV): 普适性"
 author: "李军"
 categories: journal
 tags: [RMT, universality]
