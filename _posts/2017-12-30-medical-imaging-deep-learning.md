@@ -28,10 +28,36 @@ image:
 
 [解析深度学习如何改变医疗成像领域](http://www.chinacloud.cn/show.aspx?id=24551&cid=17)
 
+[Will AI replace human doctors after Chinese robot dentist’s recent success?](http://us.blastingnews.com/tech/2017/09/will-ai-replace-human-doctors-after-chinese-robot-dentists-recent-success-002035455.html)
+
+[Deep Learning in Medical Imaging: A $300M Market by 2021](https://www.prnewswire.com/news-releases/deep-learning-in-medical-imaging-a-300m-market-by-2021-300408645.html)
+
+[Deep Learning Algorithm Diagnoses Schizophrenia from fMRI Scans](https://www.medgadget.com/2017/07/deep-learning-algorithm-diagnoses-schizophrenia-fmri-scans.html)
+
+[ORCA: Dental AI](http://orca-ai.com)
+
+[The Amazing Future of Dentistry and Oral Health](http://medicalfuturist.com/the-amazing-future-of-dentistry-and-oral-health/)
+
+[以数据的名义——浅谈三维几何的处理与分析(上)](http://www.sohu.com/a/146472987_133098)
+
+[以数据的名义——浅谈三维几何的处理与分析(下)](http://www.dataguru.cn/article-11515-1.html)
+
+[3D识别](http://blog.csdn.net/scutjy2015/article/details/72597959)
+
 [三维形状数据的深度特征表示](https://zhuanlan.zhihu.com/p/26806047)
+
+[ICCV | 深度三维残差神经网络：视频理解新突破](http://blog.csdn.net/y2c8ypzc15p/article/details/78372899)
 
 [convnet benchmarks](https://github.com/soumith/convnet-benchmarks)
 
 [Applying a 3D convolutional neural network to the data](https://www.kaggle.com/sentdex/first-pass-through-data-w-3d-convnet)
 
 [voxnet](https://github.com/dimatura/voxnet)
+
+[Tips on convolutional layers for 3D](https://github.com/keras-team/keras/pull/1623)
+
+Example Codes:
+
+[3d-cnn-action-recog-keras](https://github.com/Ectsang/3D-CNN-Keras/blob/master/3d-cnn-action-recog-keras.py)
+
+[PointNet](https://github.com/charlesq34/pointnet)
