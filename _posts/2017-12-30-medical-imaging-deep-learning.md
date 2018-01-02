@@ -28,6 +28,10 @@ image:
 
 [解析深度学习如何改变医疗成像领域](http://www.chinacloud.cn/show.aspx?id=24551&cid=17)
 
+[【PPT】深度学习技术在医学影像CAD中的应用](http://chuansong.me/n/1473034547823)
+
+[The End of Human Doctors – The Bleeding Edge of Medical AI Research ](https://lukeoakdenrayner.wordpress.com/)
+
 [Will AI replace human doctors after Chinese robot dentist’s recent success?](http://us.blastingnews.com/tech/2017/09/will-ai-replace-human-doctors-after-chinese-robot-dentists-recent-success-002035455.html)
 
 [Deep Learning in Medical Imaging: A $300M Market by 2021](https://www.prnewswire.com/news-releases/deep-learning-in-medical-imaging-a-300m-market-by-2021-300408645.html)
@@ -41,6 +45,10 @@ image:
 [以数据的名义——浅谈三维几何的处理与分析(上)](http://www.sohu.com/a/146472987_133098)
 
 [以数据的名义——浅谈三维几何的处理与分析(下)](http://www.dataguru.cn/article-11515-1.html)
+
+[计算机图形学与机器学习（深度学习）怎么结合起来？](https://www.zhihu.com/question/42904254)
+
+[Artificial Intelligence (AI) / Deep Learning (DL) / Computer Aided Detection (CAD)](http://www.intrinsicimaging.com/cad-ai-dl/)
 
 [3D识别](http://blog.csdn.net/scutjy2015/article/details/72597959)
 
@@ -56,8 +64,16 @@ image:
 
 [Tips on convolutional layers for 3D](https://github.com/keras-team/keras/pull/1623)
 
+[Deep Learning Papers on Medical Image Analysis](https://github.com/albarqouni/Deep-Learning-for-Medical-Applications)
+
+[[转自github]基于深度学习的医疗影像论文汇总(Deep Learning Papers on Medical Image Analysis)](https://zhuanlan.zhihu.com/p/30134193):这是上面的翻译版
+
 Example Codes:
 
 [3d-cnn-action-recog-keras](https://github.com/Ectsang/3D-CNN-Keras/blob/master/3d-cnn-action-recog-keras.py)
 
 [PointNet](https://github.com/charlesq34/pointnet)
+
+[MatConvNet: CNNs for MATLAB](http://www.vlfeat.org/matconvnet/)
+
+For more details, see <u>cs.princeton.edu</u>, <u>cs.cmu.edu</u> or <u>lmb.informatik.uni-freiburg.de</u>
