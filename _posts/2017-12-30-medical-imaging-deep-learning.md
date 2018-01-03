@@ -30,6 +30,8 @@ image:
 
 [【PPT】深度学习技术在医学影像CAD中的应用](http://chuansong.me/n/1473034547823)
 
+[Real 3D / Volumetric CNN for medical image classification](https://www.jianshu.com/p/f6d4d1350b71)
+
 [The End of Human Doctors – The Bleeding Edge of Medical AI Research ](https://lukeoakdenrayner.wordpress.com/)
 
 [Will AI replace human doctors after Chinese robot dentist’s recent success?](http://us.blastingnews.com/tech/2017/09/will-ai-replace-human-doctors-after-chinese-robot-dentists-recent-success-002035455.html)
@@ -54,7 +56,7 @@ image:
 
 [三维形状数据的深度特征表示](https://zhuanlan.zhihu.com/p/26806047)
 
-[ICCV | 深度三维残差神经网络：视频理解新突破](http://blog.csdn.net/y2c8ypzc15p/article/details/78372899)
+[ICCV深度三维残差神经网络:视频理解新突破](http://blog.csdn.net/y2c8ypzc15p/article/details/78372899)
 
 [convnet benchmarks](https://github.com/soumith/convnet-benchmarks)
 
@@ -76,4 +78,12 @@ Example Codes:
 
 [MatConvNet: CNNs for MATLAB](http://www.vlfeat.org/matconvnet/)
 
-For more details, see <u>cs.princeton.edu</u>, <u>cs.cmu.edu</u> or <u>lmb.informatik.uni-freiburg.de</u>
+[Mesh Denoising via Cascaded Normal Regression](http://wang-ps.github.io/denoising.html): MSRA
+
+[O-CNN: Octree-based Convolutional Neural Networks for 3D Shape Analysis](http://wang-ps.github.io/O-CNN.html): MSRA
+
+For more details, see <u>cs.princeton.edu</u>, <u>cs.cmu.edu</u> or <u>lmb.informatik.uni-freiburg.de</u>, 浙江大学, 微软亚洲研究院
+
+data:
+
+[医疗成像竞赛](http://www.grand-challenge.org/)
