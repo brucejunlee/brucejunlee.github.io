@@ -70,11 +70,17 @@ image:
 
 [[转自github]基于深度学习的医疗影像论文汇总(Deep Learning Papers on Medical Image Analysis)](https://zhuanlan.zhihu.com/p/30134193):这是上面的翻译版
 
+[Awesome Computer Vision](http://blog.csdn.net/bluecol/article/details/47339397)
+
+[Computer Graphics Research Software](http://blog.csdn.net/HW140701/article/details/78017600)
+
 Example Codes:
 
 [3d-cnn-action-recog-keras](https://github.com/Ectsang/3D-CNN-Keras/blob/master/3d-cnn-action-recog-keras.py)
 
 [PointNet](https://github.com/charlesq34/pointnet)
+
+[VNet](https://github.com/sagarhukkire)
 
 [MatConvNet: CNNs for MATLAB](http://www.vlfeat.org/matconvnet/)
 
@@ -84,6 +90,14 @@ Example Codes:
 
 For more details, see <u>cs.princeton.edu</u>, <u>cs.cmu.edu</u> or <u>lmb.informatik.uni-freiburg.de</u>, 浙江大学, 微软亚洲研究院
 
+[ModelNet](http://modelnet.cs.princeton.edu):这里给出了ModelNet 3D 数据集，并且比较了目前已有的众多3D方案的性能
+
 data:
 
 [医疗成像竞赛](http://www.grand-challenge.org/)
+
+ShapeNet
+
+ModelNet
+
+[TUM cv lab datasets](https://vision.in.tum.de/data/datasets)
