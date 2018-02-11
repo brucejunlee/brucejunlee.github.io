@@ -25,7 +25,9 @@ image:
 
 [Real 3D / Volumetric CNN for medical image classification](https://www.jianshu.com/p/f6d4d1350b71)
 
-[The End of Human Doctors – The Bleeding Edge of Medical AI Research ](https://lukeoakdenrayner.wordpress.com/)
+[The End of Human Doctors – The Bleeding Edge of Medical AI Research ](https://lukeoakdenrayner.wordpress.com/):也可以阅读相关中文报道
+
+[人工智能的医疗应用：商业化和工业化之随想](https://mp.weixin.qq.com/s/lPg2fmZaWXSmuKK-ChhcHA)
 
 [Will AI replace human doctors after Chinese robot dentist’s recent success?](http://us.blastingnews.com/tech/2017/09/will-ai-replace-human-doctors-after-chinese-robot-dentists-recent-success-002035455.html)
 
@@ -71,11 +73,13 @@ image:
 
 [图像分割评价标准](http://blog.csdn.net/yangyangyang20092010/article/details/51637073)
 
+[用python学习slam系列（一）从图像到点云](http://www.rosclub.cn/post-682.html):上面还有一系列文章
+
 [3d-cnn-action-recog-keras](https://github.com/Ectsang/3D-CNN-Keras/blob/master/3d-cnn-action-recog-keras.py)
 
 [PointNet](https://github.com/charlesq34/pointnet)
 
-[VNet](https://github.com/sagarhukkire)
+[VNet](https://sagarhukkire.github.io/Vnet-Cafffe_Guide/): Caffe_Guide, addressed to new-bees to medical image segmentation using caffe
 
 [MatConvNet: CNNs for MATLAB](http://www.vlfeat.org/matconvnet/)
 

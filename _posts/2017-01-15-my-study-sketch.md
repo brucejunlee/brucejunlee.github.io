@@ -53,6 +53,7 @@ image:
 * [Kasper Fred](https://kasperfred.com)
 * [Kevin Modzelewski](http://blog.kevmod.com)
 * [Lepisma](https://lepisma.github.io/archive/)
+* [Liam Schoneveld](https://nlml.github.io)
 * [林达华](https://dahuasky.wordpress.com)⭐️
 * [Machine Learning Mastery](https://machinelearningmastery.com/blog/)⭐️
 * [Michael Nielsen](http://michaelnielsen.org)⭐️⭐️
