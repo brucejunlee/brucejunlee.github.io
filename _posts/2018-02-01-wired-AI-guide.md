@@ -137,7 +137,7 @@ In one notable result, researchers at the University of Toronto trounced rivals 
 
 一个值得注意的结果，多伦多大学的研究人员在一年一度的竞赛中击败了对手，该比赛中软件的任务是分类图像。另一方面，来自IBM、微软和谷歌的研究人员联手发布结果，表明深度学习也能显著提高语音识别的准确性。科技公司开始疯狂地雇佣他们能找到的所有深度学习专家。
 
-###The Future of Artificial Intelligence
+### The Future of Artificial Intelligence
 
 ### 人工智能的未来
 
