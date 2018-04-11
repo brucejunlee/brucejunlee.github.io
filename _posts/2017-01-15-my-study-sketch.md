@@ -24,8 +24,10 @@ image:
 
 个人博客：
 
+* [Abigail See](http://www.abigailsee.com): A Deep Learning and NLP blog
 * [Adit Deshpande](https://adeshpande3.github.io): CS Undergrad at UCLA
 * [ALGOBEANS](https://algobeans.com/all-posts/): Layman tutorials in analytics
+* [ALGORITHMIA](https://blog.algorithmia.com): AI in every application
 * [All Things Distributed](http://www.allthingsdistributed.com): by Amazon's VP & CTO Werner Vogels
 * [Andrew Brooks](http://brooksandrew.github.io/simpleblog/): data science side projects, thoughts & experiments
 * [Andrej Karpathy](http://karpathy.github.io)
@@ -48,6 +50,7 @@ image:
 * [Galea](https://galeascience.wordpress.com)
 * [i am trask](http://iamtrask.github.io)
 * [inFERENCe](http://www.inference.vc)
+* [Jaan Altosaar](https://jaan.io/blog/): 物理与机器学习之间的思考
 * [Jeffrey Pennington](https://nlp.stanford.edu/~jpennin/): Physics(mathematical physics & high-energy physics) and Machine Learning(NLP and deep learning)
 * [John Langford](http://hunch.net): Machine Learning Theory
 * [Kasper Fred](https://kasperfred.com)
@@ -67,6 +70,7 @@ image:
 * [Pete Warden](https://petewarden.com)
 * [Peter Norvig](http://norvig.com)⭐️
 * [Random Thoughts](http://rt.dgyblog.com/ref/ref-learning-deep-learning.html)
+* [Rick Wicklin](https://blogs.sas.com/content/iml/2018/03/05/probability-saddle-point-matrix.html): 查看他的其它文章
 * [Sebastian Ruder](http://ruder.io/#open)
 * [Tim Dettmers](http://timdettmers.com)
 * [陶哲轩](https://terrytao.wordpress.com): Fields Award Winner
