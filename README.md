@@ -5,6 +5,6 @@
 ![image](https://github.com/brucejunlee/brucejunlee.github.io/blob/master/assets/img/lujiazui.jpg)
 
 
-
+Homepage: [Bruce Lee](https://brucejunlee.github.io)
 
 
